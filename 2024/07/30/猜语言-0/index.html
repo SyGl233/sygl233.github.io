@@ -14,7 +14,7 @@
 
 
 
-<title>Hexo配置致谢与补充 | Hexo</title>
+<title>猜语言(0) 这是什么？ | Hexo</title>
 
 
 
@@ -110,8 +110,8 @@
             
                 
                     <span class="post-tag">
-                        <a href="/tags/%E8%B8%A9%E5%9D%91%E7%BA%AA%E5%AE%9E/">
-                            踩坑纪实
+                        <a href="/tags/%E7%8C%9C%E8%AF%AD%E8%A8%80/">
+                            猜语言
                         </a>
                     </span>    
                            
@@ -120,12 +120,12 @@
         <div class="post-title">
             
             
-                Hexo配置致谢与补充
+                猜语言(0) 这是什么？
             
             
         </div>
         <span class="post-date">
-            Aug 31, 2024
+            Jul 30, 2024
         </span>
     </div>
     <div class="post-img">
@@ -135,18 +135,11 @@
     </div>
 </div>
     <div class="post-content">
-    <h1 id="Hexo配置"><a href="#Hexo配置" class="headerlink" title="Hexo配置"></a>Hexo配置</h1><p>感谢来自<a target="_blank" rel="noopener" href="https://ywang22thu.github.io/2024/05/07/Hexo%E5%88%9D%E6%8E%A2/">ywang22thu</a>的hexo环境搭建教程</p>
-<p>除此之外，请注意为博客建立的GitHub仓库名<code>&lt;username&gt;.github.io</code>中的<code>&lt;username&gt;</code>应与自己的GitHub账户名一致且<strong>全部小写</strong></p>
-<h1 id="GitHub-SSH若干问题"><a href="#GitHub-SSH若干问题" class="headerlink" title="GitHub SSH若干问题"></a>GitHub SSH若干问题</h1><p>本人曾遇到过无法使用任何GitHub SSH功能的情况，不管是<code>clone</code> <code>push</code> <code>pull</code>还是什么都不行，也跟目标仓库无关</p>
-<p>后来发现出现了以下两个问题：</p>
-<h2 id="SSH服务被关闭"><a href="#SSH服务被关闭" class="headerlink" title="SSH服务被关闭"></a>SSH服务被关闭</h2><p>SSH服务可能意外被关闭，可以通过以下命令查询SSH服务状态：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service ssh status</span><br></pre></td></tr></table></figure>
-<p>并通过</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service ssh start/stop/restart</span><br></pre></td></tr></table></figure>
-<p>来更新服务状态</p>
-<h2 id="DNS问题"><a href="#DNS问题" class="headerlink" title="DNS问题"></a>DNS问题</h2><p>我还遇到过DNS服务器因为未知的原因把<code>github.com</code>解析为不正确的IP的问题，这可能由于DNS服务器有一些不正确的缓存</p>
-<p>在Ubuntu中，可以通过<code>/etc/resolv.conf</code>文件来配置DNS服务器地址，可以尝试将其改为Google的公开DNS服务器<code>8.8.8.8</code></p>
-<p>然而这个修改是暂时的，每次重启系统会重置，比较麻烦</p>
+    <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p><strong>猜语言</strong>是来自<a target="_blank" rel="noopener" href="https://baltoslav.eu/adhadaj/index.php">这个网页</a>的一个语言游戏，玩家需要通过给出的一门语言的<strong>若干个单词及其释义</strong>猜出这是什么语言。</p>
+<p>所以这系列博客是一个如何根据<strong>文本</strong>猜出<strong>语言</strong>的教程。</p>
+<h1 id="自我澄清"><a href="#自我澄清" class="headerlink" title="自我澄清"></a>自我澄清</h1><p>对语言学有了解的朋友也许知道，语言的本质是语音而不是文字，所以根据文字来猜语言不是什么非常科学的事情，但是这很好玩<del>并且非常适合用来装逼</del>。</p>
+<p><strong>语言</strong>和<strong>文字</strong>是截然不同的两件事，很多语言都可以用多种不同的文字来书写。比如汉语可以使用<strong>汉字</strong>、<strong>拉丁字母</strong>（汉语拼音）甚至<strong>注音字母</strong>来书写，而世界上很多语言也曾经更改过其官方认可的文字系统。</p>
+<p>仅仅根据<strong>书写系统</strong>（比如<strong>拉丁字母ABCD</strong>、<strong>西里尔字母АБВГ</strong>、<strong>阿拉伯字母اﺏﺝﺩ</strong>等）来猜语言是不可能的，至少看到一门用拉丁字母书写的、不是英语的语言，大部分人都很难分清这是什么鸟语。所以对于采用上面这些很常见的书写系统的语言来说，仅靠“文字长什么样”是不管用的，很多时候也会需要对这些语言音系、词源、亲缘关系等的了解。</p>
 
 </div> 
 
@@ -160,16 +153,11 @@
            
                 <div class="icon arrow-left"></div>
                 <div class="post-link">
-                    <a href="/2024/09/01/%E7%A9%BA%E9%97%B4%E5%AD%A6-%E5%BC%95%E8%AE%BA/">Prev</a>
+                    <a href="/2024/07/30/%E7%8C%9C%E8%AF%AD%E8%A8%80-1/">Prev</a>
                 </div>
             
         </div>
         <div class="next-item">
-            
-                <div class="icon arrow-right"></div>
-                <div class="post-link">
-                  <a href="/2024/07/30/%E7%8C%9C%E8%AF%AD%E8%A8%80-1/">Next</a>  
-                </div>  
             
         </div>
     </nav>
