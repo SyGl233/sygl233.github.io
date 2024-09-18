@@ -14,7 +14,7 @@
 
 
 
-<title>Hexo配置致谢与补充 | Hexo</title>
+<title>编译原理(1) 绪论 | Hexo</title>
 
 
 
@@ -108,24 +108,16 @@
     <div class="post-info">
         <div class="tag-list">
             
-                
-                    <span class="post-tag">
-                        <a href="/tags/%E8%B8%A9%E5%9D%91%E7%BA%AA%E5%AE%9E/">
-                            踩坑纪实
-                        </a>
-                    </span>    
-                           
-            
         </div>
         <div class="post-title">
             
             
-                Hexo配置致谢与补充
+                编译原理(1) 绪论
             
             
         </div>
         <span class="post-date">
-            Aug 31, 2024
+            Sep 18, 2024
         </span>
     </div>
     <div class="post-img">
@@ -135,18 +127,49 @@
     </div>
 </div>
     <div class="post-content">
-    <h1 id="Hexo配置"><a href="#Hexo配置" class="headerlink" title="Hexo配置"></a>Hexo配置</h1><p>感谢来自<a target="_blank" rel="noopener" href="https://ywang22thu.github.io/2024/05/07/Hexo%E5%88%9D%E6%8E%A2/">ywang22thu</a>的hexo环境搭建教程</p>
-<p>除此之外，请注意为博客建立的GitHub仓库名<code>&lt;username&gt;.github.io</code>中的<code>&lt;username&gt;</code>应与自己的GitHub账户名一致且<strong>全部小写</strong></p>
-<h1 id="GitHub-SSH若干问题"><a href="#GitHub-SSH若干问题" class="headerlink" title="GitHub SSH若干问题"></a>GitHub SSH若干问题</h1><p>本人曾遇到过无法使用任何GitHub SSH功能的情况，不管是<code>clone</code> <code>push</code> <code>pull</code>还是什么都不行，也跟目标仓库无关</p>
-<p>后来发现出现了以下两个问题：</p>
-<h2 id="SSH服务被关闭"><a href="#SSH服务被关闭" class="headerlink" title="SSH服务被关闭"></a>SSH服务被关闭</h2><p>SSH服务可能意外被关闭，可以通过以下命令查询SSH服务状态：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service ssh status</span><br></pre></td></tr></table></figure>
-<p>并通过</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service ssh start/stop/restart</span><br></pre></td></tr></table></figure>
-<p>来更新服务状态</p>
-<h2 id="DNS问题"><a href="#DNS问题" class="headerlink" title="DNS问题"></a>DNS问题</h2><p>我还遇到过DNS服务器因为未知的原因把<code>github.com</code>解析为不正确的IP的问题，这可能由于DNS服务器有一些不正确的缓存</p>
-<p>在Ubuntu中，可以通过<code>/etc/resolv.conf</code>文件来配置DNS服务器地址，可以尝试将其改为Google的公开DNS服务器<code>8.8.8.8</code></p>
-<p>然而这个修改是暂时的，每次重启系统会重置，比较麻烦</p>
+    <h1 id="编译程序"><a href="#编译程序" class="headerlink" title="编译程序"></a>编译程序</h1><p>编译程序：源语言→目标语言</p>
+<p>编译的两个步骤：</p>
+<ol>
+<li>分析（从源语言到抽象语法分析）</li>
+<li>综合（从抽象语法分析到目标语言）</li>
+</ol>
+<p>编译程序的前端、中端、后端：</p>
+<ol>
+<li>前端：完成分析</li>
+<li>中端：完成一些中间代码工作</li>
+<li>后端：完成综合</li>
+</ol>
+<p>编译程序的逻辑结构：</p>
+<ol>
+<li>词法分析：确定每个词的类别</li>
+<li>语法分析：词→语法分析树</li>
+<li>语义分析：确定语法分析树无法判断出的语法错误</li>
+<li>符号表：用户自定义的符号名</li>
+<li>出错处理</li>
+<li>中间代码生成：得到用语法分析语言表示的内容，如抽象语法树AST、三地址码TAC等</li>
+<li>目标代码生成</li>
+</ol>
+<p>编译程序的<strong>遍</strong>：从头到尾扫描一遍某种代码</p>
+<p>一些程序：</p>
+<ul>
+<li>编译程序</li>
+<li>汇编程序</li>
+<li>装入和链接程序</li>
+<li>解释程序</li>
+<li>预处理程序</li>
+<li>调试程序</li>
+</ul>
+<h1 id="编译器的可视化理解：T型图"><a href="#编译器的可视化理解：T型图" class="headerlink" title="编译器的可视化理解：T型图"></a>编译器的可视化理解：T型图</h1><p><img src="/image/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-1/1726638383225.png" alt="1726638383225"></p>
+<ul>
+<li>S：源语言</li>
+<li>I：实现语言（编写编译程序的语言）</li>
+<li>T：目标语言</li>
+</ul>
+<p><strong>本地编译器</strong>：S-T-T</p>
+<p><strong>交叉编译器</strong>：S-I-T（I≠T）</p>
+<h2 id="T型图的T型叠加"><a href="#T型图的T型叠加" class="headerlink" title="T型图的T型叠加"></a>T型图的T型叠加</h2><p><img src="/image/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-1/1726638565560.png" alt="1726638565560"></p>
+<p>从左到右分别为：源程序、使用的编译器、目标程序</p>
+<p>二级叠加也得到允许：<br><img src="/image/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-1/1726638610228.png" alt="1726638610228"></p>
 
 </div> 
 
@@ -160,11 +183,16 @@
            
                 <div class="icon arrow-left"></div>
                 <div class="post-link">
-                    <a href="/2024/09/01/%E7%A9%BA%E9%97%B4%E5%AD%A6-%E5%BC%95%E8%AE%BA/">Prev</a>
+                    <a href="/2024/09/18/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-2-%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90/">Prev</a>
                 </div>
             
         </div>
         <div class="next-item">
+            
+                <div class="icon arrow-right"></div>
+                <div class="post-link">
+                  <a href="/2024/09/01/%E7%A9%BA%E9%97%B4%E5%AD%A6-%E5%BC%95%E8%AE%BA/">Next</a>  
+                </div>  
             
         </div>
     </nav>
