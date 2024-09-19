@@ -149,6 +149,9 @@
 <h2 id="参数传递的三种机制"><a href="#参数传递的三种机制" class="headerlink" title="参数传递的三种机制"></a>参数传递的三种机制</h2><p><strong>值调用</strong>：最常见的传递方式，即将一份拷贝传递</p>
 <p><strong>引用调用</strong>：顾名思义，Python或Java对复杂变量采取这种形式</p>
 <p><strong>名调用</strong>：现在已经很少见，将括号内的东西以宏替换的方式传入，会产生意想不到的结果</p>
+<h2 id="别名"><a href="#别名" class="headerlink" title="别名"></a>别名</h2><p><strong>别名</strong>顾名思义，例如在Python中考虑如下代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>]</span><br><span class="line">b = a</span><br></pre></td></tr></table></figure>
+<p>此时<code>b</code>就是<code>a</code>的一个别名，这对于一些试图将名字直接用值表示的优化操作可能产生限制</p>
 
 </div> 
 
