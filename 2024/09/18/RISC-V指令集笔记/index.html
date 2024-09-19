@@ -176,6 +176,13 @@
 <h1 id="杂项指令"><a href="#杂项指令" class="headerlink" title="杂项指令"></a>杂项指令</h1><p>看不懂，下一个 :(</p>
 <h1 id="伪指令"><a href="#伪指令" class="headerlink" title="伪指令"></a>伪指令</h1><p>RV32I使用了一些方便用户的伪指令，其本质使用其他指令实现，例如<code>ret</code>的真实实现是<code>jalr x0, x1, 0</code></p>
 <p>一定要善用<strong>伪指令</strong>和<strong>标号</strong>~</p>
+<h1 id="RV32I函数使用惯例"><a href="#RV32I函数使用惯例" class="headerlink" title="RV32I函数使用惯例"></a>RV32I函数使用惯例</h1><h2 id="寄存器使用"><a href="#寄存器使用" class="headerlink" title="寄存器使用"></a>寄存器使用</h2><p><code>a</code>开头为函数参数寄存器，调用者保存<br><code>s</code>开头为被调用者保存寄存器<br><code>t</code>开头为临时寄存器，调用者保存</p>
+<h2 id="函数格式"><a href="#函数格式" class="headerlink" title="函数格式"></a>函数格式</h2><p>函数入口：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">entry_label:</span><br><span class="line">    addi sp, sp, -framesize  # 拉栈帧</span><br><span class="line">    sw ra, framesize-4(sp)  # 返回地址存入栈帧</span><br></pre></td></tr></table></figure>
+
+<p>函数结尾：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">lw ra, framesize-4(sp)  # 从栈帧读取返回地址</span><br><span class="line">addi sp, sp, framesize  # 收栈帧</span><br><span class="line">ret</span><br></pre></td></tr></table></figure>
+
 
 </div> 
 
