@@ -12,7 +12,7 @@
 
 
 
-<title>RISC-V指令集笔记 | SyGl</title>
+<title>RISC-V指令集笔记 | SyGl_</title>
 
 
 
@@ -161,6 +161,20 @@
 <li>无符号读指令：<code>lhu</code> <code>lbu</code></li>
 <li>写指令：<code>sw</code> <code>sh</code> <code>sb</code></li>
 </ul>
+<h1 id="比较指令"><a href="#比较指令" class="headerlink" title="比较指令"></a>比较指令</h1><p><code>slt a0, a1, a2</code><br>意为若<code>a1 &lt; a2</code>则将<code>a0</code>置<code>1</code>，否则为<code>0</code>，<code>sltu</code>为对应的无符号数比较版本；<code>slti</code> <code>sltiu</code>为对应的立即数版本</p>
+<p>例如以下代码段：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">addi a0, a0, 0x123</span><br><span class="line">addi a1, a1, -0x234</span><br><span class="line">slt a2, a0, a1</span><br><span class="line">sltu a3, a0, a1</span><br></pre></td></tr></table></figure>
+<p>运行后<code>a2</code>为<code>0</code>，<code>a3</code>为<code>1</code></p>
+<h1 id="长立即数操作指令"><a href="#长立即数操作指令" class="headerlink" title="长立即数操作指令"></a>长立即数操作指令</h1><p><code>lui a4 0x4daf1</code><br>将<code>a4</code>的高<code>20</code>位设为<code>0x4daf1</code></p>
+<p><code>auipc a5 0x6789a</code><br>将<code>a5</code>设为<code>PC + 0x6789a000</code></p>
+<h1 id="条件分支指令"><a href="#条件分支指令" class="headerlink" title="条件分支指令"></a>条件分支指令</h1><p><code>beq a0, a1, equal</code><br>若<code>a0 == a1</code>则跳转至<code>equal</code>标号处</p>
+<p>还有<code>bne</code> <code>bge</code> <code>bgeu</code> <code>blt</code> <code>bltu</code></p>
+<h1 id="无条件跳转"><a href="#无条件跳转" class="headerlink" title="无条件跳转"></a>无条件跳转</h1><p><code>jal s9, target</code><br>跳转至<code>target</code>，将当前的<code>PC + 4</code>（即下一条指令地址）存入<code>s9</code></p>
+<p>使用<code>jal x0, target</code>则只会进行跳转，因为<code>x0</code>不可改变</p>
+<p><code>jalr x0, x1, 0</code>可以实现<code>ret</code>，即跳转到<code>x1 + 0</code>（<code>x1</code>用来存储返回地址）</p>
+<p>类似地，<code>jal x1, func</code>可以实现过程调用（注意：这里<em>没有</em>维护栈帧）</p>
+<h1 id="杂项指令"><a href="#杂项指令" class="headerlink" title="杂项指令"></a>杂项指令</h1><p>看不懂，下一个 :(</p>
+<h1 id="伪指令"><a href="#伪指令" class="headerlink" title="伪指令"></a>伪指令</h1><p>RV32I使用了一些方便用户的伪指令，其本质使用其他指令实现，例如<code>ret</code>的真实实现是<code>jalr x0, x1, 0</code></p>
 
 </div> 
 
