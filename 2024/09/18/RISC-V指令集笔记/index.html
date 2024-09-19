@@ -14,7 +14,7 @@
 
 
 
-<title>编译原理(2) 词法分析 | Hexo</title>
+<title>RISC-V指令集笔记 | Hexo</title>
 
 
 
@@ -116,8 +116,8 @@
                     </span>    
                 
                     <span class="post-tag">
-                        <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">
-                            编译原理
+                        <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">
+                            计算机组成原理
                         </a>
                     </span>    
                            
@@ -126,7 +126,7 @@
         <div class="post-title">
             
             
-                编译原理(2) 词法分析
+                RISC-V指令集笔记
             
             
         </div>
@@ -141,28 +141,28 @@
     </div>
 </div>
     <div class="post-content">
-    <h1 id="词法分析"><a href="#词法分析" class="headerlink" title="词法分析"></a>词法分析</h1><p>词法分析：按序扫描源程序，识别出<strong>单词</strong>，得到<strong>单词记录</strong>（<strong>单词记号(token)<strong>、</strong>属性值</strong>）</p>
-<p>案例：</p>
-<p><em>源代码</em></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
-
-<p><em>得到的词法分析</em></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">类型标识   int</span><br><span class="line">标识符     a</span><br><span class="line">赋值运算符(=)</span><br><span class="line">整数常量   10</span><br><span class="line">分号(;)</span><br></pre></td></tr></table></figure>
-
-<h1 id="单词描述工具"><a href="#单词描述工具" class="headerlink" title="单词描述工具"></a>单词描述工具</h1><h2 id="扩展巴克斯范式（EBNF）"><a href="#扩展巴克斯范式（EBNF）" class="headerlink" title="扩展巴克斯范式（EBNF）"></a>扩展巴克斯范式（EBNF）</h2><p><img src="/image/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-2-%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90/1726639227633.png" alt="1726639227633"></p>
-<h2 id="状态转换图"><a href="#状态转换图" class="headerlink" title="状态转换图"></a>状态转换图</h2><p><img src="/image/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-2-%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90/1726639252333.png" alt="1726639252333"></p>
-<h2 id="需要注意的技术细节"><a href="#需要注意的技术细节" class="headerlink" title="需要注意的技术细节"></a>需要注意的技术细节</h2><ul>
-<li>如何识别保留字</li>
-<li><em>字符退还</em>：在遇到&lt;后，为了判断是否是&lt;&#x3D;运算符，需要额外读取一个字符，此时若不是&#x3D;则需要退还</li>
+    <h1 id="整数运算指令"><a href="#整数运算指令" class="headerlink" title="整数运算指令"></a>整数运算指令</h1><p>格式为：[指令名] [目标], [源], [操作数]</p>
+<p>例如：</p>
+<p><code>add t0, t1, t2</code><br>意为将<code>t1 + t2</code>存放入<code>t0</code></p>
+<p><code>xori t0, t1, 0x7EF</code><br>意为将<code>t1 ^ 0x7EF</code>存放入<code>t0</code></p>
+<p><strong>注意：</strong> RV32I指令长度为32bit，带立即数的运算指令（I型指令）的立即数只有12bit，因此带符号数只能取<code>-0x800</code>到<code>0x7FF</code>之间的数</p>
+<p>具体地，运算指令有以下种类：</p>
+<ul>
+<li>算术运算：<code>add</code> <code>sub</code></li>
+<li>逻辑运算：<code>and</code> <code>or</code> <code>xor</code></li>
+<li>移位运算：<code>sll</code> <code>srl</code> <code>sra</code></li>
 </ul>
-<h1 id="词法分析程序的自动构造"><a href="#词法分析程序的自动构造" class="headerlink" title="词法分析程序的自动构造"></a>词法分析程序的自动构造</h1><ol>
-<li>定义正规表达式，如$(0+1)^*$</li>
-<li>RE → ε-NFA</li>
-<li>把每个ε-NFA整合成一个大的ε-NFA</li>
-<li>ε-NFA → DFA</li>
-<li>DFA最小化</li>
-</ol>
-<p><strong>注：</strong> 对于部分情况，直接设计DFA可能会比设计RE更容易，此时可以直接设计DFA</p>
+<h1 id="访存指令"><a href="#访存指令" class="headerlink" title="访存指令"></a>访存指令</h1><p>格式为：</p>
+<p>[指令名(读)] [目的寄存器] [偏移量]([地址寄存器])</p>
+<p>[指令名(写)] [源寄存器] [偏移量]([地址寄存器])</p>
+<p>例如：</p>
+<p><code>lb t0, (0x8)t1</code><br>意为将<code>t1</code>寄存器中的地址加<code>0x8</code>后得到的地址处的<code>1</code>个字节存入<code>t0</code></p>
+<p>具体地，有：</p>
+<ul>
+<li>读指令：<code>lw</code> <code>lh</code> <code>lb</code></li>
+<li>无符号读指令：<code>lhu</code> <code>lbu</code></li>
+<li>写指令：<code>sw</code> <code>sh</code> <code>sb</code></li>
+</ul>
 
 </div> 
 
@@ -176,7 +176,7 @@
            
                 <div class="icon arrow-left"></div>
                 <div class="post-link">
-                    <a href="/2024/09/18/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-3-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90/">Prev</a>
+                    <a href="/2024/09/19/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-4/">Prev</a>
                 </div>
             
         </div>
@@ -184,7 +184,7 @@
             
                 <div class="icon arrow-right"></div>
                 <div class="post-link">
-                  <a href="/2024/09/18/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-1/">Next</a>  
+                  <a href="/2024/09/18/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-3-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90/">Next</a>  
                 </div>  
             
         </div>
