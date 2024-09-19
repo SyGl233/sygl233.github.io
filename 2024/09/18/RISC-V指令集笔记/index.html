@@ -175,6 +175,7 @@
 <p>类似地，<code>jal x1, func</code>可以实现过程调用（注意：这里<em>没有</em>维护栈帧）</p>
 <h1 id="杂项指令"><a href="#杂项指令" class="headerlink" title="杂项指令"></a>杂项指令</h1><p>看不懂，下一个 :(</p>
 <h1 id="伪指令"><a href="#伪指令" class="headerlink" title="伪指令"></a>伪指令</h1><p>RV32I使用了一些方便用户的伪指令，其本质使用其他指令实现，例如<code>ret</code>的真实实现是<code>jalr x0, x1, 0</code></p>
+<p>一定要善用<strong>伪指令</strong>和<strong>标号</strong>~</p>
 
 </div> 
 
