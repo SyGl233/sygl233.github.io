@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+
+
+
+
+<title>计算机组成原理(2) 算术逻辑单元 | SyGl_</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto+Mono&display=swap');
+</style>
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/menu.js"></script>
+    
+
+
+
+
+
+
+
+
+
+
+  <meta name="generator" content="Hexo 7.3.0"></head>
+  <body>
+    <div class="mask-border">
+    </div>
+
+    <div class="wrapper">
+
+      <div class="header">
+  <div class="flex-container">
+    <div class="header-inner">
+      <div class="site-brand-container">
+        <a href="/">
+          
+            SyGl
+          
+        </a>
+      </div>
+      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
+        Menu
+      </div>
+      <nav class="site-nav">
+        <ul class="menu-list">
+          
+            
+              <li class="menu-item">
+                <a href="/">Home</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/archives/">Archive</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/gallery/">Gallery</a>
+              </li> 
+                   
+          
+          
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main">
+        <div class="flex-container">
+          <article id="post">
+
+  
+    <div class="post-head">
+    <div class="post-info">
+        <div class="tag-list">
+            
+                
+                    <span class="post-tag">
+                        <a href="/tags/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">
+                            课程笔记
+                        </a>
+                    </span>    
+                
+                    <span class="post-tag">
+                        <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">
+                            计算机组成原理
+                        </a>
+                    </span>    
+                           
+            
+        </div>
+        <div class="post-title">
+            
+            
+                计算机组成原理(2) 算术逻辑单元
+            
+            
+        </div>
+        <span class="post-date">
+            Oct 6, 2024
+        </span>
+    </div>
+    <div class="post-img">
+        
+            <div class="h-line-primary"></div>
+              
+    </div>
+</div>
+    <div class="post-content">
+    <h1 id="ALU的实现"><a href="#ALU的实现" class="headerlink" title="ALU的实现"></a>ALU的实现</h1><p>不考虑乘除法，ALU整体而言是一个加法器pro max</p>
+<p>主要实现思路为根据运算种类来更改超前进位器的计算逻辑，来控制实现的运算</p>
+<p>同时需要注意生成一些标志位，如结果为零、结果为负、结果溢出等等</p>
+<h1 id="原码乘法及其存储优化"><a href="#原码乘法及其存储优化" class="headerlink" title="原码乘法及其存储优化"></a>原码乘法及其存储优化</h1><p>基础算法</p>
+<p><img src="/image/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-2/1728185110200.png" alt="1728185110200"></p>
+<p><img src="/image/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-2/1728185184152.png" alt="1728185184152"></p>
+<p>改进1：被乘数没有必要使用64位寄存器，把被乘数的左移改为部分积的右移（计算值永远写入部分积高位）</p>
+<p><img src="/image/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-2/1728185283335.png" alt="1728185283335"></p>
+<p>改进2：考虑到部分积位数增长的同时，乘数的位数在减缩；部分积从高位向低位扩展，而乘数在右移；于是可以使用部分积寄存器空置的低位存储乘数</p>
+<p><img src="/image/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-2/1728185393400.png" alt="1728185393400"></p>
+<h1 id="补码乘法：布斯算法"><a href="#补码乘法：布斯算法" class="headerlink" title="补码乘法：布斯算法"></a>补码乘法：布斯算法</h1><p>$$ [x\times y]<em>补 $$<br>$$ &#x3D; [x]<em>补 \times y $$<br>$$ &#x3D; [x]<em>补 \times (-2^{n-1}y</em>{n-1} + \sum\limits</em>{i&#x3D;0}^{n-2}y_i2^i) $$<br>$$ &#x3D; [x]<em>补\times [2^{n-1}(y</em>{n-2}-y</em>{n-1})+2^{n-2}(y_{n-3}-y_{n-2})+…+2^0(y_{-1}-y_0)] $$<br>$$ &#x3D; [x]<em>补\times\sum\limits</em>{i&#x3D;0}^{n-1}2^i(y_{i-1}-y_i) $$<br>其中$y_{-1}&#x3D;0$</p>
+<p>故：首先对乘数右侧补一位$0$，之后根据乘数的最低两位取值，若相同则忽略，若$01$则加被乘数，若$10$则减被乘数</p>
+<p>在计算的过程中，右移为<strong>算术右移</strong></p>
+<p>在一个部分积寄存器中的实现如下（低位为乘数）</p>
+<p><img src="/image/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-2/1728186124918.png" alt="1728186124918"></p>
+<h1 id="加减交替除法"><a href="#加减交替除法" class="headerlink" title="加减交替除法"></a>加减交替除法</h1><p>TODO 还没看:(</p>
+
+</div> 
+
+<script>
+    window.onload = detectors();
+</script>
+    <div class="post-footer">
+    <div class="h-line-primary"></div>
+    <nav class="post-nav">
+        <div class="prev-item">
+           
+        </div>
+        <div class="next-item">
+            
+                <div class="icon arrow-right"></div>
+                <div class="post-link">
+                  <a href="/2024/10/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-1/">Next</a>  
+                </div>  
+            
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="post-comment">
+
+     
+
+     
+    
+    
+
+</div>
+     
+  
+</article>
+        </div>
+      </div>
+      
+      <div class="footer">
+    <div class="flex-container">
+        <div class="footer-text">
+            
+            
+            
+                Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> & <a target="_blank" rel="noopener" href="https://github.com/zoeingwingkei/frame/">Frame</a>
+                
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    
+    
+
+  </body>
+</html>
