@@ -12,7 +12,7 @@
 
 
 
-<title>编译原理(4) 龙书拾遗 | SyGl_</title>
+<title>密码学(2) 古典密码 | SyGl_</title>
 
 
 
@@ -130,8 +130,8 @@
                     </span>    
                 
                     <span class="post-tag">
-                        <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">
-                            编译原理
+                        <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+                            网络安全
                         </a>
                     </span>    
                            
@@ -140,12 +140,12 @@
         <div class="post-title">
             
             
-                编译原理(4) 龙书拾遗
+                密码学(2) 古典密码
             
             
         </div>
         <span class="post-date">
-            Sep 19, 2024
+            Sep 25, 2024
         </span>
     </div>
     <div class="post-img">
@@ -155,24 +155,12 @@
     </div>
 </div>
     <div class="post-content">
-    <p>简单过了一下龙书第一章，其中提到了一些一定程度上值得注意的东西，整体与编译原理课程关系不大，在这里简单记录</p>
-<h2 id="静态与动态的区别"><a href="#静态与动态的区别" class="headerlink" title="静态与动态的区别"></a>静态与动态的区别</h2><p><strong>静态</strong>：编译时确定</p>
-<p><strong>动态</strong>：运行时确定</p>
-<h2 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h2><p><strong>静态作用域</strong>：常规的对作用域的理解</p>
-<p><strong>动态作用域</strong>：很少见，比如宏定义中出现的符号的作用域</p>
-<h2 id="参数传递的三种机制"><a href="#参数传递的三种机制" class="headerlink" title="参数传递的三种机制"></a>参数传递的三种机制</h2><p><strong>值调用</strong>：最常见的传递方式，即将一份拷贝传递</p>
-<p><strong>引用调用</strong>：顾名思义，Python或Java对复杂变量采取这种形式</p>
-<p><strong>名调用</strong>：现在已经很少见，将括号内的东西以宏替换的方式传入，会产生意想不到的结果</p>
-<h2 id="别名"><a href="#别名" class="headerlink" title="别名"></a>别名</h2><p><strong>别名</strong>顾名思义，例如在Python中考虑如下代码：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>]</span><br><span class="line">b = a</span><br></pre></td></tr></table></figure>
-<p>此时<code>b</code>就是<code>a</code>的一个别名，这对于一些试图将名字直接用值表示的优化操作可能产生限制</p>
-<h2 id="词法分析基本概念"><a href="#词法分析基本概念" class="headerlink" title="词法分析基本概念"></a>词法分析基本概念</h2><ul>
-<li><strong>词法单元</strong>：一个词法单元名和一个属性值</li>
-<li><strong>模式</strong>：用来匹配词法单元的模式</li>
-<li><strong>词素</strong>：源程序中的一个字符序列</li>
-</ul>
-<p>例如<code>int a = 0;</code>中，<code>a</code>是一个词素，其对应的词法单元为：<code>&lt;Identifier, symbol(a)&gt;</code>，其中的属性是符号表中的一项</p>
-
+    <h2 id="单表代换密码"><a href="#单表代换密码" class="headerlink" title="单表代换密码"></a>单表代换密码</h2><h3 id="Caesar密码"><a href="#Caesar密码" class="headerlink" title="Caesar密码"></a>Caesar密码</h3><p>每个字母用字母表后面第k个字母替换</p>
+<p>密钥：只有25种</p>
+<h3 id="密钥词密码"><a href="#密钥词密码" class="headerlink" title="密钥词密码"></a>密钥词密码</h3><p>把一个密钥词放在前面，其余字母按顺序</p>
+<h2 id="多表代换密码"><a href="#多表代换密码" class="headerlink" title="多表代换密码"></a>多表代换密码</h2><h3 id="Playfair密码"><a href="#Playfair密码" class="headerlink" title="Playfair密码"></a>Playfair密码</h3><p>双字母作为单元，二进二出</p>
+<p>使用一个5x5加密矩阵</p>
+<h3 id="Hill密码"><a href="#Hill密码" class="headerlink" title="Hill密码"></a>Hill密码</h3><h3 id="Vigenere密码"><a href="#Vigenere密码" class="headerlink" title="Vigenere密码"></a>Vigenere密码</h3>
 </div> 
 
 <script>
@@ -185,7 +173,7 @@
            
                 <div class="icon arrow-left"></div>
                 <div class="post-link">
-                    <a href="/2024/09/19/%E7%8C%9C%E8%AF%AD%E8%A8%80-2/">Prev</a>
+                    <a href="/2024/10/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-1/">Prev</a>
                 </div>
             
         </div>
@@ -193,7 +181,7 @@
             
                 <div class="icon arrow-right"></div>
                 <div class="post-link">
-                  <a href="/2024/09/18/RISC-V%E6%8C%87%E4%BB%A4%E9%9B%86%E7%AC%94%E8%AE%B0/">Next</a>  
+                  <a href="/2024/09/25/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-1/">Next</a>  
                 </div>  
             
         </div>
