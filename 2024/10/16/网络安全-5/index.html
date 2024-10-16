@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+
+
+
+
+<title>网络安全(5) 密钥分配 | SyGl_</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto+Mono&display=swap');
+</style>
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/menu.js"></script>
+    
+
+
+
+
+
+
+
+
+
+
+  <!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+  <body>
+    <div class="mask-border">
+    </div>
+
+    <div class="wrapper">
+
+      <div class="header">
+  <div class="flex-container">
+    <div class="header-inner">
+      <div class="site-brand-container">
+        <a href="/">
+          
+            SyGl
+          
+        </a>
+      </div>
+      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
+        Menu
+      </div>
+      <nav class="site-nav">
+        <ul class="menu-list">
+          
+            
+              <li class="menu-item">
+                <a href="/">Home</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/archives/">Archive</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/gallery/">Gallery</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/note/">Note</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/personal/">Personal</a>
+              </li> 
+                   
+          
+          
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main">
+        <div class="flex-container">
+          <article id="post">
+
+  
+    <div class="post-head">
+    <div class="post-info">
+        <div class="tag-list">
+            
+                
+                    <span class="post-tag">
+                        <a href="/tags/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">
+                            课程笔记
+                        </a>
+                    </span>    
+                
+                    <span class="post-tag">
+                        <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+                            网络安全
+                        </a>
+                    </span>    
+                           
+            
+        </div>
+        <div class="post-title">
+            
+            
+                网络安全(5) 密钥分配
+            
+            
+        </div>
+        <span class="post-date">
+            Oct 16, 2024
+        </span>
+    </div>
+    <div class="post-img">
+        
+            <div class="h-line-primary"></div>
+              
+    </div>
+</div>
+    <div class="post-content">
+    <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>两种加密逻辑：<strong>链路加密</strong>和<strong>端到端加密</strong></p>
+<h1 id="传统的对称密码密钥分配"><a href="#传统的对称密码密钥分配" class="headerlink" title="传统的对称密码密钥分配"></a>传统的对称密码密钥分配</h1><p>人工传送密钥只能用于链路加密，端到端加密必须使用<strong>密钥分配中心(KDC)</strong></p>
+<h2 id="KDC模式"><a href="#KDC模式" class="headerlink" title="KDC模式"></a>KDC模式</h2><p>设A和B要建立连接，A有一个只有自己和KDC知道的主密钥Ka，B有类似的Kb</p>
+<p><img src="/image/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-5/1729082322301.png" alt="1729082322301"></p>
+<p>使用层次性KDC会更好</p>
+<h1 id="公钥分配"><a href="#公钥分配" class="headerlink" title="公钥分配"></a>公钥分配</h1><h2 id="公钥发布"><a href="#公钥发布" class="headerlink" title="公钥发布"></a>公钥发布</h2><p>广播给所有人</p>
+<p>缺点：可以伪装成其他人进行公钥发布</p>
+<h2 id="公开可访问目录"><a href="#公开可访问目录" class="headerlink" title="公开可访问目录"></a>公开可访问目录</h2><p>由可信的管理员进行公钥目录管理，但管理员存在安全漏洞</p>
+<h2 id="公钥授权"><a href="#公钥授权" class="headerlink" title="公钥授权"></a>公钥授权</h2><p><img src="/image/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-5/1729082776326.png" alt="1729082776326"></p>
+<p>缺点：管理员成为系统的瓶颈</p>
+<h2 id="公钥证书"><a href="#公钥证书" class="headerlink" title="公钥证书"></a>公钥证书</h2><p><img src="/image/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-5/1729082876550.png" alt="1729082876550"></p>
+<h1 id="基于公钥密码的传统密钥分配"><a href="#基于公钥密码的传统密钥分配" class="headerlink" title="基于公钥密码的传统密钥分配"></a>基于公钥密码的传统密钥分配</h1><h2 id="naive"><a href="#naive" class="headerlink" title="naive"></a>naive</h2><p>直接用公钥系统对密钥加密，但会被伪造</p>
+<h2 id="安全方法"><a href="#安全方法" class="headerlink" title="安全方法"></a>安全方法</h2><p><img src="/image/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-5/1729083061948.png" alt="1729083061948"></p>
+
+</div> 
+
+<script>
+    window.onload = detectors();
+</script>
+    <div class="post-footer">
+    <div class="h-line-primary"></div>
+    <nav class="post-nav">
+        <div class="prev-item">
+           
+        </div>
+        <div class="next-item">
+            
+                <div class="icon arrow-right"></div>
+                <div class="post-link">
+                  <a href="/2024/10/16/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-4/">Next</a>  
+                </div>  
+            
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="post-comment">
+
+     
+
+     
+    
+    
+
+</div>
+     
+  
+</article>
+        </div>
+      </div>
+      
+      <div class="footer">
+    <div class="flex-container">
+        <div class="footer-text">
+            
+            
+            
+                Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> & <a target="_blank" rel="noopener" href="https://github.com/zoeingwingkei/frame/">Frame</a>
+                
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    
+    
+
+  </body>
+</html>
