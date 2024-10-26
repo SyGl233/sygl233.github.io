@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+
+
+
+
+<title>编译原理(6) 自底向上语法分析 | SyGl_</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto+Mono&display=swap');
+</style>
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/menu.js"></script>
+    
+
+
+
+
+
+
+
+
+
+
+  <!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+  <body>
+    <div class="mask-border">
+    </div>
+
+    <div class="wrapper">
+
+      <div class="header">
+  <div class="flex-container">
+    <div class="header-inner">
+      <div class="site-brand-container">
+        <a href="/">
+          
+            SyGl
+          
+        </a>
+      </div>
+      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
+        Menu
+      </div>
+      <nav class="site-nav">
+        <ul class="menu-list">
+          
+            
+              <li class="menu-item">
+                <a href="/">Home</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/archives/">Archive</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/gallery/">Gallery</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/note/">Note</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/personal/">Personal</a>
+              </li> 
+                   
+          
+          
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main">
+        <div class="flex-container">
+          <article id="post">
+
+  
+    <div class="post-head">
+    <div class="post-info">
+        <div class="tag-list">
+            
+                
+                    <span class="post-tag">
+                        <a href="/tags/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">
+                            课程笔记
+                        </a>
+                    </span>    
+                
+                    <span class="post-tag">
+                        <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">
+                            编译原理
+                        </a>
+                    </span>    
+                           
+            
+        </div>
+        <div class="post-title">
+            
+            
+                编译原理(6) 自底向上语法分析
+            
+            
+        </div>
+        <span class="post-date">
+            Oct 26, 2024
+        </span>
+    </div>
+    <div class="post-img">
+        
+            <div class="h-line-primary"></div>
+              
+    </div>
+</div>
+    <div class="post-content">
+    <blockquote>
+<p>九九归一。</p>
+</blockquote>
+<p>自底向上的语法分析过程被称为<strong>归约</strong></p>
+<p>与自顶向下语法分析即<strong>推导</strong>类似，归约的关键在于如何降低“归约哪个子串”和“选择哪个产生式”带来的<strong>非确定性复杂度</strong></p>
+<h1 id="短语"><a href="#短语" class="headerlink" title="短语"></a>短语</h1><p>降低归约复杂度的第一步：选择可归约串，即短语：</p>
+<p>若<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo><mover><mo><mo>⇒</mo></mo><mo lspace="0em" rspace="0em">∗</mo></mover></mo><mi>α</mi><mi>A</mi><mi>δ</mi></mrow><annotation encoding="application/x-tex">S\stackrel{*}{\Rightarrow}\alpha A\delta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9926em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel"><span class="mop op-limits"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9926em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span><span class="mop">⇒</span></span></span><span style="top:-3.5669em;margin-left:0em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">∗</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mord mathnormal">A</span><span class="mord mathnormal" style="margin-right:0.03785em;">δ</span></span></span></span>且<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo><mover><mo><mo>⇒</mo></mo><mo lspace="0em" rspace="0em">+</mo></mover></mo><mi>β</mi></mrow><annotation encoding="application/x-tex">A\stackrel{+}{\Rightarrow}\beta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0752em;"></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel"><span class="mop op-limits"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.0752em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span><span class="mop">⇒</span></span></span><span style="top:-3.5669em;margin-left:0em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">+</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05278em;">β</span></span></span></span>，则称<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>β</mi></mrow><annotation encoding="application/x-tex">\beta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05278em;">β</span></span></span></span>是句型<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mi>A</mi><mi>δ</mi></mrow><annotation encoding="application/x-tex">\alpha A\delta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mord mathnormal">A</span><span class="mord mathnormal" style="margin-right:0.03785em;">δ</span></span></span></span>相对于非终结符<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi></mrow><annotation encoding="application/x-tex">A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span></span></span></span>的<strong>短语</strong></p>
+<p>简单来说，短语就是一个句型中由一个非终结符推导出的子串</p>
+<p>特别地，若<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>⇒</mo><mi>β</mi></mrow><annotation encoding="application/x-tex">A\Rightarrow\beta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">⇒</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05278em;">β</span></span></span></span>，即<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>β</mi></mrow><annotation encoding="application/x-tex">\beta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05278em;">β</span></span></span></span>为非终结符一步推导得到，则称之为<strong>直接短语</strong></p>
+<h2 id="句柄"><a href="#句柄" class="headerlink" title="句柄"></a>句柄</h2><p><strong>句柄</strong>是一类特殊的短语，其定义为：</p>
+<p>对右句型<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mi>A</mi><mi>w</mi></mrow><annotation encoding="application/x-tex">\alpha Aw</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mord mathnormal">A</span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span></span></span></span>，其中<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span></span></span></span>是终结符串，若<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>⇒</mo><mi>β</mi></mrow><annotation encoding="application/x-tex">A\Rightarrow\beta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">⇒</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05278em;">β</span></span></span></span>，则称<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>β</mi></mrow><annotation encoding="application/x-tex">\beta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05278em;">β</span></span></span></span>是<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mi>β</mi><mi>w</mi></mrow><annotation encoding="application/x-tex">\alpha\beta w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mord mathnormal" style="margin-right:0.02691em;">βw</span></span></span></span>相对<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi></mrow><annotation encoding="application/x-tex">A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span></span></span></span>的句柄</p>
+<p>事实上，句柄是最右推导过程中得到<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mi>β</mi><mi>w</mi></mrow><annotation encoding="application/x-tex">\alpha\beta w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mord mathnormal" style="margin-right:0.02691em;">βw</span></span></span></span>的最后一步推导的产生式右端</p>
+<p>句柄不一定唯一，因为对二义文法，最右推导可能不唯一</p>
+<h1 id="移进-归约-shift-reduce-分析技术"><a href="#移进-归约-shift-reduce-分析技术" class="headerlink" title="移进-归约(shift-reduce)分析技术"></a>移进-归约(shift-reduce)分析技术</h1><p>移进-归约分析器是一台具有一个<strong>下推栈</strong>的有限状态控制的<strong>分析引擎</strong>，分析引擎根据：</p>
+<ul>
+<li>当前状态</li>
+<li>下推栈</li>
+<li>剩余输入单词序列</li>
+</ul>
+<p>来确定以下动作之一：</p>
+<ul>
+<li>Reduce：归约栈顶短语</li>
+<li>Shift：从输入序列移进一个单词</li>
+<li>Error：发现语法错误，进行错误处理、恢复</li>
+<li>Accept：分析成功</li>
+</ul>
+<h1 id="LR分析"><a href="#LR分析" class="headerlink" title="LR分析"></a>LR分析</h1><p>LR的含义：从<strong>左</strong>向右扫描输入单词序列，产生最<strong>右</strong>推导</p>
+<h2 id="LR分析表"><a href="#LR分析表" class="headerlink" title="LR分析表"></a>LR分析表</h2><p>包含两张表：<code>ACTION</code>表和<code>GOTO</code>表，例如：</p>
+<p><img src="/image/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-6/1729939286999.png" alt="1729939286999"></p>
+<p>其中<code>ACTION</code>表的表项<code>ACTION[S,a]</code>表示当栈顶状态为<code>S</code>，当前输入符号为<code>a</code>时做什么，共有以下几种可能：</p>
+<ul>
+<li><code>sj</code>，表示向栈内压入状态<code>j</code>，再移进一个单词</li>
+<li><code>rj</code>，表示按照第<code>j</code>条产生式进行归约，然后从栈顶弹出等于此产生式右端串长度数目的状态后，根据弹出后的栈顶状态和产生式左端查询<code>GOTO</code>表，转到<code>GOTO</code>表指示的状态</li>
+<li><code>acc</code>，表示接受当前串</li>
+</ul>
+<h2 id="加入符号栈的LR分析"><a href="#加入符号栈的LR分析" class="headerlink" title="加入符号栈的LR分析"></a>加入符号栈的LR分析</h2><p>可以发现：上述过程中归约过程每个符号对应一个栈中状态，因此可以引入符号栈，栈内存储二元组(状态, 符号)，则可以通过归约过程栈结构产生最右推导过程</p>
+<h1 id="几种获得LR表的分析方法"><a href="#几种获得LR表的分析方法" class="headerlink" title="几种获得LR表的分析方法"></a>几种获得LR表的分析方法</h1><ul>
+<li>LR(0)</li>
+<li>SLR(1)</li>
+<li>LR(1)</li>
+<li>LALR(1)</li>
+</ul>
+<h2 id="LR-0-分析"><a href="#LR-0-分析" class="headerlink" title="LR(0)分析"></a>LR(0)分析</h2><h3 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h3><ul>
+<li><strong>增广文法</strong>：在原文法中加入<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>S</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo>→</mo><mi>S</mi></mrow><annotation encoding="application/x-tex">S&#x27;\rightarrow S</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7519em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7519em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span></span></span></span>，使得新的开始符号<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>S</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup></mrow><annotation encoding="application/x-tex">S&#x27;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7519em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7519em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span>不存在于任何产生式右部</li>
+<li><strong>活前缀</strong>：若<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo><mover><mo><mo>⇒</mo></mo><mo lspace="0em" rspace="0em">∗</mo></mover></mo><mi>α</mi><mi>β</mi><mi>w</mi></mrow><annotation encoding="application/x-tex">S\stackrel{*}{\Rightarrow} \alpha\beta w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9926em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel"><span class="mop op-limits"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9926em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span><span class="mop">⇒</span></span></span><span style="top:-3.5669em;margin-left:0em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">∗</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mord mathnormal" style="margin-right:0.02691em;">βw</span></span></span></span>且<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>β</mi></mrow><annotation encoding="application/x-tex">\beta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05278em;">β</span></span></span></span>是句柄，则<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mi>β</mi></mrow><annotation encoding="application/x-tex">\alpha\beta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mord mathnormal" style="margin-right:0.05278em;">β</span></span></span></span>的任何前缀<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>γ</mi></mrow><annotation encoding="application/x-tex">\gamma</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05556em;">γ</span></span></span></span>都是文法的活前缀<ul>
+<li>即：此前缀可以完整“存活”在LR分析过程中的符号栈里而不被归约</li>
+<li>右句型的活前缀不超过右句型的任何一个句柄</li>
+</ul>
+</li>
+</ul>
+<h3 id="LR-0-FSM"><a href="#LR-0-FSM" class="headerlink" title="LR(0) FSM"></a>LR(0) FSM</h3><h4 id="LR-0-FSM的形状"><a href="#LR-0-FSM的形状" class="headerlink" title="LR(0) FSM的形状"></a>LR(0) FSM的形状</h4><p>每个上下文无关文法<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>G</mi><mo>=</mo><mo stretchy="false">(</mo><msub><mi>V</mi><mi>N</mi></msub><mo separator="true">,</mo><msub><mi>V</mi><mi>T</mi></msub><mo separator="true">,</mo><mi>P</mi><mo separator="true">,</mo><mi>S</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">G=(V_N,V_T,P,S)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">G</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.2222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em;">N</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.2222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mclose">)</span></span></span></span>都对应一个LR(0) FSM，可以通过增广文法来构造，其实际上是一个字母表为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>V</mi><mi>N</mi></msub><mo>∪</mo><msub><mi>V</mi><mi>T</mi></msub></mrow><annotation encoding="application/x-tex">V_N \cup V_T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.2222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em;">N</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∪</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.2222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>的DFA</p>
+<p>LR(0) FSM的状态是<strong>LR(0)项目</strong>组成的集合，一个LR(0)项目是在产生式右端某一位置插入圆点得到的东西，如对产生式<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>→</mo><mi>x</mi><mi>y</mi><mi>z</mi></mrow><annotation encoding="application/x-tex">A\rightarrow xyz</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">x</span><span class="mord mathnormal" style="margin-right:0.04398em;">yz</span></span></span></span>，以下都是项目：</p>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>→</mo><mi mathvariant="normal">.</mi><mi>x</mi><mi>y</mi><mi>z</mi></mrow><annotation encoding="application/x-tex">A\rightarrow .xyz</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord">.</span><span class="mord mathnormal">x</span><span class="mord mathnormal" style="margin-right:0.04398em;">yz</span></span></span></span></li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>→</mo><mi>x</mi><mi mathvariant="normal">.</mi><mi>y</mi><mi>z</mi></mrow><annotation encoding="application/x-tex">A\rightarrow x.yz</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">x</span><span class="mord">.</span><span class="mord mathnormal" style="margin-right:0.04398em;">yz</span></span></span></span></li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>→</mo><mi>x</mi><mi>y</mi><mi mathvariant="normal">.</mi><mi>z</mi></mrow><annotation encoding="application/x-tex">A\rightarrow xy.z</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">x</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mord">.</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span></span></span></span></li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>→</mo><mi>x</mi><mi>y</mi><mi>z</mi><mi mathvariant="normal">.</mi></mrow><annotation encoding="application/x-tex">A\rightarrow xyz.</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">x</span><span class="mord mathnormal" style="margin-right:0.04398em;">yz</span><span class="mord">.</span></span></span></span></li>
+</ul>
+<p>圆点的作用是标志当前已经识别到的位置</p>
+<p>LR(0)项目可以分为以下四类：</p>
+<ol>
+<li><strong>移进项目</strong>：圆点后是终结符</li>
+<li><strong>待约项目</strong>：圆点后是非终结符</li>
+<li><strong>归约项目</strong>：圆点在产生式结尾，且不是增广文法的增广产生式<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>S</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo>→</mo><mi>S</mi></mrow><annotation encoding="application/x-tex">S&#x27;\rightarrow S</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7519em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7519em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span></span></span></span></li>
+<li><strong>接受项目</strong>：圆点在产生式结尾，且是增广产生式</li>
+</ol>
+<p>LR(0) FSM的<strong>状态</strong>是一个LR(0)项目集<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>I</mi></mrow><annotation encoding="application/x-tex">I</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span></span></span></span>的闭包<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">C</mi><mi mathvariant="normal">l</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">s</mi><mi mathvariant="normal">u</mi><mi mathvariant="normal">r</mi><mi mathvariant="normal">e</mi></mrow><mo stretchy="false">(</mo><mi>I</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">{\rm Closure}(I)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord"><span class="mord mathrm">Closure</span></span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="mclose">)</span></span></span></span>，计算闭包所用的规则为：</p>
+<blockquote>
+<p>若<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>→</mo><mi>α</mi><mi mathvariant="normal">.</mi><mi>B</mi><mi>β</mi><mtext> </mtext><mo>∈</mo><mrow><mi mathvariant="normal">C</mi><mi mathvariant="normal">l</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">s</mi><mi mathvariant="normal">u</mi><mi mathvariant="normal">r</mi><mi mathvariant="normal">e</mi></mrow><mo stretchy="false">(</mo><mi>I</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">A\rightarrow \alpha .B\beta\ \in {\rm Closure}(I)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mord">.</span><span class="mord mathnormal" style="margin-right:0.05278em;">Bβ</span><span class="mspace"> </span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord"><span class="mord mathrm">Closure</span></span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="mclose">)</span></span></span></span>，且<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><mo>→</mo><mi>γ</mi><mtext> </mtext><mo>∈</mo><mi>P</mi></mrow><annotation encoding="application/x-tex">B\rightarrow \gamma\ \in P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7335em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05556em;">γ</span><span class="mspace"> </span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span></span></span></span>，则<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><mo>→</mo><mi mathvariant="normal">.</mi><mi>γ</mi><mtext> </mtext><mo>∈</mo><mrow><mi mathvariant="normal">C</mi><mi mathvariant="normal">l</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">s</mi><mi mathvariant="normal">u</mi><mi mathvariant="normal">r</mi><mi mathvariant="normal">e</mi></mrow><mo stretchy="false">(</mo><mi>I</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">B\rightarrow .\gamma\ \in {\rm Closure}(I)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7335em;vertical-align:-0.1944em;"></span><span class="mord">.</span><span class="mord mathnormal" style="margin-right:0.05556em;">γ</span><span class="mspace"> </span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord"><span class="mord mathrm">Closure</span></span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="mclose">)</span></span></span></span></p>
+</blockquote>
+<h4 id="从增广文法构造LR-0-FSM"><a href="#从增广文法构造LR-0-FSM" class="headerlink" title="从增广文法构造LR(0) FSM"></a>从增广文法构造LR(0) FSM</h4><p>下面我们将介绍LR(0) FSM的构造方法：</p>
+<ul>
+<li>LR(0) FSM的<strong>初态</strong>是<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">C</mi><mi mathvariant="normal">l</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">s</mi><mi mathvariant="normal">u</mi><mi mathvariant="normal">r</mi><mi mathvariant="normal">e</mi></mrow><mo stretchy="false">(</mo><mo stretchy="false">{</mo><msup><mi>S</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo>→</mo><mi mathvariant="normal">.</mi><mi>S</mi><mo stretchy="false">}</mo><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">{\rm Closure}(\{S&#x27;\rightarrow .S\})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0019em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord"><span class="mord mathrm">Closure</span></span></span><span class="mopen">({</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7519em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">.</span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mclose">})</span></span></span></span></li>
+<li>LR(0) FSM的<strong>转移函数</strong>定义为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>δ</mi><mo stretchy="false">(</mo><mi>I</mi><mo separator="true">,</mo><mi>X</mi><mo stretchy="false">)</mo><mo>=</mo><mrow><mi mathvariant="normal">C</mi><mi mathvariant="normal">l</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">s</mi><mi mathvariant="normal">u</mi><mi mathvariant="normal">r</mi><mi mathvariant="normal">e</mi></mrow><mo stretchy="false">(</mo><mi>J</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\delta(I,X)={\rm Closure}(J)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.03785em;">δ</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord"><span class="mord mathrm">Closure</span></span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.09618em;">J</span><span class="mclose">)</span></span></span></span>，其中<ul>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span>为文法符号</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>J</mi><mo>=</mo><mo stretchy="false">{</mo><mi>A</mi><mo>→</mo><mi>α</mi><mi>X</mi><mi mathvariant="normal">.</mi><mi>β</mi><mtext> </mtext><mi mathvariant="normal">∣</mi><mtext> </mtext><mi>A</mi><mo>→</mo><mi>α</mi><mi mathvariant="normal">.</mi><mi>X</mi><mi>β</mi><mtext> </mtext><mo>∈</mo><mi>I</mi><mo stretchy="false">}</mo></mrow><annotation encoding="application/x-tex">J=\{A\rightarrow\alpha X.\beta\ |\ A\rightarrow\alpha.X\beta\ \in I\}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.09618em;">J</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">{</span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mord">.</span><span class="mord mathnormal" style="margin-right:0.05278em;">β</span><span class="mspace"> </span><span class="mord">∣</span><span class="mspace"> </span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mord">.</span><span class="mord mathnormal" style="margin-right:0.05278em;">Xβ</span><span class="mspace"> </span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="mclose">}</span></span></span></span>，即<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>J</mi></mrow><annotation encoding="application/x-tex">J</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.09618em;">J</span></span></span></span>是<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>I</mi></mrow><annotation encoding="application/x-tex">I</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span></span></span></span>中项目“对<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span>移进”组成的集合</li>
+</ul>
+</li>
+</ul>
+<p>遍历每个状态和每个符号，应用上述转移函数规则，直到状态集不再变大，即完成状态机构造</p>
+<h4 id="LR-0-FSM的语言"><a href="#LR-0-FSM的语言" class="headerlink" title="LR(0) FSM的语言"></a>LR(0) FSM的语言</h4><p>如果认为LR(0) FSM所有上述生成状态均为状态，则它可以看成某正规语言的DFA</p>
+<p>可以证明：该DFA的语言是<strong>增广文法的活前缀组成的集合</strong></p>
+<p>LR(0) FSM状态与活前缀的关系为：</p>
+<ul>
+<li>每个活前缀对应唯一的状态，即从初态经过此活前缀得到的状态</li>
+<li>此状态内所有项目对此活前缀都是<strong>有效的</strong>，即存在某种最右推导，使得此活前缀的上一步推导使用的是此项目的产生式，且位于此项目的圆点的位置</li>
+<li>针对这些活前缀的所有有效项目均隶属于此状态</li>
+</ul>
+<h4 id="从LR-0-FSM构造LR-0-分析表"><a href="#从LR-0-FSM构造LR-0-分析表" class="headerlink" title="从LR(0) FSM构造LR(0)分析表"></a>从LR(0) FSM构造LR(0)分析表</h4><p>给所有FSM状态编号，将编号作为LR(0)分析栈的状态，其中初态编为0号</p>
+<p>考虑每个状态<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>I</mi><mi>k</mi></msub></mrow><annotation encoding="application/x-tex">I_k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0785em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>中的每个项目，按以下规则构造分析表：</p>
+<ul>
+<li>对<strong>移进项目</strong><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>→</mo><mi>α</mi><mi mathvariant="normal">.</mi><mi>a</mi><mi>β</mi></mrow><annotation encoding="application/x-tex">A\rightarrow \alpha.a\beta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mord">.</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.05278em;">β</span></span></span></span>，若<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>δ</mi><mo stretchy="false">(</mo><msub><mi>I</mi><mi>k</mi></msub><mo separator="true">,</mo><mi>a</mi><mo stretchy="false">)</mo><mo>=</mo><msub><mi>I</mi><mi>j</mi></msub></mrow><annotation encoding="application/x-tex">\delta(I_k, a)=I_j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.03785em;">δ</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0785em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">a</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.9694em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0785em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span>，则令<code>ACTION[k, a]</code>为<code>sj</code></li>
+<li>对<strong>归约项目</strong><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>→</mo><mi>α</mi><mi mathvariant="normal">.</mi></mrow><annotation encoding="application/x-tex">A\rightarrow \alpha.</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mord">.</span></span></span></span>，则对任何<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span></span></span></span>，令<code>ACTION[k, a]</code>为<code>rj</code>，其中<code>j</code>为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>→</mo><mi>α</mi></mrow><annotation encoding="application/x-tex">A\rightarrow \alpha</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span></span></span></span>的产生式编号</li>
+<li>对<strong>接受项目</strong>，令<code>ACTION[k, #]</code>为<code>acc</code></li>
+</ul>
+<p>对于每一条非终结符的转移边<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>δ</mi><mo stretchy="false">(</mo><msub><mi>I</mi><mi>k</mi></msub><mo separator="true">,</mo><mi>A</mi><mo stretchy="false">)</mo><mo>=</mo><msub><mi>I</mi><mi>j</mi></msub></mrow><annotation encoding="application/x-tex">\delta(I_k, A)=I_j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.03785em;">δ</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0785em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">A</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.9694em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0785em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span>，令<code>GOTO(k, A)=j</code></p>
+<h4 id="LR-0-文法"><a href="#LR-0-文法" class="headerlink" title="LR(0)文法"></a>LR(0)文法</h4><p>若按上述算法构造的分析表，每一表项都没有多重定义，则称该文法是一个<strong>LR(0)文法</strong>，这等价于说：</p>
+<ul>
+<li>任何状态不同时含有移进项目和归约项目<ul>
+<li>同时含有的情况会发生<strong>移进-归约冲突</strong></li>
+</ul>
+</li>
+<li>任何状态不含有两个以上归约项目<ul>
+<li>同时含有的情况会导致产生式选择不确定，即<strong>归约-归约冲突</strong></li>
+</ul>
+</li>
+</ul>
+<p>可以看出，<code>ACTION</code>表每一行不同时存在移进和归约，即只根据栈顶状态就可以判断需要移进还是归约；同时<code>ACTION</code>表需要根据当前符号进行判断时，当前符号一定已被移进或将要被移进，所以LR(0)分析<em>不需要向前察看</em></p>
+<h2 id="SLR-1-分析"><a href="#SLR-1-分析" class="headerlink" title="SLR(1)分析"></a>SLR(1)分析</h2><blockquote>
+<p>Simple LR(1)</p>
+</blockquote>
+<p>核心思想：通过<strong>向前查看一个符号</strong>来解决移进-归约或归约-归约冲突</p>
+<p>因此，虽然SLR(1)可以分析非LR(0)的文法，但也需要对文法进行一些要求：</p>
+<ul>
+<li>要可以解决<strong>归约-归约冲突</strong>，则要求每个状态中所有<strong>归约项目</strong>的待归约非终结符的FOLLOW集互不相交</li>
+<li>要可以解决<strong>移进-归约冲突</strong>，则要求每个状态中所有<strong>归约项目</strong>的待归约非终结符的FOLLOW集不包含<strong>移进项目</strong>的移进符号</li>
+</ul>
+<p>SLR(1)分析表的构造只需要把LR(0)分析表构造中对归约项目的处理进行更改，改为只对FOLLOW(A)中的非终结符放置表项</p>
+<p><strong>注</strong> 这引入了“向前察看一个单词”的要求</p>
+
+</div> 
+
+<script>
+    window.onload = detectors();
+</script>
+    <div class="post-footer">
+    <div class="h-line-primary"></div>
+    <nav class="post-nav">
+        <div class="prev-item">
+           
+        </div>
+        <div class="next-item">
+            
+                <div class="icon arrow-right"></div>
+                <div class="post-link">
+                  <a href="/2024/10/26/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-5/">Next</a>  
+                </div>  
+            
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="post-comment">
+
+     
+
+     
+    
+    
+
+</div>
+     
+  
+</article>
+        </div>
+      </div>
+      
+      <div class="footer">
+    <div class="flex-container">
+        <div class="footer-text">
+            
+            
+            
+                Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> & <a target="_blank" rel="noopener" href="https://github.com/zoeingwingkei/frame/">Frame</a>
+                
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    
+    
+
+  </body>
+</html>

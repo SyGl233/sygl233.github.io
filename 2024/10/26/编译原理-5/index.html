@@ -12,7 +12,7 @@
 
 
 
-<title>Tag: 编译原理 | SyGl_</title>
+<title>编译原理(5) 符号表 | SyGl_</title>
 
 
 
@@ -115,153 +115,100 @@
 
       <div class="main">
         <div class="flex-container">
-          <div id="tag">
+          <article id="post">
+
   
-
-    <p class="tag-title">
-      / <a href="/tag/">tags</a>
-      / <a href="">编译原理</a> /
-    </p>
-    <div class="post-list">
-    
-    
-
-        
-
-        
-            <div class="year-title">2024</div>
-        
-
-        <div class="post-list-item">
-            <div class="post-title">
-            <a href="/2024/10/26/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-6/">
-                
-                    编译原理(6) 自底向上语法分析
-                
-                </a> 
-            </div>
+    <div class="post-head">
+    <div class="post-info">
+        <div class="tag-list">
             
-            <span class="post-date">Oct 26, 2024</span>
-        </div>
-
-    
-
-        
-
-        
-
-        <div class="post-list-item">
-            <div class="post-title">
-            <a href="/2024/10/26/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-5/">
                 
-                    编译原理(5) 符号表
+                    <span class="post-tag">
+                        <a href="/tags/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">
+                            课程笔记
+                        </a>
+                    </span>    
                 
-                </a> 
-            </div>
+                    <span class="post-tag">
+                        <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">
+                            编译原理
+                        </a>
+                    </span>    
+                           
             
-            <span class="post-date">Oct 26, 2024</span>
         </div>
-
-    
-
-        
-
-        
-
-        <div class="post-list-item">
-            <div class="post-title">
-            <a href="/2024/10/13/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-3-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90/">
-                
-                    编译原理(4) 自顶向下语法分析
-                
-                </a> 
-            </div>
+        <div class="post-title">
             
-            <span class="post-date">Oct 13, 2024</span>
-        </div>
-
-    
-
-        
-
-        
-
-        <div class="post-list-item">
-            <div class="post-title">
-            <a href="/2024/09/19/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-4/">
-                
-                    编译原理(3) 龙书拾遗
-                
-                </a> 
-            </div>
             
-            <span class="post-date">Sep 19, 2024</span>
-        </div>
-
-    
-
-        
-
-        
-
-        <div class="post-list-item">
-            <div class="post-title">
-            <a href="/2024/09/18/RISC-V%E6%8C%87%E4%BB%A4%E9%9B%86%E7%AC%94%E8%AE%B0/">
-                
-                    RISC-V指令集笔记
-                
-                </a> 
-            </div>
+                编译原理(5) 符号表
             
-            <span class="post-date">Sep 18, 2024</span>
-        </div>
-
-    
-
-        
-
-        
-
-        <div class="post-list-item">
-            <div class="post-title">
-            <a href="/2024/09/18/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-2-%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90/">
-                
-                    编译原理(2) 词法分析
-                
-                </a> 
-            </div>
             
-            <span class="post-date">Sep 18, 2024</span>
         </div>
-
-    
-
+        <span class="post-date">
+            Oct 26, 2024
+        </span>
+    </div>
+    <div class="post-img">
         
-
-        
-
-        <div class="post-list-item">
-            <div class="post-title">
-            <a href="/2024/09/18/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-1/">
-                
-                    编译原理(1) 绪论
-                
-                </a> 
-            </div>
-            
-            <span class="post-date">Sep 18, 2024</span>
-        </div>
-
-    
-    <div id="paginator">
-        
+            <div class="h-line-primary"></div>
+              
     </div>
 </div>
+    <div class="post-content">
+    <p>符号表的作用：用来体现<strong>作用域</strong>与<strong>可见性</strong></p>
+<p>作用域在程序中某一处可以作如下分类：</p>
+<ul>
+<li>开作用域：当前作用域和包含当前作用域的作用域</li>
+<li>闭作用域：其他作用域</li>
+</ul>
+<p>可见性规则：</p>
+<ul>
+<li>任何一点只可访问开作用域中声明的名字</li>
+<li>若一个名字在多个开作用域中被声明，则把（在作用域栈中）最近的一个声明作为引用的解释</li>
+<li>新的声明只能出现在当前作用域</li>
+</ul>
+<p>使用<strong>作用域栈</strong>维护作用域及每个作用域的符号信息</p>
 
+</div> 
 
-  
+<script>
+    window.onload = detectors();
+</script>
+    <div class="post-footer">
+    <div class="h-line-primary"></div>
+    <nav class="post-nav">
+        <div class="prev-item">
+           
+                <div class="icon arrow-left"></div>
+                <div class="post-link">
+                    <a href="/2024/10/26/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-6/">Prev</a>
+                </div>
+            
+        </div>
+        <div class="next-item">
+            
+                <div class="icon arrow-right"></div>
+                <div class="post-link">
+                  <a href="/2024/10/26/%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%E5%8E%9F%E7%90%86-1/">Next</a>  
+                </div>  
+            
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="post-comment">
+
+     
+
+     
+    
+    
 
 </div>
+     
+  
+</article>
         </div>
       </div>
       
