@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+
+
+
+
+<title>认证技术(1) 消息认证 | SyGl_</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto+Mono&display=swap');
+</style>
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/menu.js"></script>
+    
+
+
+
+
+
+
+
+
+
+
+  <!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+  <body>
+    <div class="mask-border">
+    </div>
+
+    <div class="wrapper">
+
+      <div class="header">
+  <div class="flex-container">
+    <div class="header-inner">
+      <div class="site-brand-container">
+        <a href="/">
+          
+            SyGl
+          
+        </a>
+      </div>
+      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
+        Menu
+      </div>
+      <nav class="site-nav">
+        <ul class="menu-list">
+          
+            
+              <li class="menu-item">
+                <a href="/">Home</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/archives/">Archive</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/gallery/">Gallery</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/note/">Note</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/personal/">Personal</a>
+              </li> 
+                   
+          
+          
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main">
+        <div class="flex-container">
+          <article id="post">
+
+  
+    <div class="post-head">
+    <div class="post-info">
+        <div class="tag-list">
+            
+                
+                    <span class="post-tag">
+                        <a href="/tags/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">
+                            课程笔记
+                        </a>
+                    </span>    
+                
+                    <span class="post-tag">
+                        <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+                            网络安全
+                        </a>
+                    </span>    
+                           
+            
+        </div>
+        <div class="post-title">
+            
+            
+                认证技术(1) 消息认证
+            
+            
+        </div>
+        <span class="post-date">
+            Nov 13, 2024
+        </span>
+    </div>
+    <div class="post-img">
+        
+            <div class="h-line-primary"></div>
+              
+    </div>
+</div>
+    <div class="post-content">
+    <h1>网络环境中的攻击</h1>
+<ul>
+<li>泄密：没有密钥的接收方获得了消息</li>
+<li>传输分析：分析双方的通信模式</li>
+<li>伪装：声称这条消息来自某个合法实体</li>
+<li>内容修改</li>
+<li>顺序修改</li>
+<li>计时修改：对消息延时、重放</li>
+<li>发送方否认发送过某条消息</li>
+<li>接收方否认接收过某条消息</li>
+</ul>
+<p>对于上述攻击，可以采取的手段有：</p>
+<ul>
+<li>消息加密：应对泄密、传输分析</li>
+<li>消息认证：应对伪装、内容修改、顺序修改、计时修改</li>
+<li>数字签名：应对发送方否认</li>
+<li>应对接收方否认需要特定协议</li>
+</ul>
+<h1>消息认证</h1>
+<p><strong>消息认证</strong>是验证收到的消息确实<strong>来自真正的发送方</strong>且<strong>未被修改</strong>的消息</p>
+<p>消息认证一定包括：</p>
+<ul>
+<li>下层——产生<strong>认证符</strong>的函数</li>
+<li>上层——接收方根据认证符验证消息真实性</li>
+</ul>
+<p>产生认证符的函数称为<strong>认证函数</strong></p>
+<ul>
+<li>消息加密：整个消息密文作为认证符</li>
+<li>消息认证码MAC：消息和密钥的公开函数，产生定长的值</li>
+<li>Hash函数：任意长的消息映射为定长的Hash值的公开函数</li>
+</ul>
+<h2 id="消息加密">消息加密</h2>
+<p><strong>对称加密</strong>的消息认证</p>
+<ol>
+<li>
+<p>对明文消息计算错误检测码（或<strong>帧校验序列 FCS</strong>）</p>
+</li>
+<li>
+<p>对加入FCS的消息加密，传输密文</p>
+</li>
+</ol>
+<p>先FCS再加密才具有认证效力，先加密再FCS是可以模仿的</p>
+<p>然而，由于A和B具有对称的密钥，接收方可以伪造信息，发送方也可以否认信息，即这种认证<strong>不提供数字签名</strong></p>
+<hr />
+<p><strong>公钥加密</strong>的消息认证</p>
+<p>一般而言，公钥加密只提供保密性，因为任何人都知道接收方的公钥，无法认证发送方身份</p>
+<p>一种方法是：</p>
+<ol>
+<li>A用A的私钥将消息明文加密，得到数字签名</li>
+<li>A再将得到的密文用B的公钥再次加密，发送给B</li>
+<li>B用自己的私钥解密，得到A经过数字签名后的消息</li>
+<li>B再用A的公钥解密，确认消息确由A发出</li>
+</ol>
+<p>然而这种方法使用了4次公钥算法，复杂度很高</p>
+<p>公钥加密的数字签名接收方无法伪造，于是发送方也无法否认</p>
+<h2 id="消息认证码-MAC">消息认证码 MAC</h2>
+<p>MAC利用密文生成一个固定长度的短数据块，将其附加在消息之后，即：</p>
+<p class="katex-block math-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mrow><mi mathvariant="normal">M</mi><mi mathvariant="normal">A</mi><mi mathvariant="normal">C</mi></mrow><mo>=</mo><msub><mi>C</mi><mi>k</mi></msub><mo stretchy="false">(</mo><mi>M</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">{\rm MAC}=C_k(M)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord"><span class="mord"><span class="mord mathrm">MAC</span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0715em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mclose">)</span></span></span></span></span></p>
+<p>其中<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi></mrow><annotation encoding="application/x-tex">M</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span></span></span></span>为输入消息，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi></mrow><annotation encoding="application/x-tex">C</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span></span></span></span>为MAC函数，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span>为收发双方共享密钥</p>
+<p>MAC函数与加密类似，但<strong>不要求可逆性</strong>，只需要比对即可</p>
+
+</div> 
+
+<script>
+    window.onload = detectors();
+</script>
+    <div class="post-footer">
+    <div class="h-line-primary"></div>
+    <nav class="post-nav">
+        <div class="prev-item">
+           
+                <div class="icon arrow-left"></div>
+                <div class="post-link">
+                    <a href="/2024/11/19/%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%E5%8E%9F%E7%90%86-4/">Prev</a>
+                </div>
+            
+        </div>
+        <div class="next-item">
+            
+                <div class="icon arrow-right"></div>
+                <div class="post-link">
+                  <a href="/2024/11/13/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-9/">Next</a>  
+                </div>  
+            
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="post-comment">
+
+     
+
+     
+    
+    
+
+</div>
+     
+  
+</article>
+        </div>
+      </div>
+      
+      <div class="footer">
+    <div class="flex-container">
+        <div class="footer-text">
+            
+            
+            
+                Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> & <a target="_blank" rel="noopener" href="https://github.com/zoeingwingkei/frame/">Frame</a>
+                
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    
+    
+
+  </body>
+</html>
