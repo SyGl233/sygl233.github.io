@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+
+
+
+
+<title>计算机组成原理(3) 存储系统 | SyGl_</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto+Mono&display=swap');
+</style>
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/menu.js"></script>
+    
+
+
+
+
+
+
+
+
+
+
+  <!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+  <body>
+    <div class="mask-border">
+    </div>
+
+    <div class="wrapper">
+
+      <div class="header">
+  <div class="flex-container">
+    <div class="header-inner">
+      <div class="site-brand-container">
+        <a href="/">
+          
+            SyGl
+          
+        </a>
+      </div>
+      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
+        Menu
+      </div>
+      <nav class="site-nav">
+        <ul class="menu-list">
+          
+            
+              <li class="menu-item">
+                <a href="/">Home</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/archives/">Archive</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/gallery/">Gallery</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/note/">Note</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/personal/">Personal</a>
+              </li> 
+                   
+          
+          
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main">
+        <div class="flex-container">
+          <article id="post">
+
+  
+    <div class="post-head">
+    <div class="post-info">
+        <div class="tag-list">
+            
+                
+                    <span class="post-tag">
+                        <a href="/tags/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">
+                            课程笔记
+                        </a>
+                    </span>    
+                
+                    <span class="post-tag">
+                        <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">
+                            计算机组成原理
+                        </a>
+                    </span>    
+                           
+            
+        </div>
+        <div class="post-title">
+            
+            
+                计算机组成原理(3) 存储系统
+            
+            
+        </div>
+        <span class="post-date">
+            Dec 12, 2024
+        </span>
+    </div>
+    <div class="post-img">
+        
+            <div class="h-line-primary"></div>
+              
+    </div>
+</div>
+    <div class="post-content">
+    <h1>存储系统</h1>
+<h2 id="存储器概论">存储器概论</h2>
+<p><strong>存储器</strong>用来在计算机中存储程序和数据</p>
+<p>为此，对存储介质有如下基本要求：</p>
+<ul>
+<li>能够有两个稳定状态</li>
+<li>两个状态容易识别</li>
+<li>两个状态转换方便</li>
+</ul>
+<p>存储器按照访问方式分类：</p>
+<ul>
+<li>随机访问存储器（RAM）
+<ul>
+<li>访问时间与位置无关，例如半导体存储器</li>
+</ul>
+</li>
+<li>顺序访问存储器（SAM）
+<ul>
+<li>按存储位置依次访问，例如磁带</li>
+</ul>
+</li>
+<li>直接访问存储器（DAM）
+<ul>
+<li>可以随机访问或顺序访问，例如磁盘</li>
+</ul>
+</li>
+<li>关联访问存储器（CAM）
+<ul>
+<li>根据内容访问，例如Cache和TLB</li>
+</ul>
+</li>
+</ul>
+<p>存储器的目标是大容量、高速度，但目前的现实是，速度越快容量越小</p>
+<p>解决方案：<strong>层次存储器系统</strong></p>
+<h2 id="层次存储器系统">层次存储器系统</h2>
+<ul>
+<li>高速度
+<ul>
+<li>使用速度高的静态存储器作为较小容量的高速缓存</li>
+</ul>
+</li>
+<li>大容量
+<ul>
+<li>使用价格、速度适中的动态存储器作为主存储器</li>
+</ul>
+</li>
+<li>低成本
+<ul>
+<li>使用价格最低的磁盘存储器作为辅助存储器和虚拟存储器的载体</li>
+</ul>
+</li>
+</ul>
+<p>程序运行的局部性原理：</p>
+<ul>
+<li><strong>时间上</strong>：最近访问过的程序和数据很可能再次被访问</li>
+<li><strong>空间上</strong>：被访问的程序和数据在空间上集中</li>
+<li><strong>顺序上</strong>：顺序执行比转移执行可能性大</li>
+</ul>
+<p>层次系统之间应满足的原则：</p>
+<ul>
+<li><strong>一致性原则</strong>：不同层存储器中的同一信息应当保持相同的值</li>
+<li><strong>包含性原则</strong>：内层的信息一定存在于外层存储器中</li>
+</ul>
+<p>沿存储金字塔向下，速度变慢，每容量价格降低，CPU访问频率降低，可靠性降低，容量增大</p>
+<ul>
+<li>依次为：寄存器→缓存→主存→磁盘→磁带或光盘</li>
+</ul>
+<h2 id="动态存储器">动态存储器</h2>
+<h3 id="工作原理">工作原理</h3>
+<p>使用单个MOS管存储一个bit，MOS管源极的寄生电容CS中有电荷表示1，无电荷表示0</p>
+<p><img src="/image/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-3/image-20241212110313606.png" alt="image-20241212110313606" /></p>
+<p>写1操作：字线高，位线低，电容充电</p>
+<p>写0操作：字线高，位线高，电容放电</p>
+<p>读操作：字线高，位线高，相当于写0</p>
+<p>于是，动态存储器的工作特点为：</p>
+<ul>
+<li>破坏性读出：读操作相当于写0，需要在读出后立刻写回——带来<strong>预充电延迟</strong></li>
+<li>需定期刷新：不进行读写时，电容短路，但由于漏电的存在，需要及时刷新，刷新按行进行
+<ul>
+<li>集中刷新：停止所有读写，逐行刷新</li>
+<li>分散刷新：每次读写后刷新一行，各行轮流进行</li>
+</ul>
+</li>
+<li>支持快速分页组织：行、列地址要分两次给出，但是连续读写相同行的存储时可以先将行地址锁存，然后只需要送列地址</li>
+</ul>
+<p>主存储器通过<strong>地址</strong>、<strong>数据</strong>、<strong>控制</strong>三类总线与其他部件连接：</p>
+<ul>
+<li>地址总线：选择主存储器的一个存储单元
+<ul>
+<li>其位数决定了<strong>最大可寻址空间</strong>，注意区分<strong>按字节寻址和按字寻址</strong></li>
+</ul>
+</li>
+<li>数据总线：传送数据
+<ul>
+<li>其最高数据吞吐是数据总线位数乘总线时钟频率</li>
+</ul>
+</li>
+</ul>
+<h2 id="静态存储器">静态存储器</h2>
+<p>静态存储器原理：</p>
+<p><img src="/image/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-3/image-20241212112110055.png" alt="image-20241212112110055" /></p>
+<p>写操作：字线高，两条位线按待写入数据排布</p>
+<p>读操作：字线高，两条位线均高，之后用放大器感知两条位线的变化</p>
+<p>静态存储器的特征：</p>
+<ul>
+<li>速度块</li>
+<li>存储密度低</li>
+<li>数据出入共用管脚</li>
+<li>能耗、成本高</li>
+</ul>
+<p><img src="/image/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-3/image-20241212112436614.png" alt="image-20241212112436614" /></p>
+<h2 id="高速缓冲存储器">高速缓冲存储器</h2>
+<p>位于主存与CPU之间，使用静态存储器实现</p>
+<p>与CPU的运行速度基本匹配，且对程序员透明（注：这里的<strong>透明</strong>指的是程序员不关心高速缓存是否存在，高速缓存是否存在、如何存在不影响程序编写和运行）</p>
+<p>缓存参数：</p>
+<ul>
+<li><strong>块(Line)</strong>：数据交换的最小单位</li>
+<li><strong>命中(Hit)</strong>：缓存中发现要访问的内容
+<ul>
+<li>命中率(HR)、命中时间</li>
+</ul>
+</li>
+<li><strong>缺失(Miss)</strong>：需要到较低层次（如主存）中访问块
+<ul>
+<li>缺失率(1-HR)、缺失损失</li>
+</ul>
+</li>
+<li>命中时间&lt;&lt;缺失损失</li>
+<li>平均访问时间=HR*命中时间+(1-HR)*缺失损失</li>
+</ul>
+<h3 id="缓存映射策略">缓存映射策略</h3>
+<h4 id="全相连映射">全相连映射</h4>
+<p><strong>全相连</strong>方式中，每个缓存块对主存块的对应关系是任意的</p>
+<p>例如，主存为4GB，缓存4KB，块大小4B，则缓存有1024个块，而主存有1G个块</p>
+<p>每个缓存块单元中包含以下三项：</p>
+<ul>
+<li>有效位（1bit）</li>
+<li>标记（30bit），表示当前缓存内容在主存中的块地址</li>
+<li>数据（32bit）</li>
+</ul>
+<p>判断缓存是否命中的方式为并行地将地址的高30位与缓存标记比较，然后通过1024-1数据选择器</p>
+<p>全相连方式使用灵活，但成本高</p>
+<h4 id="直接映射">直接映射</h4>
+<p><strong>直接映射</strong>方式中，将主存块地址分为Tag和Index，同一Index的地址映射到同一缓存单元</p>
+<p>例如，主存4GB，缓存4KB，块大小4B，则缓存有1024个块，即Index一共有1024种</p>
+<p>主存1G个块，主存块地址位数为30位，取前20位为tag，后10位为index</p>
+<p>每个缓存单元包含：</p>
+<ul>
+<li>有效位（1bit）</li>
+<li>标记（20bit）</li>
+<li>数据（32bit）</li>
+</ul>
+<p>直接映射缓存中，缓存缺失可能有两种原因：</p>
+<ul>
+<li>对应index处的有效位为0（启动失效）</li>
+<li>对应index处缓存有效，但tag不匹配（冲突失效）</li>
+</ul>
+<p>特点：利用率低，命中率低，效率低，成本低</p>
+<h4 id="多路组相连">多路组相连</h4>
+<p>直接映射和全相连的折中方案，组内为全相连，组间为直接映射</p>
+<h3 id="缓存一致性保证策略">缓存一致性保证策略</h3>
+<p>缓存内存储的数据必须与主存中的对应数据完全一致，这是缓存成立的前提</p>
+<p>因此，需要在发生数据写入时需要考虑将数据写回缓存还是写回主存</p>
+<h4 id="写直达-Write-through">写直达 (Write through)</h4>
+<p>是效率低的强一致性保证手段</p>
+<ul>
+<li>缓存命中的写
+<ul>
+<li>同时写缓存和主存</li>
+</ul>
+</li>
+<li>缓存缺失的写</li>
+</ul>
+<h4 id="拖后写-Write-back">拖后写 (Write back)</h4>
+<p>是效率高的弱一致性保证手段</p>
+<p>缓存命中时先只写缓存，不写主存，选择合适的时间写主存</p>
+<h4 id="写分配和非写分配">写分配和非写分配</h4>
+<p>写分配和非写分配是当写入缓存缺失的块时的策略：</p>
+<ul>
+<li><strong>写分配</strong>：寻找一个块将被写的块放入，再按照缓存命中的写处理</li>
+<li><strong>非写分配</strong>：直接写主存</li>
+</ul>
+<h4 id="MESI态">MESI态</h4>
+<ul>
+<li>修改态（M）：此缓存中的数据已被修改且和主存中不同（“脏数据”），只能从此缓存中获取</li>
+<li>独占态（E）：此缓存中数据与主存相同，但其他缓存中没有副本</li>
+<li>共享态（S）：此缓存中数据与主存相同，且其他缓存中可能有副本</li>
+<li>无效态（I）：尚未装入数据</li>
+</ul>
+<p>状态转移图（其中远程读写表示读写了其他缓存中的相同数据）</p>
+<p><img src="/image/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-3/image-20241212115957662.png" alt="image-20241212115957662" /></p>
+<h3 id="缓存命中率分析">缓存命中率分析</h3>
+<p>四类缓存缺失：</p>
+<ul>
+<li><strong>必然缺失</strong>
+<ul>
+<li>开机或进程切换</li>
+<li>首次访问某数据块</li>
+<li>对策：预取</li>
+</ul>
+</li>
+<li><strong>容量缺失</strong>
+<ul>
+<li>活动数据超过了缓存大小</li>
+<li>对策：增大缓存容量</li>
+</ul>
+</li>
+<li><strong>冲突缺失</strong>
+<ul>
+<li>多个内存块映射到同一缓存块</li>
+<li>对策：增加缓存容量、增加相连的路数</li>
+</ul>
+</li>
+<li><strong>无效缺失</strong>
+<ul>
+<li>其他进程修改了主存数据，使缓存数据无效</li>
+</ul>
+</li>
+</ul>
+<p>影响缓存命中率的因素：</p>
+<ul>
+<li>缓存容量</li>
+<li>缓存块大小</li>
+<li>地址映射方式（多少路？）</li>
+<li>替换算法（同一标签的组满了之后，替换哪一行出去）</li>
+<li>多级缓存</li>
+</ul>
+<p>缓存替换策略：</p>
+<ul>
+<li>最近最少使用（LRU）
+<ul>
+<li>满足程序局部性要求，有较高命中率，但硬件实现复杂</li>
+</ul>
+</li>
+<li>先入先出（FIFO）
+<ul>
+<li>满足时间局部性，实现简单</li>
+</ul>
+</li>
+<li>随机替换（RAND）
+<ul>
+<li>实现简单，命中率也不太低</li>
+</ul>
+</li>
+</ul>
+<h3 id="缓存接入系统的体系结构">缓存接入系统的体系结构</h3>
+<ol>
+<li>
+<p>侧接法</p>
+<ul>
+<li>和CPU、主存在总线上并列</li>
+<li>结构简单，成本低，但总线会高占用</li>
+</ul>
+</li>
+<li>
+<p>隔断法</p>
+<ul>
+<li>缓存将CPU与主存在总线上隔断</li>
+<li>支持总线并发，但结构复杂，成本较高</li>
+</ul>
+</li>
+</ol>
+<h2 id="虚拟内存">虚拟内存</h2>
+<h3 id="虚拟内存的意义">虚拟内存的意义</h3>
+<ol>
+<li>独立的逻辑地址空间：每个进程在自身视角认为独占虚拟内存</li>
+<li>实现内存共享：不同进程的不同虚拟页可能映射到相同物理页</li>
+<li>实现内存保护：页表中存放访问权限</li>
+</ol>
+<h3 id="段式存储管理">段式存储管理</h3>
+<p>段式内存管理使用<strong>段表</strong>，包含如下内容：</p>
+<ul>
+<li>段表基地址</li>
+<li>段表项
+<ul>
+<li>段起始地址</li>
+<li>段长</li>
+<li>装入位</li>
+<li>保护、共享等标志</li>
+</ul>
+</li>
+</ul>
+<p>段的分界和程序或数据的自然分界相对应，段长动态可变，段起点、终点不变，空间分配困难，容易产生碎片</p>
+<h3 id="页式存储管理">页式存储管理</h3>
+<p>使用<strong>页表</strong>，与段式不同，页的大小固定，页起终点总是按页大小对齐</p>
+<p>页表大小可能很大，因此需要采用<strong>层次页表</strong>或<strong>反转页表</strong></p>
+<h4 id="转换旁路缓冲-TLB">转换旁路缓冲 (TLB)</h4>
+<p>TLB通常容量较小，最多128-256个表项，可以使用全相连，但一般使用N路组相连</p>
+<h4 id="页替换算法">页替换算法</h4>
+<ul>
+<li>最近最少使用（LRU）
+<ul>
+<li>将页按照最近一段时间的访问频率排序，当访问一个页时，将其移到表头，替换时替换表尾页</li>
+<li>被替换页最好是“干净”（即未被修改过）的</li>
+</ul>
+</li>
+</ul>
+<h2 id="磁盘">磁盘</h2>
+<p>之前提到的SRAM、DRAM都属于<strong>易失性存储</strong>，掉电后信息会丢失，访问粒度小（字节或缓存块），但访问速度快</p>
+<p>磁盘属于<strong>非易失性存储器</strong>，访问很慢，但掉电后信息不丢失，访问的粒度很大（数据块）</p>
+<p>磁盘使用磁颗粒的不同偏转方向来区分不同的状态</p>
+<p>磁盘需要<strong>串行访问</strong>而非<strong>随机访问</strong>，访问时间与存储位的物理位置有关</p>
+<p>磁盘的主要技术指标：</p>
+<ul>
+<li>存储密度：单位大小磁层表面存储的二进制信息量</li>
+<li>存储容量：总信息量</li>
+<li>寻址时间</li>
+<li>数据传输率</li>
+<li>误码率</li>
+<li>价格</li>
+</ul>
+<p>磁头使用软磁材料，磁记录材料使用硬磁材料</p>
+<h3 id="磁记录方式">磁记录方式</h3>
+<p>指使用磁层介质中的磁化翻转序列（表现为磁头读取时线圈中电流的变化）编码二进制信息的方法</p>
+<p>评价标准有编码效率、自同步能力、读写可靠性等</p>
+<p>常见的磁记录方式：</p>
+<ul>
+<li>归零制（RZ）：线圈中正脉冲为1，负脉冲为0，两个信息位之间线圈中电流为零</li>
+<li>不归零制（NRZ）：线圈中一直有正或负脉冲</li>
+<li>见1翻转的不归零制（NRZ1）：只有见到1才改变电流的方向</li>
+<li>调相制（PM）：使用边沿表示0和1</li>
+<li>调频制（FM）：周期中心和边缘都翻转为1，只有边缘翻转为0</li>
+<li>改进的调频制（MFM）：只有连续两个或以上的0时才在位周期开始位置翻转</li>
+</ul>
+<p><img src="/image/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-3/image-20241212155817012.png" alt="image-20241212155817012" /></p>
+<p>上图中每两条竖直线之间为一个<strong>位周期</strong></p>
+<h3 id="磁盘访问过程">磁盘访问过程</h3>
+<p><strong>寻道</strong>：将磁头移动到正确的磁道上（圆形磁盘自内向外布有若干圈磁道）</p>
+<p><strong>寻找扇区</strong>：等待磁盘旋转到需要访问的扇区</p>
+<p><strong>数据传输</strong>：读写数据</p>
+<p>因此，硬盘具有每面磁道数、每个磁道扇区数等参数，<strong>扇区</strong>是磁盘访问的最小单位</p>
+<p>外磁道比内磁道的扇区数多一些，可以更好利用面积</p>
+<h3 id="RAID盘">RAID盘</h3>
+<p>**RAID盘 (Redundant Array of Inexpensive/Independent Disks)**是一种通过并行I/O来提高磁盘性能的技术</p>
+<p>RAID的目标：</p>
+<ul>
+<li>N个磁盘的容量</li>
+<li>1/N的访问时间</li>
+<li>更高的性价比</li>
+<li>采用冗余技术来提高存储信息的可用性（能正常工作的占比）</li>
+</ul>
+<p>下面介绍RAID技术发展的若干个阶段</p>
+<h4 id="RAID0">RAID0</h4>
+<p>RAID0将多个廉价磁盘模拟的单个虚拟磁盘划分成带(Strip)，每带k个扇区</p>
+<p>设RAID阵列有N个磁盘，则将所有扇区按照编号模N的余数装载在对应的磁盘上，即<strong>分带</strong></p>
+<p>这样如果需要读取N个连续的带，则可以并行进行，且此操作对软件透明</p>
+<p>但这样的做法没有冗余，不算真正的RAID</p>
+<h4 id="RAID1">RAID1</h4>
+<p>将之前的N块磁盘再复制一份备份，写入磁盘时同时对两份磁盘写入，而读磁盘的时候可以负载均衡地读取任意一个磁盘</p>
+<p>写操作效率不变但读操作变快</p>
+<h4 id="RAID2">RAID2</h4>
+<p>将单个虚拟磁盘上的字节分解成4位的半字节，每个半字节配备3位海明码，形成7位字，7位字的每一位分别存储在7个磁盘上</p>
+<p>要求驱动器同步转动</p>
+<h4 id="RAID3">RAID3</h4>
+<p>与RAID2类似，但采用奇偶校验</p>
+<h4 id="RAID4">RAID4</h4>
+<p>和RAID0类似，在额外的驱动器上写校验码，主磁盘崩溃时可以通过校验盘恢复</p>
+<p>校验盘负担较重</p>
+<h4 id="RAID5">RAID5</h4>
+<p>为了解决校验盘负载重的问题，将校验位循环分配在每块盘上</p>
+<h4 id="RAID6">RAID6</h4>
+<p>使用二维校验码</p>
+<h3 id="固态硬盘">固态硬盘</h3>
+<p>固态盘不使用机械盘中的旋转装置和磁头，没有移动的机械结构</p>
+<p>由控制单元和存储单元组成</p>
+<p>固态盘存储单元经过多次擦除后会不可靠</p>
+<p>SSD的层次结构：</p>
+<ol>
+<li>package，一个存储芯片</li>
+<li>die</li>
+<li>plane，不同plane可以并行操作</li>
+<li>block，最小的擦除单位（MB粒度）</li>
+<li>page，最小的读写单位（KB粒度）</li>
+</ol>
+<p>SSD的写入不会写入到之前的页，可以写入到距离非常遥远的新页，使用FTL层来维护逻辑地址和物理地址的映射关系</p>
+<p>FTL：Flash Translation Layer，进行地址翻译的同时完成磨损均衡（FTL会选择目前擦写次数较少的页面进行写入）</p>
+<p>SSD的垃圾回收：将回收块中有效页移动到其他块后擦除该块</p>
+
+</div> 
+
+<script>
+    window.onload = detectors();
+</script>
+    <div class="post-footer">
+    <div class="h-line-primary"></div>
+    <nav class="post-nav">
+        <div class="prev-item">
+           
+        </div>
+        <div class="next-item">
+            
+                <div class="icon arrow-right"></div>
+                <div class="post-link">
+                  <a href="/2024/12/03/%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%E5%8E%9F%E7%90%86-7/">Next</a>  
+                </div>  
+            
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="post-comment">
+
+     
+
+     
+    
+    
+
+</div>
+     
+  
+</article>
+        </div>
+      </div>
+      
+      <div class="footer">
+    <div class="flex-container">
+        <div class="footer-text">
+            
+            
+            
+                Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> & <a target="_blank" rel="noopener" href="https://github.com/zoeingwingkei/frame/">Frame</a>
+                
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    
+    
+
+  </body>
+</html>
