@@ -255,6 +255,52 @@
 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mord mathrm" style="margin-right:0.01389em;">CV</span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">L</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span></p>
 <p>其中<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi></mrow><annotation encoding="application/x-tex">f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span></span></span></span>是一个压缩函数，将<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span>位值和<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span>位分组结合起来得到新的<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span>位值</p>
 <p>设计安全hash函数的问题转化成了设计抗碰撞的压缩函数<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi></mrow><annotation encoding="application/x-tex">f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span></span></span></span>的问题</p>
+<h3 id="常用Hash算法">常用Hash算法</h3>
+<h4 id="MD5">MD5</h4>
+<p>输入：任意长的消息</p>
+<p>分组：512bits</p>
+<p>输出：128bits</p>
+<p>设计目标：安全、快速、简洁，使用小端结构</p>
+<hr />
+<p><strong>第1步：增加填充位、填充长度</strong></p>
+<p>增加填充位1000…0使填充后的总长度模512余448，并在填充后的消息最后附上消息长度对<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>64</mn></msup></mrow><annotation encoding="application/x-tex">2^{64}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">64</span></span></span></span></span></span></span></span></span></span></span></span>的余数，于是总长度是512的倍数</p>
+<p>填充的长度用小端法表示，在算法中增加长度是为了增强安全强度</p>
+<p><strong>第2步：初始化MD缓存</strong></p>
+<p>Hash函数的中间结果保存在四个32位寄存器中，其初始值如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">A = 0x01234567</span><br><span class="line">B = 0x89ABCDEF</span><br><span class="line">C = 0xFEDCBA98</span><br><span class="line">D = 0x76543210</span><br></pre></td></tr></table></figure>
+<p><strong>计算Hash值的具体过程略</strong></p>
+<h4 id="SHA">SHA</h4>
+<h4 id="RIPEMD-160">RIPEMD-160</h4>
+<h2 id="数字签名算法DSS">数字签名算法DSS</h2>
+<p><strong>消息认证</strong>和<strong>数字签名</strong>之间的区别：</p>
+<ul>
+<li><strong>消息认证</strong>用于防止通信双方以外的第三方的攻击，即第三方无法伪造出经过双方认证的消息</li>
+<li><strong>数字签名</strong>用于防止通信双方自身的攻击，例如接收方伪造一条消息，并生成其来自发送方
+<ul>
+<li>由于接收方可以伪造消息，发送方也就可以否认发送过的消息</li>
+</ul>
+</li>
+</ul>
+<p>数字签名必须具备的特征：</p>
+<ul>
+<li>可以验证签名者、签名时间</li>
+<li>可以认证被签的消息内容</li>
+<li>签名可以由第三方仲裁</li>
+</ul>
+<h3 id="直接数字签名和仲裁数字签名">直接数字签名和仲裁数字签名</h3>
+<p><strong>直接数字签名</strong>：</p>
+<ul>
+<li>只涉及通信双方</li>
+<li>例如X使用自己的私钥对消息或消息摘要加密后发送给Y</li>
+<li>方法有效性依赖于私钥安全性</li>
+</ul>
+<p><strong>仲裁数字签名</strong>：</p>
+<ul>
+<li>引入仲裁者A</li>
+<li>X的消息签名后发送给A，A对消息和签名进行检查，之后加上日期发送给Y</li>
+</ul>
+<h3 id="数字签名标准DSS">数字签名标准DSS</h3>
+<p><img src="image/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-6/image-20241214114017934.png" alt="image-20241214114017934" /></p>
 
 </div> 
 
