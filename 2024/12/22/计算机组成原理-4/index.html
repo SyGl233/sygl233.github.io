@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+
+
+
+
+<title>计算机组成原理(4) 输入输出 | SyGl_</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto+Mono&display=swap');
+</style>
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/menu.js"></script>
+    
+
+
+
+
+
+
+
+
+
+
+  <!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+  <body>
+    <div class="mask-border">
+    </div>
+
+    <div class="wrapper">
+
+      <div class="header">
+  <div class="flex-container">
+    <div class="header-inner">
+      <div class="site-brand-container">
+        <a href="/">
+          
+            SyGl
+          
+        </a>
+      </div>
+      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
+        Menu
+      </div>
+      <nav class="site-nav">
+        <ul class="menu-list">
+          
+            
+              <li class="menu-item">
+                <a href="/">Home</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/archives/">Archive</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/gallery/">Gallery</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/note/">Note</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/personal/">Personal</a>
+              </li> 
+                   
+          
+          
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main">
+        <div class="flex-container">
+          <article id="post">
+
+  
+    <div class="post-head">
+    <div class="post-info">
+        <div class="tag-list">
+            
+                
+                    <span class="post-tag">
+                        <a href="/tags/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">
+                            课程笔记
+                        </a>
+                    </span>    
+                
+                    <span class="post-tag">
+                        <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">
+                            计算机组成原理
+                        </a>
+                    </span>    
+                           
+            
+        </div>
+        <div class="post-title">
+            
+            
+                计算机组成原理(4) 输入输出
+            
+            
+        </div>
+        <span class="post-date">
+            Dec 22, 2024
+        </span>
+    </div>
+    <div class="post-img">
+        
+            <div class="h-line-primary"></div>
+              
+    </div>
+</div>
+    <div class="post-content">
+    <p>对输入输出，需要解决的问题有：</p>
+<ul>
+<li><strong>控制方式（输入输出方式）</strong>：CPU如何控制输入输出？</li>
+<li><strong>传输方式</strong>：传输通道、方式、速率等</li>
+<li><strong>数据识别和转换</strong></li>
+</ul>
+<h1>输入/输出方式</h1>
+<h2 id="程序直接控制">程序直接控制</h2>
+<p>例如读串口，直接使用汇编指令来查询接口状态并且读取：</p>
+<p><img src="image/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-4/image-20241222115316241.png" alt="image-20241222115316241" /></p>
+<p>特点是成本低，但也效率低，严重占用CPU资源（等待读取的时候CPU无法进行其他操作）</p>
+<h2 id="程序中断">程序中断</h2>
+<p>外部设备在希望CPU处理的时候发出请求，CPU接到请求，中断正在进行的程序进行响应，处理完成后恢复原来的程序</p>
+<p>在没有请求时，CPU和外设可以并行工作</p>
+<p>中断中涉及的一些概念：</p>
+<ul>
+<li>中断源
+<ul>
+<li>外部中断：I/O设备等</li>
+<li>内部中断（异常）：处理器硬件故障、程序出错、陷阱</li>
+<li>中断触发器</li>
+<li>中断状态寄存器</li>
+</ul>
+</li>
+<li>中断优先级
+<ul>
+<li>表明响应中断的顺序</li>
+</ul>
+</li>
+<li>禁止中断与中断屏蔽
+<ul>
+<li>CPU设有中断允许触发器</li>
+<li>可以有选择封锁一些不希望响应的中断</li>
+</ul>
+</li>
+</ul>
+<p>中断的完整过程：</p>
+<ul>
+<li>中断源设备设置中断触发器，发出中断请求</li>
+<li>CPU根据当前是否允许中断、中断的优先级，等待当前指令结束后相应中断</li>
+<li>CPU保存现场信息之后运行中断处理程序，然后从中断返回</li>
+</ul>
+<h2 id="直接存储访问（DMA）">直接存储访问（DMA）</h2>
+<p>直接在IO设备和主存之间成组传输数据，然后由CPU访问主存得到外设数据</p>
+<h2 id="通道控制方式">通道控制方式</h2>
+<p><img src="image/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-4/image-20241222124238322.png" alt="image-20241222124238322" /></p>
+
+</div> 
+
+<script>
+    window.onload = detectors();
+</script>
+    <div class="post-footer">
+    <div class="h-line-primary"></div>
+    <nav class="post-nav">
+        <div class="prev-item">
+           
+                <div class="icon arrow-left"></div>
+                <div class="post-link">
+                    <a href="/2024/12/24/%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%E5%8E%9F%E7%90%86-9/">Prev</a>
+                </div>
+            
+        </div>
+        <div class="next-item">
+            
+                <div class="icon arrow-right"></div>
+                <div class="post-link">
+                  <a href="/2024/12/18/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-11/">Next</a>  
+                </div>  
+            
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="post-comment">
+
+     
+
+     
+    
+    
+
+</div>
+     
+  
+</article>
+        </div>
+      </div>
+      
+      <div class="footer">
+    <div class="flex-container">
+        <div class="footer-text">
+            
+            
+            
+                Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> & <a target="_blank" rel="noopener" href="https://github.com/zoeingwingkei/frame/">Frame</a>
+                
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    
+    
+
+  </body>
+</html>

@@ -158,48 +158,46 @@
     <blockquote>
 <p>一生二，二生三，三生万物。</p>
 </blockquote>
-<h1 id="语法分析"><a href="#语法分析" class="headerlink" title="语法分析"></a>语法分析</h1><p><strong>识别</strong> 和 <strong>解析</strong></p>
+<h1>语法分析</h1>
+<p><strong>识别</strong> 和 <strong>解析</strong></p>
 <p><strong>推导</strong> ：自顶向下（术语：<strong>句型</strong> <strong>句子</strong>，回顾<strong>形式语言与自动机</strong>课程）</p>
 <p><strong>归约</strong> ：自底向上</p>
-<h1 id="自顶向下的语法分析"><a href="#自顶向下的语法分析" class="headerlink" title="自顶向下的语法分析"></a>自顶向下的语法分析</h1><h2 id="推导的两类非确定性"><a href="#推导的两类非确定性" class="headerlink" title="推导的两类非确定性"></a>推导的两类非确定性</h2><ul>
+<h1>自顶向下的语法分析</h1>
+<h2 id="推导的两类非确定性">推导的两类非确定性</h2>
+<ul>
 <li>推导哪个非终结符</li>
 <li>使用哪个产生式</li>
 </ul>
 <p>对第一个不确定性进行改进：总是对最左边的非终结符推导，即<strong>最左推导</strong></p>
-<h2 id="确定的自顶向下分析"><a href="#确定的自顶向下分析" class="headerlink" title="确定的自顶向下分析"></a>确定的自顶向下分析</h2><p><strong>要求</strong>：非终结符选择和产生式选择都是确定的，所以是<strong>无回溯</strong>的方法（<strong>预测分析</strong>）</p>
+<h2 id="确定的自顶向下分析">确定的自顶向下分析</h2>
+<p><strong>要求</strong>：非终结符选择和产生式选择都是确定的，所以是<strong>无回溯</strong>的方法（<strong>预测分析</strong>）</p>
 <p>从左往右扫描，但在扫描过程中，为了确定使用哪个产生式可能需要<strong>向前查看</strong></p>
 <p>分析的结果：得到<strong>唯一的最左推导</strong>，因此对文法有一定的限制，例如至少要求文法无二义性</p>
 <p><strong>例</strong>  对如下文法：</p>
 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo>→</mo><mi>A</mi><mi>B</mi></mrow><annotation encoding="application/x-tex">S\rightarrow AB </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span></span></span></span>
 <br>
-
 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>→</mo><mi>a</mi><mi>A</mi></mrow><annotation encoding="application/x-tex">A\rightarrow aA </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">a</span><span class="mord mathnormal">A</span></span></span></span>
 <br>
-
 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>→</mo><mi>ϵ</mi></mrow><annotation encoding="application/x-tex">A\rightarrow\epsilon </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">ϵ</span></span></span></span>
 <br>
-
 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><mo>→</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">B\rightarrow b </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span>
 <br>
-
 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><mo>→</mo><mi>b</mi><mi>B</mi></mrow><annotation encoding="application/x-tex">B\rightarrow bB </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span></span></span></span>
-
-<p>只需要向前看2个单词就可以确定使用的产生式</p>
+<p>只需要向前看2个单词就可以确定使用的产生式：这里产生式选择的主要歧义来源于<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><mo>→</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">B\to b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi><mo>→</mo><mi>b</mi><mi>B</mi></mrow><annotation encoding="application/x-tex">b\to bB</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span></span></span></span>两个产生式无法通过向前查看1个字符区分，如果将产生式优化成<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><mo>→</mo><mi>b</mi><mi>B</mi></mrow><annotation encoding="application/x-tex">B\to bB</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><mo>→</mo><mi>ϵ</mi></mrow><annotation encoding="application/x-tex">B\to \epsilon</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">ϵ</span></span></span></span>则可以只查查看1个字符</p>
+<p>用后面的话说，这是因为文法含有<strong>左公因子</strong></p>
 <p><strong>例</strong> 对如下文法：</p>
 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo>→</mo><mi>S</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">S\rightarrow Sa </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mord mathnormal">a</span></span></span></span> <br>
-
-
 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo>→</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">S\rightarrow b </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span>
-
 <p>无法通过向前查看固定数目的单词来确定使用的产生式</p>
 <p>事实上，确定的自顶向下分析需要文法不含<strong>左递归</strong></p>
 <p>一个非终结符A是<strong>左递归</strong>，定义为：</p>
 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">∃</mi><mi>β</mi><mo>∈</mo><mo stretchy="false">(</mo><mi>V</mi><mo>∪</mo><mi>T</mi><msup><mo stretchy="false">)</mo><mo>∗</mo></msup><mtext> </mtext><mi>s</mi><mi mathvariant="normal">.</mi><mi>t</mi><mi mathvariant="normal">.</mi><mtext> </mtext><mi>A</mi><mo><mover><mo><mo>⇒</mo></mo><mo lspace="0em" rspace="0em">∗</mo></mover></mo><mi>A</mi><mi>β</mi></mrow><annotation encoding="application/x-tex">\exists\beta\in (V\cup T)^*\ s.t.\ A\stackrel{*}{\Rightarrow}A\beta </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord">∃</span><span class="mord mathnormal" style="margin-right:0.05278em;">β</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∪</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.2426em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6887em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∗</span></span></span></span></span></span></span></span><span class="mspace"> </span><span class="mord mathnormal">s</span><span class="mord">.</span><span class="mord mathnormal">t</span><span class="mord">.</span><span class="mspace"> </span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel"><span class="mop op-limits"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9926em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span><span class="mop">⇒</span></span></span><span style="top:-3.5669em;margin-left:0em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">∗</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">A</span><span class="mord mathnormal" style="margin-right:0.05278em;">β</span></span></span></span>
-<h2 id="FIRST和FOLLOW"><a href="#FIRST和FOLLOW" class="headerlink" title="FIRST和FOLLOW"></a>FIRST和FOLLOW</h2><p>FIRST(α)定义为所有可以由α推导出的串的首字符组成的集合，如果可以推导出空串，则也应包含空串</p>
+<h2 id="FIRST和FOLLOW">FIRST和FOLLOW</h2>
+<p>FIRST(α)定义为所有可以由α推导出的串的首字符组成的集合，如果可以推导出空串，则也应包含空串</p>
 <p>FOLLOW(A)集合定义为所有可以在某些句型中出现在A后面的终结符的集合，如果A可以作为某些句型的最右侧符号，则FOLLOW(A)包含一个特殊的符号#</p>
 <p><strong>FIRST集合的计算</strong></p>
 <ol>
-<li>对终结符a，则FIRST(a)&#x3D;{a}</li>
+<li>对终结符a，则FIRST(a)={a}</li>
 <li>对非终结符A，若<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>→</mo><msub><mi>Y</mi><mn>1</mn></msub><msub><mi>Y</mi><mn>2</mn></msub><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><msub><mi>Y</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">A\rightarrow Y_1Y_2...Y_n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.2222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.2222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">...</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.2222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，假设在<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>Y</mi><mi>k</mi></msub></mrow><annotation encoding="application/x-tex">Y_k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.2222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>之前的所有FIRST(Y)都含空串，则FIRST(A)应包含<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>Y</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">Y_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.2222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>至<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>Y</mi><mi>k</mi></msub></mrow><annotation encoding="application/x-tex">Y_k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.2222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>的FIRST集合的并（但注意：<em>空串应特殊考虑</em>）</li>
 <li>对串，只需要朴素地根据左侧的一些符号FIRST是否为空，类似第2步即可计算</li>
 </ol>
@@ -211,7 +209,8 @@
 <li>如果A → αBβ，则FIRST(β)中非空串元素都在FOLLOW(B)中</li>
 <li>如果A → αB或A → αBβ但FIRST(β)含空串，则FOLLOW(A)中所有符号都在FOLLOW(B)中</li>
 </ol>
-<h2 id="LL-1-文法"><a href="#LL-1-文法" class="headerlink" title="LL(1)文法"></a>LL(1)文法</h2><p><strong>定义</strong> 可以构造从左向右的只需要向前查看一个单词的预测分析器的文法</p>
+<h2 id="LL-1-文法">LL(1)文法</h2>
+<p><strong>定义</strong> 可以构造从左向右的只需要向前查看一个单词的预测分析器的文法</p>
 <p><strong>LL(1)的等价条件</strong> LL(1)文法必须且只需满足：对任何两个不同的产生式A → α | β</p>
 <ol>
 <li>α和β不可推导出同首字符的串</li>
@@ -220,38 +219,44 @@
 </ol>
 <p><strong>预测集合</strong> PS(A → α)定义为：</p>
 <ol>
-<li>如果FIRST(α)不含空，则PS(A → α) &#x3D; FIRST(α)</li>
-<li>如果FIRST(α)含空，则PS(A → α) &#x3D; (FIRST(α) - {ε})∪FOLLOW(A)</li>
+<li>如果FIRST(α)不含空，则PS(A → α) = FIRST(α)</li>
+<li>如果FIRST(α)含空，则PS(A → α) = (FIRST(α) - {ε})∪FOLLOW(A)</li>
 </ol>
 <p>即，PS(A → α)表示所有使得当前可以选择A → α的待处理字符组成的集合，LL(1)文法的定义等价于说，文法中任何两个左端相同的产生式的预测集合无交</p>
-<h2 id="预测分析表"><a href="#预测分析表" class="headerlink" title="预测分析表"></a>预测分析表</h2><p><strong>预测分析表</strong>是一个二维数组M[A,a]，其中A是非终结符，a是终结符或#，表示当前非终结符是A且输入串下一个字符是a时应采用的产生式，对每条产生式A → α，构造规则如下：</p>
+<h2 id="预测分析表">预测分析表</h2>
+<p><strong>预测分析表</strong>是一个二维数组M[A,a]，其中A是非终结符，a是终结符或#，表示当前非终结符是A且输入串下一个字符是a时应采用的产生式，对每条产生式A → α，构造规则如下：</p>
 <ol>
 <li>对FIRST(α)中的每一个a，A → α添加到M[A,a]中</li>
 <li>如果FIRST(α)含空，则对FOLLOW(A)中的每一个b（可以是$），将A → α添加到M[A,b]中</li>
 </ol>
 <p>根据上面对LL(1)文法的要求，容易看出，LL(1)文法构造出的预测分析表不存在某个表项有多个产生式</p>
-<h2 id="表驱动的LL-1-预测分析器"><a href="#表驱动的LL-1-预测分析器" class="headerlink" title="表驱动的LL(1)预测分析器"></a>表驱动的LL(1)预测分析器</h2><p>预测分析器维护一个栈和输入序列，二者的瞬间状态共同组成分析器的<strong>格局</strong></p>
+<h2 id="表驱动的LL-1-预测分析器">表驱动的LL(1)预测分析器</h2>
+<p>预测分析器维护一个栈和输入序列，二者的瞬间状态共同组成分析器的<strong>格局</strong></p>
 <p>预测分析器考虑当前栈顶符号和下一个输入符号，如果二者相同，消去；如果当前栈顶符号是非终结符，则使用预测分析表中的产生式；若预测分析表中对应表项为空，或二者是不同的终结符，则产生语法分析错误</p>
-<h2 id="递归下降LL-1-预测分析器"><a href="#递归下降LL-1-预测分析器" class="headerlink" title="递归下降LL(1)预测分析器"></a>递归下降LL(1)预测分析器</h2><p>递归下降的预测分析器是一个基于子程序调用的预测分析模型，其入口为<code>parseS()</code>，根据情况选择调用诸如<code>parseT()</code>或<code>matchToken(&#39;a&#39;)</code>之类的子程序</p>
+<h2 id="递归下降LL-1-预测分析器">递归下降LL(1)预测分析器</h2>
+<p>递归下降的预测分析器是一个基于子程序调用的预测分析模型，其入口为<code>parseS()</code>，根据情况选择调用诸如<code>parseT()</code>或<code>matchToken('a')</code>之类的子程序</p>
 <p>一个非终结符的预测分析子程序的一般过程如下：</p>
-<p><img src="/image/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-3-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90/1728824376651.png" alt="1728824376651"></p>
-<h2 id="语法分析的错误处理"><a href="#语法分析的错误处理" class="headerlink" title="语法分析的错误处理"></a>语法分析的错误处理</h2><p>编译器错误处理原则：</p>
+<p><img src="image/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-3-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90/1728824376651.png" alt="1728824376651" /></p>
+<h2 id="语法分析的错误处理">语法分析的错误处理</h2>
+<p>编译器错误处理原则：</p>
 <ul>
 <li>尽可能准确指出错误位置和错误属性</li>
 <li>尽可能进行校正</li>
 </ul>
-<h3 id="表驱动LL-1-分析中的错误处理"><a href="#表驱动LL-1-分析中的错误处理" class="headerlink" title="表驱动LL(1)分析中的错误处理"></a>表驱动LL(1)分析中的错误处理</h3><p>使用<strong>出错报告</strong>的形式：直接报告遇到的不匹配或表为空的情况</p>
+<h3 id="表驱动LL-1-分析中的错误处理">表驱动LL(1)分析中的错误处理</h3>
+<p>使用<strong>出错报告</strong>的形式：直接报告遇到的不匹配或表为空的情况</p>
 <p><strong>应急恢复机制</strong>：</p>
 <p>跳过一些符号直到遇到栈顶非终结符A的<strong>同步符号</strong>：FOLLOW(A)或FIRST(A)，遇到前者则放弃A，遇到后者则处理A</p>
-<h3 id="递归下降LL-1-分析中的错误处理"><a href="#递归下降LL-1-分析中的错误处理" class="headerlink" title="递归下降LL(1)分析中的错误处理"></a>递归下降LL(1)分析中的错误处理</h3><p>进入和离开一个语法单元（非终结符的分析子程序）时判断当前符号是否是合理的开始符号BeginSym（即FIRST）或结束符号EndSym（可以理解为LAST），若不是，则报错（出错报告），并跳过接下来第一个BeginSym或EndSym之前的任何符号（应急恢复），遇到BeginSym则返回初始，遇到EndSym则结束</p>
-<h1 id="文法变换"><a href="#文法变换" class="headerlink" title="文法变换"></a>文法变换</h1><h2 id="消除左递归"><a href="#消除左递归" class="headerlink" title="消除左递归"></a>消除左递归</h2><p><strong>直接左递归的消除</strong></p>
+<h3 id="递归下降LL-1-分析中的错误处理">递归下降LL(1)分析中的错误处理</h3>
+<p>进入和离开一个语法单元（非终结符的分析子程序）时判断当前符号是否是合理的开始符号BeginSym（即FIRST）或结束符号EndSym（可以理解为LAST），若不是，则报错（出错报告），并跳过接下来第一个BeginSym或EndSym之前的任何符号（应急恢复），遇到BeginSym则返回初始，遇到EndSym则结束</p>
+<h1>文法变换</h1>
+<h2 id="消除左递归">消除左递归</h2>
+<p><strong>直接左递归的消除</strong></p>
 <p>对于</p>
 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo>→</mo><mi>P</mi><mi>α</mi><mtext> </mtext><mi mathvariant="normal">∣</mi><mtext> </mtext><mi>β</mi></mrow><annotation encoding="application/x-tex">P\rightarrow P\alpha\ |\ \beta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mspace"> </span><span class="mord">∣</span><span class="mspace"> </span><span class="mord mathnormal" style="margin-right:0.05278em;">β</span></span></span></span>
-
 <p>改写为</p>
 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo>→</mo><mi>β</mi><mi>Q</mi></mrow><annotation encoding="application/x-tex">P\rightarrow \beta Q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">βQ</span></span></span></span><br>
 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Q</mi><mo>→</mo><mi>α</mi><mi>Q</mi><mtext> </mtext><mi mathvariant="normal">∣</mi><mtext> </mtext><mi>ϵ</mi></mrow><annotation encoding="application/x-tex">Q\rightarrow \alpha Q\ |\ \epsilon</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">Q</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mord mathnormal">Q</span><span class="mspace"> </span><span class="mord">∣</span><span class="mspace"> </span><span class="mord mathnormal">ϵ</span></span></span></span>
-
 <p><strong>一般左递归的消除</strong></p>
 <p>对于无回路（即A可推导出A，这说明文法二义）、无ε-产生式的文法，通过下列步骤消除一般左递归：</p>
 <ol>
@@ -259,21 +264,23 @@
 <li>对序列中每个非终结符，展开其产生式，使其中不包含序列中在其之前的符号，过程中一旦出现直接左递归则将其消除</li>
 <li>化简文法</li>
 </ol>
-<h2 id="提取左公因子"><a href="#提取左公因子" class="headerlink" title="提取左公因子"></a>提取左公因子</h2><p><strong>提取左公因子规则</strong> 对于</p>
+<h2 id="提取左公因子">提取左公因子</h2>
+<p><strong>提取左公因子规则</strong> 对于</p>
 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo>→</mo><mi>α</mi><mi>β</mi><mtext> </mtext><mi mathvariant="normal">∣</mi><mtext> </mtext><mi>α</mi><mi>γ</mi></mrow><annotation encoding="application/x-tex">P\rightarrow \alpha\beta\ |\ \alpha\gamma</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mord mathnormal" style="margin-right:0.05278em;">β</span><span class="mspace"> </span><span class="mord">∣</span><span class="mspace"> </span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mord mathnormal" style="margin-right:0.05556em;">γ</span></span></span></span>
-
 <p>可以用以下产生式替换：</p>
 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo>→</mo><mi>α</mi><mi>Q</mi></mrow><annotation encoding="application/x-tex">P\rightarrow \alpha Q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mord mathnormal">Q</span></span></span></span><br>
 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Q</mi><mo>→</mo><mi>β</mi><mtext> </mtext><mi mathvariant="normal">∣</mi><mtext> </mtext><mi>γ</mi></mrow><annotation encoding="application/x-tex">Q\rightarrow \beta\ |\ \gamma</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">Q</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.05278em;">β</span><span class="mspace"> </span><span class="mord">∣</span><span class="mspace"> </span><span class="mord mathnormal" style="margin-right:0.05556em;">γ</span></span></span></span>
-
 <p><strong>注</strong> 提取左公因子与左递归无关，进而与文法是否可以无回溯预测分析无关，但提取左公因子可以将一些非LL(1)文法转化为LL(1)文法</p>
-<h1 id="LL-K-文法的一些理论上的结论"><a href="#LL-K-文法的一些理论上的结论" class="headerlink" title="LL(K)文法的一些理论上的结论"></a>LL(K)文法的一些理论上的结论</h1><h2 id="可判定性"><a href="#可判定性" class="headerlink" title="可判定性"></a>可判定性</h2><ul>
+<h1>LL(K)文法的一些理论上的结论</h1>
+<h2 id="可判定性">可判定性</h2>
+<ul>
 <li>给定k＞0，一个CFG是否是LL(k)文法是可判定的</li>
 <li>对于一个CFG，是否存在k＞0，使该文法是LL(k)文法，是不可判定的</li>
 <li>是否存在于文法等价的LL(k)文法，是不可判定的</li>
 <li>两个LL(k)文法的语言是否相等是可判定的</li>
 </ul>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
+<h2 id="其他">其他</h2>
+<ul>
 <li>LL(k)文法是无二义文法</li>
 <li>LL(k)文法中不存在左递归的非终结符</li>
 <li>给定k＞0，不含ε产生式的LL(k)文法的语言类真包含于不含ε产生式的LL(k+1)文法的语言类</li>
