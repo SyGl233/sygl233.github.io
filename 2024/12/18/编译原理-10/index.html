@@ -12,7 +12,7 @@
 
 
 
-<title>编译原理-10 | SyGl_</title>
+<title>编译原理(10) 运行时存储组织 | SyGl_</title>
 
 
 
@@ -122,11 +122,25 @@
     <div class="post-info">
         <div class="tag-list">
             
+                
+                    <span class="post-tag">
+                        <a href="/tags/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">
+                            课程笔记
+                        </a>
+                    </span>    
+                
+                    <span class="post-tag">
+                        <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">
+                            编译原理
+                        </a>
+                    </span>    
+                           
+            
         </div>
         <div class="post-title">
             
             
-                编译原理-10
+                编译原理(10) 运行时存储组织
             
             
         </div>
@@ -141,7 +155,89 @@
     </div>
 </div>
     <div class="post-content">
-    
+    <p><strong>运行时存储组织</strong>一节主要讨论在代码运行时的内存空间中如何存放所需的变量</p>
+<p>本节中最复杂的问题来自于<strong>函数的嵌套定义</strong>，此时对外层嵌套函数中的变量寻址将会产生一些问题，例如</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">func1</span>():</span><br><span class="line">    x1 = <span class="number">0</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">func2</span>():</span><br><span class="line">        <span class="built_in">print</span>(x1)</span><br><span class="line">    func2()</span><br></pre></td></tr></table></figure>
+<p>此时再<code>func2</code>中如何定位定义在<code>func1</code>中的变量<code>x1</code>的地址？这就是本节需要解决的问题</p>
+<h1>运行时存储组织概论</h1>
+<p>运行时存储组织的几个主要问题：</p>
+<ul>
+<li>数据表示</li>
+<li>表达式计算</li>
+<li>存储分配策略</li>
+<li>过程实现（特别是<strong>过程的递归调用</strong>）</li>
+</ul>
+<hr />
+<p><strong>数据表示</strong>：</p>
+<ul>
+<li>对基本类型数据，使用已规定的数据大小存储</li>
+<li>对于数组/结构/对象等复合类型，使用一块连续的存储空间存储</li>
+<li>对象的成员函数/方法，存储在其所属类的代码区，每个类存放一份</li>
+</ul>
+<hr />
+<p><strong>表达式的计算</strong>：</p>
+<ul>
+<li>在栈区计算：中间结果或运算数存放在活动记录或寄存器中</li>
+<li>在运算数栈计算：为表达式计算开辟专门的运算数栈</li>
+</ul>
+<hr />
+<p><strong>运行时的存储空间布局</strong>：</p>
+<ul>
+<li>保留地址区</li>
+<li>代码区</li>
+<li>静态数据区</li>
+<li>共享库和分别编译模块区</li>
+<li>动态数据区（堆区、栈区）</li>
+</ul>
+<hr />
+<p><strong>存储分配策略</strong>：</p>
+<ul>
+<li>静态分配：编译期分配</li>
+<li>动态分配
+<ul>
+<li>栈式分配：拉栈，静态确定栈大小也属于动态分配</li>
+<li>堆式分配：堆分配和释放，例如C++中的<code>new</code></li>
+</ul>
+</li>
+</ul>
+<h1>活动记录</h1>
+<p><strong>活动记录</strong>是相对于<strong>过程或函数</strong>而言的，记录此过程的<strong>局部变量</strong>、<strong>实参</strong>、<strong>临时中间值</strong>等数据和<strong>必要的控制信息</strong></p>
+<p>活动记录具体体现为<strong>运行栈上的栈帧</strong></p>
+<hr />
+<p>对于<strong>不支持过程嵌套定义</strong>的语言，活动记录的实现很简单，只要维护栈顶地址、栈帧中的返回地址即可</p>
+<p>这是因为此类语言所有过程都定义在全局作用域，过程能够访问的过程外数据只有全局变量和参数</p>
+<ul>
+<li>全局变量可以直接根据地址寻址</li>
+<li>参数通过传参规范在寄存器中或栈上寻址</li>
+</ul>
+<p>对于<strong>支持过程嵌套定义</strong>的语言，过程可以访问的过程外数据不止包括全局变量和参数，还包括<strong>外层过程的局部变量</strong></p>
+<p>这里的<strong>外层过程</strong>指的是定义此嵌套过程的过程，访问此类局部变量需要先找到外层过程的活动记录</p>
+<p>而外层过程不一定总是直接调用嵌套过程，具体地，在下述代码中：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">p</span>():</span><br><span class="line">    x1 = <span class="number">0</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">q</span>():</span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">r</span>():</span><br><span class="line">            <span class="built_in">print</span>(x1)</span><br><span class="line">            r()</span><br><span class="line">        r()</span><br><span class="line">    q()</span><br><span class="line">p()</span><br></pre></td></tr></table></figure>
+<p>过程记录栈的内容为p→q→r→r→r→……</p>
+<p>此时过程r需要使用过程p中定义的<code>x1</code>，但过程r的直接调用者并不是过程p，且由于过程r可能经过任意轮递归，过程p在栈中的位置是不确定的</p>
+<p>这是<strong>定义嵌套和调用嵌套的矛盾</strong>，此时需要使用数据结构来显式维护<strong>定义嵌套链</strong>和<strong>调用嵌套链</strong></p>
+<h2 id="静态链和动态链法">静态链和动态链法</h2>
+<p>在活动记录中：</p>
+<ul>
+<li>使用<strong>静态链 (SL)</strong> 指向当前过程在<strong>定义嵌套链</strong>中的上一级，即<strong>定义者</strong>的最近一次调用</li>
+<li>使用<strong>动态链 (DL)</strong> 指向当前过程在<strong>调用嵌套链</strong>中的上一级，即<strong>调用者</strong>；技术上动态链总是指向栈中上一个活动记录</li>
+<li>每个活动记录分配固定位置的栈上地址，存储SL和DL</li>
+</ul>
+<h2 id="Display表法">Display表法</h2>
+<p><strong>Display表</strong>是<strong>静态链</strong>的另一种实现，在Display表中，D[i]表示当前过程定义链中第i层的过程的活动记录；D[0]总是指向全局记录或主函数记录</p>
+<p>在函数调用发生时，Display表可能发生表项替换，此时需要将换下的表项保存在栈上的活动记录中，当函数返回时用栈上保存的表项替换Display表中的原有表项</p>
+<p>由于一个过程在定义链中的层数是<strong>编译期已知</strong>的，因此不需要进行Display表层数的动态维护</p>
+<p>Display表的更新和保存见下图：</p>
+<p><img src="/image/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-10/image-20250103183734412.png" alt="image-20250103183734412" /></p>
+<p>这里，S调用P，P调用Q，Q调用R，R调用P；S、P并行定义，P定义Q，Q定义R</p>
+<h1>动态作用域和静态作用域</h1>
+<p>对于在过程调用中，对于变量引用的定值选择存在两种不同的模式：</p>
+<ul>
+<li><strong>静态作用域（词法作用域）</strong>： 最常见的模式，变量的引用按照静态链（定义链）中最近的活动记录中的值处理</li>
+<li><strong>动态作用域</strong>：变量的引用按照动态链（调用链）中最近的活动记录中的值处理</li>
+</ul>
+
 </div> 
 
 <script>
