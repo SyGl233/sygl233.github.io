@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+
+
+
+
+<title>高性能计算(1) 高性能计算简介和并行编程模型 | SyGl_</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto+Mono&display=swap');
+</style>
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/menu.js"></script>
+    
+
+
+
+
+
+
+
+
+
+
+  <!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+  <body>
+    <div class="mask-border">
+    </div>
+
+    <div class="wrapper">
+
+      <div class="header">
+  <div class="flex-container">
+    <div class="header-inner">
+      <div class="site-brand-container">
+        <a href="/">
+          
+            SyGl
+          
+        </a>
+      </div>
+      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
+        Menu
+      </div>
+      <nav class="site-nav">
+        <ul class="menu-list">
+          
+            
+              <li class="menu-item">
+                <a href="/">Home</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/archives/">Archive</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/gallery/">Gallery</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/note/">Note</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/personal/">Personal</a>
+              </li> 
+                   
+          
+          
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main">
+        <div class="flex-container">
+          <article id="post">
+
+  
+    <div class="post-head">
+    <div class="post-info">
+        <div class="tag-list">
+            
+                
+                    <span class="post-tag">
+                        <a href="/tags/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">
+                            课程笔记
+                        </a>
+                    </span>    
+                
+                    <span class="post-tag">
+                        <a href="/tags/%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97/">
+                            高性能计算
+                        </a>
+                    </span>    
+                           
+            
+        </div>
+        <div class="post-title">
+            
+            
+                高性能计算(1) 高性能计算简介和并行编程模型
+            
+            
+        </div>
+        <span class="post-date">
+            Jan 27, 2025
+        </span>
+    </div>
+    <div class="post-img">
+        
+            <div class="h-line-primary"></div>
+              
+    </div>
+</div>
+    <div class="post-content">
+    <h1>高性能计算简介</h1>
+<p>高性能计算的核心是<strong>并行处理</strong></p>
+<p>高性能计算的三个目标：</p>
+<ul>
+<li><strong>算的更快</strong>：提升<strong>求解速度</strong></li>
+<li><strong>算的更多</strong>：提升<strong>问题规模</strong></li>
+<li><strong>算的更好</strong>：提升<strong>求解精度</strong></li>
+</ul>
+<p>高性能计算的衡量单位：</p>
+<ul>
+<li>计算能力，Flop/s：浮点数运算每秒</li>
+<li>存储能力，B：字节</li>
+</ul>
+<h2 id="高性能计算硬件">高性能计算硬件</h2>
+<p><strong>高性能计算机（超级计算机）</strong>：一般为多个<strong>多核服务器</strong>通过<strong>高速网络</strong>互连组成的系统，称为<strong>集群架构（cluster）</strong></p>
+<p><strong>多核服务器</strong>：包含CPU、内存、存储、加速器、网卡</p>
+<ul>
+<li>使用<strong>并行文件系统</strong>，存储节点独立于计算节点，与计算节点通过高速互联网络处理IO</li>
+<li>网络使用比<strong>以太网</strong>更加快速、短程的<strong>Infiniband（IB）</strong>，核心技术为<strong>远程直接内存访问（RDMA）</strong></li>
+</ul>
+<h1>并行计算硬件模型</h1>
+<h2 id="Flynn分类法">Flynn分类法</h2>
+<p>并行计算硬件模型的<strong>Flynn分类法</strong>：从处理单元的角度考虑<strong>指令流</strong>和<strong>数据流</strong></p>
+<ul>
+<li>SISD：单指令流、单数据流
+<ul>
+<li>单核处理器</li>
+</ul>
+</li>
+<li>SIMD：单指令流、多数据流
+<ul>
+<li>例如CPU中的向量处理单元、GPU</li>
+<li>可以并行操作数据</li>
+</ul>
+</li>
+<li>MISD：多指令流、单数据流
+<ul>
+<li>实际应用很受限</li>
+</ul>
+</li>
+<li>MIMD：多指令流、多数据流
+<ul>
+<li>现代计算机、多核处理器</li>
+</ul>
+</li>
+</ul>
+<h2 id="内存视角分类">内存视角分类</h2>
+<p><strong>共享内存</strong>：</p>
+<ul>
+<li>所有处理单元与共享内存相连，处于<strong>同一地址空间</strong></li>
+<li>任何处理单元可以<strong>直接访问</strong>任何内存位置</li>
+<li><strong>均匀内存访问架构（UMA）</strong>：每个处理器访问每个地址的性能相同</li>
+<li><strong>非均匀内存访问架构（NUMA）</strong>：每个单元有局部内存，访问局部内存优于访问远程内存；可以拓展到很大规模</li>
+</ul>
+<p><strong>分布式内存</strong>：</p>
+<ul>
+<li>每个处理单元拥有自己的内存，不同内存<strong>地址空间独立</strong></li>
+<li>数据传输不能直接访问，需要<strong>显式通信</strong></li>
+</ul>
+<hr />
+<p><strong>对称多处理器（SMP）</strong></p>
+<ul>
+<li>包含多个相同处理器，连接到一个共享内存</li>
+<li>多个处理器是同构、对称的</li>
+<li>可以同时处理不同任务</li>
+</ul>
+<p><img src="/image/%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97-1/image-20250127094521659.png" alt="image-20250127094521659" /></p>
+<p><strong>单芯片多处理器（CMP）</strong></p>
+<ul>
+<li>将SMP技术应用到单个处理器内，也叫<strong>多核处理器</strong></li>
+</ul>
+<h1>并行编程模型</h1>
+<h2 id="共享内存模型">共享内存模型</h2>
+<p>不同<strong>指令流</strong>并发执行</p>
+<p>指令流之间的<strong>同步</strong>采用<strong>共享变量</strong></p>
+<p>数据存放在<strong>单一地址空间</strong>，不需要显式通信</p>
+<p>适用<strong>共享内存架构</strong>的硬件模型（例子：<em>多线程</em> ）</p>
+<blockquote>
+<p><strong>进程</strong>：进行数据隔离</p>
+<p><strong>线程</strong>：在进程内部进行指令流隔离</p>
+</blockquote>
+<p>例子：pthread、OpenMP</p>
+<h2 id="消息传递模型">消息传递模型</h2>
+<p>不同<strong>指令流</strong>并发执行</p>
+<p>指令流之间的<strong>同步</strong>基于<strong>通信</strong></p>
+<p>数据存放在不同指令流的<strong>独立地址空间</strong>，需要<strong>显式通信</strong></p>
+<p>适用<strong>分布式内存架构</strong>或<strong>共享内存架构</strong></p>
+<p>使用MPI作为事实标准，MPI有不同实现</p>
+<h2 id="数据并行模型">数据并行模型</h2>
+<p>在不同数据上执行相同逻辑，逻辑上只有一个指令流，操作多份数据</p>
+<p>适用SIMD或分布式内存架构</p>
+<p>例子：向量扩展指令、MapReduce编程模型</p>
+<blockquote>
+<p>MapReduce：对向量输入的计算分为两个阶段</p>
+<ul>
+<li>Map：以相同的逻辑处理输入中的每个元素，即“映射”</li>
+<li>Reduce：综合映射得到的中间结果，得到最终结果</li>
+</ul>
+</blockquote>
+<h2 id="混合多种并行编程模型">混合多种并行编程模型</h2>
+<p>实际使用中往往混合应用，例如分布式深度学习训练：</p>
+<ul>
+<li>节点间采用消息传递模型</li>
+<li>节点内采用三种模型综合</li>
+</ul>
+<p>科学计算中，使用超大规模集群、多核节点、异构计算设备</p>
+<h1>并行计算性能指标</h1>
+<p><strong>加速比</strong>：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo><mo>=</mo><msub><mi>T</mi><mi>s</mi></msub><mi mathvariant="normal">/</mi><msub><mi>T</mi><mi>p</mi></msub></mrow><annotation encoding="application/x-tex">S(p)=T_s/T_p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.0361em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">s</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">/</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">p</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span></p>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>T</mi><mi>s</mi></msub></mrow><annotation encoding="application/x-tex">T_s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">s</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>为串行时间，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>T</mi><mi>p</mi></msub></mrow><annotation encoding="application/x-tex">T_p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9694em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">p</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span>为并行时间，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span>为处理单元数目</li>
+<li>线性加速：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo><mo>=</mo><mi>p</mi></mrow><annotation encoding="application/x-tex">S(p)=p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span>，为理想情况的最大加速比</li>
+<li>超线性加速：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo><mo>&gt;</mo><mi>p</mi></mrow><annotation encoding="application/x-tex">S(p)&gt;p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span>，实际情况中有时会发生</li>
+<li>亚线性加速：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo><mo>&lt;</mo><mi>p</mi></mrow><annotation encoding="application/x-tex">S(p)&lt;p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span>，是典型的情况</li>
+</ul>
+<p>难以实现理想线性加速的原因：</p>
+<ul>
+<li>程序不是所有部分都可以并行</li>
+<li>并行处理引入通信和同步开销（比较重要）</li>
+<li>并行可能引入额外计算（比如重复计算）</li>
+</ul>
+
+</div> 
+
+<script>
+    window.onload = detectors();
+</script>
+    <div class="post-footer">
+    <div class="h-line-primary"></div>
+    <nav class="post-nav">
+        <div class="prev-item">
+           
+        </div>
+        <div class="next-item">
+            
+                <div class="icon arrow-right"></div>
+                <div class="post-link">
+                  <a href="/2025/01/11/%E5%81%8F%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B%E5%9F%BA%E7%A1%80/">Next</a>  
+                </div>  
+            
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="post-comment">
+
+     
+
+     
+    
+    
+
+</div>
+     
+  
+</article>
+        </div>
+      </div>
+      
+      <div class="footer">
+    <div class="flex-container">
+        <div class="footer-text">
+            
+            
+            
+                Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> & <a target="_blank" rel="noopener" href="https://github.com/zoeingwingkei/frame/">Frame</a>
+                
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    
+    
+
+  </body>
+</html>
