@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+
+
+
+
+<title>高性能计算(2) 消息传递编程模型 | SyGl_</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto+Mono&display=swap');
+</style>
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/menu.js"></script>
+    
+
+
+
+
+
+
+
+
+
+
+  <!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+  <body>
+    <div class="mask-border">
+    </div>
+
+    <div class="wrapper">
+
+      <div class="header">
+  <div class="flex-container">
+    <div class="header-inner">
+      <div class="site-brand-container">
+        <a href="/">
+          
+            SyGl
+          
+        </a>
+      </div>
+      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
+        Menu
+      </div>
+      <nav class="site-nav">
+        <ul class="menu-list">
+          
+            
+              <li class="menu-item">
+                <a href="/">Home</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/archives/">Archive</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/gallery/">Gallery</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/note/">Note</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/personal/">Personal</a>
+              </li> 
+                   
+          
+          
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main">
+        <div class="flex-container">
+          <article id="post">
+
+  
+    <div class="post-head">
+    <div class="post-info">
+        <div class="tag-list">
+            
+                
+                    <span class="post-tag">
+                        <a href="/tags/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">
+                            课程笔记
+                        </a>
+                    </span>    
+                
+                    <span class="post-tag">
+                        <a href="/tags/%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97/">
+                            高性能计算
+                        </a>
+                    </span>    
+                           
+            
+        </div>
+        <div class="post-title">
+            
+            
+                高性能计算(2) 消息传递编程模型
+            
+            
+        </div>
+        <span class="post-date">
+            Jan 27, 2025
+        </span>
+    </div>
+    <div class="post-img">
+        
+            <div class="h-line-primary"></div>
+              
+    </div>
+</div>
+    <div class="post-content">
+    <h1>MPI</h1>
+<p>MPI：Message Passing Interface，是一套消息传递库的标准，定义了<strong>接口</strong>，但并不定义具体实现</p>
+<p>常用于<strong>分布式内存系统</strong></p>
+<p>设计目标：<strong>可移植性</strong>、<strong>可扩展性</strong>、<strong>灵活性</strong></p>
+<p>MPI采取<strong>SPMD编程风格</strong>，即<strong>单程序多数据</strong>，注意：</p>
+<ul>
+<li>SPMD中程序的某个片段并行分支执行，使用不同区域的数据执行相同的程序段，但具体执行方式（例如程序段内有依赖数据的分支）可能不同</li>
+<li>SIMD是指令级的单指令多数据，对不同的数据一定执行相同的操作</li>
+<li>SPMD不是SIMD</li>
+</ul>
+<h2 id="MPI编程基础">MPI编程基础</h2>
+<p>下面介绍基于C++的MPI编程</p>
+<p>首先，程序需要包含<code>mpi.h</code>头文件，然后对每个MPI调用采取<code>rc = MPI_Xxx(xxx)</code>的格式，如果正确执行，返回值<code>rc = MPI_SUCCESS</code></p>
+<hr />
+<p>在并行程序执行时的重要问题：</p>
+<ul>
+<li>How many?——即总进程数，由<code>MPI_Comm_size</code>提供</li>
+<li>Who am I?——即当前进程号，由<code>MPI_Comm_rank</code>提供</li>
+</ul>
+<blockquote>
+<p>注意：MPI是分布式数据的<strong>进程级</strong>并行</p>
+</blockquote>
+<hr />
+<p>MPI环境配置函数：</p>
+<ul>
+<li><code>MPI_Init()</code>：初始化MPI运行环境</li>
+<li><code>MPI_Finalize()</code>：终止MPI运行环境</li>
+<li><code>MPI_Comm_size(comm, &amp;size)</code>：确定通信域中的进程数量</li>
+<li><code>MPI_Comm_rank(comm, &amp;rank)</code>：确定通信域内的rank，即任务ID</li>
+</ul>
+<blockquote>
+<p>注意：这里后两个函数传入的参数是<strong>引用</strong>，即在进入并行后<code>size</code>和<code>rank</code>存入的变量，实际起到的功能是<strong>保存进程参数</strong></p>
+</blockquote>
+<hr />
+<p>示例程序：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;mpi.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span> <span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span> &#123;</span><br><span class="line">    <span class="type">int</span> rank, size;</span><br><span class="line">    MPI_Init(&amp;argc, &amp;argv);</span><br><span class="line">    MPI_Comm_rank(MPI_COMM_WORLD, &amp;rank);</span><br><span class="line">    MPI_Comm_size(MPI_COMM_WORLD, &amp;size);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;I am %d of %d!\n&quot;</span>, rank, size);</span><br><span class="line">    MPI_Finalize();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="MPI通信">MPI通信</h2>
+<p>点对点通信分为两种方式：<strong>阻塞式</strong>和<strong>非阻塞式</strong></p>
+<h3 id="阻塞式">阻塞式</h3>
+<p>阻塞式通信中，函数在完成通信（即发送/接收完成后）才返回</p>
+<p><code>MPI_Send(buffer, count, type, dest, tag, comm)</code></p>
+<p><code>MPI_Recv(buffer, count, type, source, tag, comm, status)</code></p>
+<p>这里的<code>comm</code>默认为<code>MPI_COMM_WORLD</code></p>
+<p><code>source</code>可以使用<code>MPI_ANY_SOURCE</code>；<code>tag</code>可以使用<code>MPI_ANY_TAG</code></p>
+<h3 id="非阻塞式">非阻塞式</h3>
+<p>非阻塞式通信中，函数调用后立即返回，并构造一个<strong>非阻塞通信对象</strong><code>request</code>，以便后续查询通信状态</p>
+<p><code>MPI_Isend(buffer, count, type, dest, tag, comm, request)</code></p>
+<p><code>MPI_Irecv(buffer, count, type, source, tag, comm, request)</code></p>
+<p>此时可以使用</p>
+<p><code>MPI_Wait(request, status)</code></p>
+<p>来等待之前发出的通信结束，或者使用</p>
+<p><code>MPI_Waitall(count, array_of_requests, array_of_statuses)</code></p>
+<p>来等待通信列表全部结束</p>
+<h2 id="消息传递模型的并行化策略">消息传递模型的并行化策略</h2>
+<ul>
+<li>将问题<strong>划分为子任务</strong></li>
+<li>将子任务<strong>映射</strong>到不同的进程</li>
+<li>进程<strong>并行计算</strong>各自的子任务，之后将结果汇总</li>
+</ul>
+<h2 id="MPI集合通信">MPI集合通信</h2>
+<p><strong>集合通信</strong>是MPI提供的一种比点对点通信更高效的通信手段</p>
+<hr />
+<p><strong>广播</strong>（一发多）</p>
+<p><code>MPI_Bcast(&amp;buffer, count, datatype, root, comm)</code></p>
+<p>广播rank为<code>root</code>的进程的<code>buffer</code>，自动存入其他进程的<code>buffer</code>，例如</p>
+<p><code>MPI_Bcase(&amp;value, 1, MPI_INT, 0, MPI_COMM_WORLD)</code></p>
+<p>会自动将所有进程的<code>value</code>值设为0号进程的对应值</p>
+<p><strong>归约</strong>（多发一）</p>
+<p><code>MPI_Reduce(&amp;sendbuf, &amp;recvbuf, count, datatype, op, dest, comm)</code></p>
+<p>将所有进程中的<code>sendbuf</code>中的值以某一操作<code>op</code>汇总后放入某一进程的<code>recvbuf</code></p>
+<p>例如<code>dest = 2; count = 1; op = MPI_SUM</code>则是将所有进程的<code>sendbuf</code>求和后放入2号进程的<code>recvbuf</code></p>
+<p><strong>扫描</strong></p>
+<p>前缀版本的归约，操作数比归约少一个<code>dest</code></p>
+<p>例如，对以下情况使用<code>MPI_SUM</code>归约：</p>
+<table>
+<thead>
+<tr>
+<th>rank</th>
+<th>value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>2</td>
+</tr>
+<tr>
+<td>2</td>
+<td>3</td>
+</tr>
+<tr>
+<td>3</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<p>得到的结果为：</p>
+<table>
+<thead>
+<tr>
+<th>rank</th>
+<th>value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>3</td>
+</tr>
+<tr>
+<td>2</td>
+<td>6</td>
+</tr>
+<tr>
+<td>3</td>
+<td>10</td>
+</tr>
+</tbody>
+</table>
+<p><strong>其他操作</strong></p>
+<p>这里略去具体使用方式和用途，可以随时查询</p>
+<ul>
+<li>分散（Scatter）</li>
+<li>收集（Gatter）</li>
+<li>Allgather</li>
+<li>Allreduce</li>
+<li>Alltoall</li>
+</ul>
+<p><strong>屏障</strong></p>
+<p><code>MPI_Barrier(comm)</code></p>
+<p>在组内创建barrier来同步，阻塞进程直到组内所有进程到达barrier处</p>
+<h2 id="通信域和组">通信域和组</h2>
+<p><strong>组（Group）</strong>：定义了一些可以相互通信的进程</p>
+<p><strong>通信域（Communicator）</strong>：是一个与组关联的对象，用于执行通信函数调用</p>
+<p>预先定义的全通信域为<code>MPI_COMM_WORLD</code></p>
+<p>可以如下定义新的通信域和组：</p>
+<ul>
+<li>
+<p>使用<code>MPI_Comm_group</code>访问通信域关联的组</p>
+</li>
+<li>
+<p>使用<code>MPI_Group_incl</code>通过现有组的子集创建组</p>
+</li>
+<li>
+<p>使用<code>MPI_Comm_create</code>创建一个基于组的通信域</p>
+</li>
+</ul>
+<p>利用<code>MPI_COMM_WORLD</code>和上述接口就可以创建任意的通信域和组</p>
+<h2 id="MPI-IO">MPI-IO</h2>
+<p>在MPI中使用常规的POSIX文件访问会面临性能不足的问题，因为不同进程访问同一文件会创建多个文件句柄</p>
+<p>MPI提供了并行IO接口，使得不同进程访问同一文件时，文件在底层只打开一次，不同进程具有相同的文件句柄，可以同时读写</p>
+<p>分为独立I/O和集合I/O两种</p>
+<p>具体接口包括：</p>
+<ul>
+<li>打开文件：<code>MPI_File_open</code></li>
+<li>关闭文件：<code>MPI_File_close</code></li>
+<li>独立读写：<code>MPI_File_read/write</code></li>
+<li>集合读写：<code>MPI_File_read/write_all</code></li>
+<li>将写操作刷新到存储设备中：<code>MPI_File_sync</code></li>
+<li><code>MPI_File_seek</code></li>
+<li><code>MPI_File_read_at</code></li>
+</ul>
+<h2 id="点对点通信的缓冲区问题">点对点通信的缓冲区问题</h2>
+
+</div> 
+
+<script>
+    window.onload = detectors();
+</script>
+    <div class="post-footer">
+    <div class="h-line-primary"></div>
+    <nav class="post-nav">
+        <div class="prev-item">
+           
+        </div>
+        <div class="next-item">
+            
+                <div class="icon arrow-right"></div>
+                <div class="post-link">
+                  <a href="/2025/01/27/%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97-1/">Next</a>  
+                </div>  
+            
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="post-comment">
+
+     
+
+     
+    
+    
+
+</div>
+     
+  
+</article>
+        </div>
+      </div>
+      
+      <div class="footer">
+    <div class="flex-container">
+        <div class="footer-text">
+            
+            
+            
+                Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> & <a target="_blank" rel="noopener" href="https://github.com/zoeingwingkei/frame/">Frame</a>
+                
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    
+    
+
+  </body>
+</html>
