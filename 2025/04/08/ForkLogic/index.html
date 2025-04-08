@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+
+
+
+
+<title>fork()构成逻辑表达式的进程数量分析 | SyGl_</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto+Mono&display=swap');
+</style>
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/menu.js"></script>
+    
+
+
+
+
+
+
+
+
+
+
+  <!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+  <body>
+    <div class="mask-border">
+    </div>
+
+    <div class="wrapper">
+
+      <div class="header">
+  <div class="flex-container">
+    <div class="header-inner">
+      <div class="site-brand-container">
+        <a href="/">
+          
+            SyGl
+          
+        </a>
+      </div>
+      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
+        Menu
+      </div>
+      <nav class="site-nav">
+        <ul class="menu-list">
+          
+            
+              <li class="menu-item">
+                <a href="/">Home</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/archives/">Archive</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/gallery/">Gallery</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/note/">Note</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/personal/">Personal</a>
+              </li> 
+                   
+          
+          
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main">
+        <div class="flex-container">
+          <article id="post">
+
+  
+    <div class="post-head">
+    <div class="post-info">
+        <div class="tag-list">
+            
+                
+                    <span class="post-tag">
+                        <a href="/tags/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">
+                            课程笔记
+                        </a>
+                    </span>    
+                           
+            
+        </div>
+        <div class="post-title">
+            
+            
+                fork()构成逻辑表达式的进程数量分析
+            
+            
+        </div>
+        <span class="post-date">
+            Apr 8, 2025
+        </span>
+    </div>
+    <div class="post-img">
+        
+            <div class="h-line-primary"></div>
+              
+    </div>
+</div>
+    <div class="post-content">
+    <p>在计算机系统概论/操作系统的考题中，经常遇见以下形状的问题：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fork() || fork() &amp;&amp; fork() || fork();</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;A\n&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p>问代码运行会输出多少个<code>A</code></p>
+<p>这类问题乍一看非常棘手，但实际上有一套统一的做法可以完成，我称之为<strong>状态机标数法</strong></p>
+<h2 id="例1：仅统计总进程数量">例1：仅统计总进程数量</h2>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(fork() &amp;&amp; fork() || fork() &amp;&amp; fork() || fork() &amp;&amp; fork() &amp;&amp; fork());</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;A\n&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p>上例中，<code>fork()</code>逻辑表达式的求值结果实际上不起作用，但由于逻辑运算符<code>&amp;&amp;</code>和<code>||</code>的求值是短路的（即如果进行部分求值后已经可以知道整体的值，则不会进行后续求值），因此逻辑表达式的部分求值结果会影响后续的<code>fork()</code>是否执行，从而影响总进程数量。最终输出的<code>A</code>的数量等于总进程数量。</p>
+<h3 id="步骤1：画出表达式状态机">步骤1：画出表达式状态机</h3>
+<p>为了研究上述表达式的求值过程，我们需要画出<strong>表达式状态机</strong>，这本质上是一个<strong>确定有限自动机</strong>，每个<strong>状态</strong>表示一次<code>fork()</code>函数调用，转移符号共有<code>0</code>和<code>1</code>两种，<code>0</code>表示<code>fork()</code>返回零值，即子进程；<code>1</code>表示<code>fork()</code>返回非零值，即父进程</p>
+<p>本例有7个<code>fork()</code>，将其从左到右编号为<code>1</code>至<code>7</code>（虽然运算符有优先级，但运算符序列中的运算数永远是从左到右求值的），再加上一个完成求值的终态，建立8个自动机状态：</p>
+<p><img src="/image/ForkLogic/image-20250408142202457.png" alt="image-20250408142202457" /></p>
+<p>接下来我们需要考虑<strong>转移边</strong>的含义。我们规定，从状态<code>i</code>接受符号<code>a</code>转移到状态<code>j</code>的含义是：<strong>在第<code>i</code>个<code>fork()</code>求值为<code>a</code>的情况下，下一步要求解的是第<code>j</code>个<code>fork()</code></strong></p>
+<blockquote>
+<p>值得注意的是，C语言中<code>&amp;&amp;</code>的优先级大于<code>||</code>，因此上面的运算等价与<code>(f&amp;&amp;f)||(f&amp;&amp;f)||(f&amp;&amp;f&amp;&amp;f)</code></p>
+</blockquote>
+<p>考虑第<code>1</code>个<code>fork()</code>，当此<code>fork()</code>返回非零值时，<code>&amp;&amp;</code>表达式不短路，下一个执行<code>2</code>；当<code>1</code>返回零值时，<code>&amp;&amp;</code>表达式短路，确定值为<code>false</code>，但此时<code>&amp;&amp;</code>表达式的下一步<code>||</code>运算不短路，于是下一个执行<code>3</code></p>
+<p>我们可以如下画出转移边：</p>
+<p><img src="/image/ForkLogic/image-20250408142546367.png" alt="image-20250408142546367" /></p>
+<p>类似地，考虑<code>2</code>。注意到<code>2</code>被执行当且仅当<code>1</code>返回了非零值，于是此时可以忽略<code>1</code>的返回值（在短路运算中，执行到某一个运算符的右侧操作数时，此运算符的左侧操作数的值一定是已知的）。当<code>2</code>返回非零值时，第一个<code>&amp;&amp;</code>表达式为<code>true</code>，于是总表达式已经可以确定为<code>true</code>，后面的<code>||</code>均被短路，直接跳转到<code>END</code>；当<code>2</code>返回零值时，第一个<code>&amp;&amp;</code>表达式为<code>false</code>，这相当于<code>1</code>直接返回零值，因此跳转到<code>3</code></p>
+<p><img src="/image/ForkLogic/image-20250408142837667.png" alt="image-20250408142837667" /></p>
+<p>类似地我们可以完成整个转移图的绘制：</p>
+<p><img src="/image/ForkLogic/image-20250408143000147.png" alt="image-20250408143000147" /></p>
+<h3 id="步骤2：状态机标数">步骤2：状态机标数</h3>
+<p>接下来我们要对上面的状态机的每个状态标数，这里标的数的含义是<strong>在这个<code>fork()</code>执行之前，要执行此<code>fork()</code>的总进程数</strong></p>
+<p>因此，我们按如下的算法标数：</p>
+<ul>
+<li>对状态<code>1</code>标1（因为在第一个<code>fork()</code>执行前只有一个进程），其他状态初始化为0</li>
+<li>按编号从小到大的顺序遍历每个状态（因为<code>fork()</code>在每个进程内的执行顺序总是和编号顺序一致的）
+<ul>
+<li>将此状态的两个转移边的目标状态的标数增加此状态的标数（因为有转移边说明此<code>fork()</code>执行后，每个进程都会产生一个进程转移到目标状态）</li>
+</ul>
+</li>
+<li>当遍历完每个状态时，<code>END</code>状态的标数就是总进程数</li>
+</ul>
+<p>模拟算法如下（绿色标数表示这一轮模拟到的状态，黄色标数表示被绿色状态更新的状态）：</p>
+<p><img src="/image/ForkLogic/image-20250408143432635.png" alt="image-20250408143432635" /></p>
+<p><img src="/image/ForkLogic/image-20250408143518194.png" alt="image-20250408143518194" /></p>
+<p><img src="/image/ForkLogic/image-20250408143607085.png" alt="image-20250408143607085" /></p>
+<p><img src="/image/ForkLogic/image-20250408143640709.png" alt="image-20250408143640709" /></p>
+<p><img src="/image/ForkLogic/image-20250408143707904.png" alt="image-20250408143707904" /></p>
+<p><img src="/image/ForkLogic/image-20250408143745280.png" alt="image-20250408143745280" /></p>
+<p><img src="/image/ForkLogic/image-20250408143805993.png" alt="image-20250408143805993" /></p>
+<p><img src="/image/ForkLogic/image-20250408143820997.png" alt="image-20250408143820997" /></p>
+<p>于是我们得到结论，执行完成一共有19个进程，输出19个<code>A</code></p>
+<h2 id="例2：统计逻辑表达式有特定结果的进程数量">例2：统计逻辑表达式有特定结果的进程数量</h2>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (fork() || fork() &amp;&amp; fork() || !fork())</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;A\n&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p>在上例中，我们需要统计的进程数量变成了完成求值且求值结果为<code>true</code>的进程数量</p>
+<p>为此，做法实际与例1没有本质区别，只是我们需要将原来的一个<code>END</code>终态变成两个终态：<code>TRUE</code>和<code>FALSE</code>，分别代表完成求值的两种结果</p>
+<p>我们同样画出状态机图：</p>
+<p><img src="/image/ForkLogic/image-20250408144418659.png" alt="image-20250408144418659" /></p>
+<p>对状态机标数：</p>
+<p><img src="/image/ForkLogic/image-20250408144522725.png" alt="image-20250408144522725" /></p>
+<p>于是我们得到结论：共产生6个进程，其中4个<code>if</code>求值为真，2个求值为假，输出4个<code>A</code></p>
+<p>若将代码改为</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (fork() || fork() &amp;&amp; fork() || !fork())</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;A\n&quot;</span>);</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;B\n&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p>则会输出4个<code>A</code>和2个<code>B</code></p>
+
+</div> 
+
+<script>
+    window.onload = detectors();
+</script>
+    <div class="post-footer">
+    <div class="h-line-primary"></div>
+    <nav class="post-nav">
+        <div class="prev-item">
+           
+        </div>
+        <div class="next-item">
+            
+                <div class="icon arrow-right"></div>
+                <div class="post-link">
+                  <a href="/2025/03/30/NumericalAnalysis-4/">Next</a>  
+                </div>  
+            
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="post-comment">
+
+     
+
+     
+    
+    
+
+</div>
+     
+  
+</article>
+        </div>
+      </div>
+      
+      <div class="footer">
+    <div class="flex-container">
+        <div class="footer-text">
+            
+            
+            
+                Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> & <a target="_blank" rel="noopener" href="https://github.com/zoeingwingkei/frame/">Frame</a>
+                
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    
+    
+
+  </body>
+</html>
