@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+
+
+
+
+<title>操作系统 复习纲要 | SyGl_</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto+Mono&display=swap');
+</style>
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/menu.js"></script>
+    
+
+
+
+
+
+
+
+
+
+
+  <!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+  <body>
+    <div class="mask-border">
+    </div>
+
+    <div class="wrapper">
+
+      <div class="header">
+  <div class="flex-container">
+    <div class="header-inner">
+      <div class="site-brand-container">
+        <a href="/">
+          
+            SyGl
+          
+        </a>
+      </div>
+      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
+        Menu
+      </div>
+      <nav class="site-nav">
+        <ul class="menu-list">
+          
+            
+              <li class="menu-item">
+                <a href="/">Home</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/archives/">Archive</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/gallery/">Gallery</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/note/">Note</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/personal/">Personal</a>
+              </li> 
+                   
+          
+          
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main">
+        <div class="flex-container">
+          <article id="post">
+
+  
+    <div class="post-head">
+    <div class="post-info">
+        <div class="tag-list">
+            
+                
+                    <span class="post-tag">
+                        <a href="/tags/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">
+                            课程笔记
+                        </a>
+                    </span>    
+                
+                    <span class="post-tag">
+                        <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">
+                            操作系统
+                        </a>
+                    </span>    
+                           
+            
+        </div>
+        <div class="post-title">
+            
+            
+                操作系统 复习纲要
+            
+            
+        </div>
+        <span class="post-date">
+            Jun 10, 2025
+        </span>
+    </div>
+    <div class="post-img">
+        
+            <div class="h-line-primary"></div>
+              
+    </div>
+</div>
+    <div class="post-content">
+    <h1>7 进程管理与单处理器调度</h1>
+<h2 id="7-1-进程管理">7.1 进程管理</h2>
+<ol>
+<li>进程的抽象：独立的逻辑控制流和私有的地址空间</li>
+<li>进程管理系统调用：fork exec exit waitpid getpid</li>
+<li>僵尸进程、孤儿进程</li>
+<li><a target="_blank" rel="noopener" href="https://sygl233.github.io/2025/04/08/ForkLogic/">fork嵌套逻辑</a></li>
+</ol>
+<h2 id="7-2-单处理器调度">7.2 单处理器调度</h2>
+<ol>
+<li>非抢占调度：必须等待当前进程主动放弃CPU；抢占调度相反</li>
+<li>区分周转时间、就绪等待时间、响应时间</li>
+<li>FCFS：先来先服务</li>
+<li>SJF：短作业优先</li>
+<li>SRT：最短剩余时间，支持抢占</li>
+<li>HRRN：最高响应比优先，响应比为等待时间占总时间的比例</li>
+<li>RR：时间片轮转算法</li>
+<li>MQ：多级队列，按权限调度</li>
+<li>MLFQ：多级反馈队列，一个时间片内未完成的任务降低优先级</li>
+<li>FSS：公平共享调度</li>
+</ol>
+<h2 id="7-3-实时调度">7.3 实时调度</h2>
+<ol>
+<li>实时体现在：任务有截止时间，例如周期性任务</li>
+<li>静态优先级、动态优先级：同一任务的优先级是否会不同；一般可抢占</li>
+<li>RM：速率单调调度算法，周期越短优先级越高</li>
+<li>EDF：最早截止时间优先算法，执行离截止时间最近的任务</li>
+<li>LLF：最低松弛度优先，松弛度表示为截止时间-当前时间-还需运行时间</li>
+<li>优先级反置现象：低优先级进程占据了高优先级进程需要的资源。解决：优先级继承、优先级天花板协议</li>
+</ol>
+<h1>8 多处理器调度</h1>
+<h2 id="8-1-对称多处理与多核架构">8.1 对称多处理与多核架构</h2>
+<ol>
+<li>超线程处理器：部分硬件共用，部分硬件可以并行</li>
+<li>多核处理器、众核处理器</li>
+<li>对称多处理器SMP、非一致内存访问系统NUMA</li>
+<li>多处理器的缓存一致性问题</li>
+</ol>
+<h2 id="8-2-多处理器调度简述">8.2 多处理器调度简述</h2>
+<ol>
+<li>
+<p>SQMS：单队列多处理器调度（所有进程在一个队列中，不同核心选择队列不同位置的进程）</p>
+<p><img src="/image/OperateSystem-review/image-20250610141036689.png" alt="image-20250610141036689" /></p>
+</li>
+<li>
+<p>缓存亲和性：尽可能让进程保持在同一个CPU上运行</p>
+</li>
+<li>
+<p>MQMS：多队列多处理器调度，每个CPU的调度队列独立</p>
+<ol>
+<li>问题：2核3进程时，负载不均</li>
+<li>解决：定期迁移进程，每个队列观测其他队列是否有更多进程，有则可以窃取，需要设置合理的窃取检查间隔</li>
+</ol>
+</li>
+</ol>
+<h2 id="8-3-Linux-O-1-调度">8.3 Linux O(1)调度</h2>
+<ol>
+<li>O(n)调度算法
+<ol>
+<li>每个时间片开始时计算进程的动态优先级，按动态优先级执行</li>
+<li>单队列，多个核竞争访问一个runqueue</li>
+</ol>
+</li>
+<li>O(1)调度
+<ol>
+<li>每个CPU一个runqueue</li>
+<li>140级全局优先级，实时进程优先级高于普通进程</li>
+<li>维护140个优先级队列，和一个140长度的位图，通过位图最高1位查询来得知当前最高优先级的进程</li>
+<li>优先级队列使用FIFO queue实现</li>
+<li>每个优先级包括Active队列和Expired队列，进程执行完一个时间片重新计算自身优先级并进入Expired队列</li>
+<li>Active全空后与Expired交换</li>
+<li>所有操作均为O(1)</li>
+</ol>
+</li>
+</ol>
+<h2 id="8-4-Linux-CFS-调度">8.4 Linux CFS 调度</h2>
+<ol>
+<li>CFS：Completely Fair Scheduler</li>
+<li>为每个进程维护vruntime，表示进程应该获得的CPU时间量，每次调度vruntime最小的进程</li>
+<li>根据进程的nice值决定每次运行后vruntime的增长速度，nice越低，权重越高，vruntime增加越慢</li>
+<li>类似stride策略</li>
+<li>数据结构上采用红黑树记录vruntime</li>
+<li>新进程vruntime设置为所在队列的最小值</li>
+<li>休眠进程需要补偿vruntime</li>
+<li>进程在多个CPU之间迁移时要对当前CPU的本地min_vruntime做适配</li>
+</ol>
+<h2 id="8-5-Linux-FreeBSD-BFS-调度">8.5 Linux/FreeBSD BFS 调度</h2>
+<ol>
+<li>BFS：Brain F**k Scheduler</li>
+<li>时间片轮转算法的变种</li>
+<li>多处理机时使用单就绪队列，用双向链表实现
+<ol>
+<li>需要互斥访问</li>
+<li>不需要负载均衡</li>
+</ol>
+</li>
+<li>每个进程有时间片大小和虚拟截止时间，虚拟截止时间表示在此时间到达前必须受到调度；每个时间片用完时重新计算虚拟截止时间</li>
+<li>EEVDF：最早可执行虚拟截止时间优先调度算法</li>
+</ol>
+<h1>9 文件系统</h1>
+<h2 id="9-1-文件和文件系统">9.1 文件和文件系统</h2>
+<ol>
+<li>文件操作的基本单位是数据块</li>
+<li>文件的访问模式：顺序访问、随机访问、索引访问（例：数据库）</li>
+<li>文件描述符：文件描述符表的索引值</li>
+<li>每个进程有一个文件描述符表，指向整个内核维护的一个打开文件表，打开文件表指向i-node表，i-node表指向具体文件</li>
+<li>目录：特殊的文件，是文件名的线性列表，每个文件名包含一个指针</li>
+<li>硬链接：直接指向相同inode；不能跨文件系统，不能链接到目录</li>
+<li>软链接：新建文件，文件内部存储了链接的文件的名称；可以跨文件系统，可以链接到目录</li>
+<li>文件系统需要先挂载（将根节点与<code>/</code>关联）才能访问</li>
+</ol>
+<h2 id="9-2-文件系统的设计和实现">9.2 文件系统的设计和实现</h2>
+<ol>
+<li>虚拟文件系统VFS：文件系统的统一接口</li>
+<li>文件系统的存储视图
+<ol>
+<li>文件卷控制块（超级块）</li>
+<li>文件控制块（inode）</li>
+<li>目录项</li>
+<li>数据块</li>
+</ol>
+</li>
+<li>文件数据块分配：连续分配与链式分配</li>
+<li>索引分配：包括一个索引块，索引块记录了后续属于此文件的块</li>
+<li>用位图记录空闲块表</li>
+</ol>
+<h2 id="9-3-支持崩溃一致性的文件系统">9.3 支持崩溃一致性的文件系统</h2>
+<ol>
+<li>
+<p>文件系统中很多写操作不是原子的（例如：写位图、写inode、写数据块），容易引发崩溃不一致</p>
+</li>
+<li>
+<p>fsck文件系统检查：</p>
+<ol>
+<li>检查超级块</li>
+<li>检查inode和位图是否匹配，不匹配以inode为准</li>
+<li>检查inode，擦除损坏的inode</li>
+<li>目录链接计数检查</li>
+<li>重复指针检查</li>
+<li>坏块检查</li>
+</ol>
+</li>
+<li>
+<p>日志文件系统</p>
+<ol>
+<li>日志写入：写入TxB（事务开始）、元数据、数据</li>
+<li>日志提交：写入TxE</li>
+<li>加检查点：将更新内容写入磁盘位置</li>
+<li>通过日志超级块、周期清空日志来提高性能</li>
+<li>元数据日志：日志只记录元数据，先写数据再写日志</li>
+</ol>
+<p><img src="/image/OperateSystem-review/image-20250610150008104.png" alt="image-20250610150008104" /></p>
+<ol start="6">
+<li>三种模式：Journal Mode写全部日志，Ordered Mode只写元数据日志但保证先写数据后写日志，Writeback Mode只写元数据日志且不保证先写数据再写日志</li>
+</ol>
+</li>
+</ol>
+<h1>10 进程间通信</h1>
+<h2 id="10-1-进程间通信-IPC-概述">10.1 进程间通信(IPC)概述</h2>
+<ol>
+<li>直接通信/间接通信：是否依赖内核中转</li>
+<li>IPC机制：
+<ol>
+<li>信号</li>
+<li>管道</li>
+<li>消息队列</li>
+<li>套接字</li>
+<li>文件</li>
+<li>共享内存：唯一一种直接通信方法，其他均需要内核转达</li>
+</ol>
+</li>
+<li>缓冲区大小决定发送方是否需要等待接收方、需要等待多久</li>
+<li>管道：有读写端的一定大小的字节队列，读端只读，写端只写，两端fd不同</li>
+<li>命名管道：FIFO，可以通过mkfifo命令创建，命名管道可以支持任意两个进程间的通信，匿名管道只支持父子或兄弟进程（需要由某个进程显式创建）</li>
+<li>消息队列：以消息的形式组织IPC信息，消息之间组成FIFO队列
+<ol>
+<li>msgget msgsnd msgrcv msgctl</li>
+<li>msgget需要一个key，可以使用ftok生成</li>
+</ol>
+</li>
+<li>共享内存：将一个物理内存区域映射到多个进程的地址空间
+<ol>
+<li>shmget shmat shmdt shmctl</li>
+</ol>
+</li>
+<li>信号
+<ol>
+<li>信号处理流程：先进入内核态，内核态将用户态返回地址指向预先定义的sig_handler函数，切入用户态执行，用户态执行完通过系统调用sigreturn陷入内核态，内核态再返回应用程序的正常上下文</li>
+</ol>
+</li>
+</ol>
+<h1>11 线程与协程</h1>
+<h2 id="11-1-线程">11.1 线程</h2>
+<ol>
+<li>进程：资源分配的单位，线程：CPU调度的单位</li>
+<li>线程的独有资源只有寄存器和栈</li>
+<li>创建线程：pthread_create</li>
+<li>等待线程：pthread_join，阻塞当前线程直到目标线程终止</li>
+<li>线程的几种实现方式：
+<ol>
+<li>用户态管理、用户态运行</li>
+<li>内核态管理、用户态运行</li>
+<li>内核态管理、内核态运行（内核线程）</li>
+<li>混合管理运行</li>
+</ol>
+</li>
+<li>用户态管理线程：使用用户函数而非系统调用管理线程，高效，TCB由用户管理</li>
+<li>内核态管理的用户线程：TCB由内核管理，但运行的是用户代码</li>
+<li>多线程程序使用fork可能出现问题</li>
+<li>内核线程：处理内核问题，例如进行缓存写回、虚存交换、文件系统写日志</li>
+<li>LWP：轻量级线程或混合线程，用内核线程和用户级线程一一对应</li>
+</ol>
+<h2 id="11-2-协程">11.2 协程</h2>
+<ol>
+<li>协程：子例程的推广，子例程只允许一个入口点、返回一次，协程可以多个入口点、在中途挂起和恢复（核心在于主动让出控制流）</li>
+<li>无栈协程也可以看成一种异步函数</li>
+<li>按控制传递机制分类：对称协程/非对称协程</li>
+<li>无栈协程：可以挂起/恢复的函数；有栈协程：用户态管理并运行的线程</li>
+<li>First-Class协程：协程可以作为变量，可以用于数据结构、传参等；Second-Class协程无法作为实际对象</li>
+<li>切换需求
+<ol>
+<li>进程：页表、堆、栈、寄存器</li>
+<li>线程：栈、寄存器</li>
+<li>协程：寄存器</li>
+</ol>
+</li>
+</ol>
+<h1>12 同步互斥</h1>
+<h2 id="12-1-概述">12.1 概述</h2>
+<ol>
+<li>
+<p>临界区：</p>
+<ol>
+<li>进入去：检查能否进入临界区的代码</li>
+<li>临界区：访问临界资源，需要互斥执行</li>
+<li>退出区：清除正在进入临界区的标志</li>
+<li>剩余区</li>
+</ol>
+</li>
+<li>
+<p>实现互斥的方法之一：禁用硬件中断</p>
+</li>
+<li>
+<p>Peterson算法：孔融让梨</p>
+<p><img src="/image/OperateSystem-review/image-20250610160944458.png" alt="image-20250610160944458" /></p>
+</li>
+<li>
+<p>Dekkers算法</p>
+<p><img src="/image/OperateSystem-review/image-20250610161325305.png" alt="image-20250610161325305" /></p>
+</li>
+<li>
+<p>n线程：</p>
+<p><img src="/image/OperateSystem-review/image-20250610161519885.png" alt="image-20250610161519885" /></p>
+<p><img src="/image/OperateSystem-review/image-20250610161534445.png" alt="image-20250610161534445" /></p>
+<p><img src="/image/OperateSystem-review/image-20250610161823283.png" alt="image-20250610161823283" /></p>
+</li>
+<li>
+<p>更高级的原语：</p>
+<ol>
+<li>锁</li>
+<li>原子测试置位指令TaS：测试一个值是否是1，无论是否都置1，返回原始值，可用来请求锁（是1就忙等，是0就置1）</li>
+<li>原子交换指令CaS：判断值是否是old，如果是则改为new返回true，否则什么也不做，返回false</li>
+</ol>
+</li>
+</ol>
+<h2 id="12-2-信号量">12.2 信号量</h2>
+<ol>
+<li>P：请求，减少；V：释放，增加</li>
+<li>两种使用模式
+<ol>
+<li>临界区：先P再V</li>
+<li>条件同步：我P你V</li>
+</ol>
+</li>
+<li>生产者-消费者问题：设置3个信号量，一个用于临界区限制，一个用于计数当前满槽数，一个用于计数当前空槽数</li>
+</ol>
+<h2 id="12-3-管程和条件变量">12.3 管程和条件变量</h2>
+<ol>
+<li>
+<p>管程：一种用于多线程互斥访问共享资源的程序结构，使用面向对象方法，任意时刻最多一个线程执行管程代码</p>
+</li>
+<li>
+<p>条件变量：没有实际变量语义，但有阻塞/唤醒功能，允许线程在条件变量处被阻塞、等待条件变量唤醒</p>
+</li>
+<li>
+<p>管程各原语的语义：</p>
+<p><img src="/image/OperateSystem-review/image-20250610163821619.png" alt="image-20250610163821619" /></p>
+</li>
+<li>
+<p>Hoare/Hansen/MESA管程</p>
+<p><img src="/image/OperateSystem-review/image-20250610164003192.png" alt="image-20250610164003192" /></p>
+</li>
+<li>
+<p>生产者-消费者问题的Java条件变量实现分析</p>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">BoundedBuffer</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> Queue&lt;Integer&gt; buffer;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> capacity;</span><br><span class="line">    <span class="keyword">private</span> Lock mutex;</span><br><span class="line">    <span class="keyword">private</span> Condition notFull;  <span class="comment">// 缓冲区不满的条件</span></span><br><span class="line">    <span class="keyword">private</span> Condition notEmpty; <span class="comment">// 缓冲区不空的条件</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">BoundedBuffer</span><span class="params">(<span class="type">int</span> cap)</span> &#123;</span><br><span class="line">        buffer = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;&gt;();</span><br><span class="line">        capacity = cap;</span><br><span class="line">        mutex = <span class="keyword">new</span> <span class="title class_">ReentrantLock</span>();</span><br><span class="line">        notFull = mutex.newCondition();</span><br><span class="line">        notEmpty = mutex.newCondition();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 生产者方法</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">produce</span><span class="params">(<span class="type">int</span> item)</span> <span class="keyword">throws</span> InterruptedException &#123;</span><br><span class="line">        mutex.lock();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">while</span> (buffer.size() == capacity) &#123;</span><br><span class="line">                notFull.await();  <span class="comment">// 缓冲区满，等待</span></span><br><span class="line">            &#125;</span><br><span class="line">            buffer.add(item);</span><br><span class="line">            notEmpty.signal();    <span class="comment">// 唤醒消费者</span></span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            mutex.unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 消费者方法</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">consume</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException &#123;</span><br><span class="line">        mutex.lock();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">while</span> (buffer.isEmpty()) &#123;</span><br><span class="line">                notEmpty.await();  <span class="comment">// 缓冲区空，等待</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="type">int</span> <span class="variable">item</span> <span class="operator">=</span> buffer.remove();</span><br><span class="line">            notFull.signal();      <span class="comment">// 唤醒生产者</span></span><br><span class="line">            <span class="keyword">return</span> item;</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            mutex.unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里的<code>consume</code>和<code>produce</code>函数均为管程，二者同时只有一个可以执行，这是为了防止二者同时进入，依赖各自的条件变量导致死锁</p>
+<h2 id="12-4-同步互斥实例问题">12.4 同步互斥实例问题</h2>
+<ol>
+<li>
+<p>哲学家就餐</p>
+<p><img src="/image/OperateSystem-review/image-20250610165827836.png" alt="image-20250610165827836" /></p>
+<ol>
+<li>解决方案：AND型信号量集</li>
+</ol>
+</li>
+<li>
+<p>读者—写者问题：读优先/写优先？</p>
+</li>
+</ol>
+<h2 id="12-5-死锁">12.5 死锁</h2>
+<ol>
+<li>
+<p>资源：可重用资源、可消耗资源</p>
+</li>
+<li>
+<p>资源分配图</p>
+<ol>
+<li>顶点：进程和资源</li>
+<li>边：进程指向资源为请求，资源指向进程为分配</li>
+</ol>
+</li>
+<li>
+<p>形成死锁的必要条件：互斥，持有并等待，非抢占，循环等待</p>
+</li>
+<li>
+<p>死锁预防：破坏死锁四个条件之一</p>
+</li>
+<li>
+<p>死锁避免</p>
+<ol>
+<li>
+<p>需要先验信息：进程声明所需资源的最大数目</p>
+</li>
+<li>
+<p>系统安全状态：存在安全执行序列，沿此序列，每个进程释放资源后，下一个进程一定可以满足需求</p>
+</li>
+<li>
+<p>不安全状态不一定会出现死锁，但安全状态一定无死锁</p>
+</li>
+<li>
+<p>银行家算法</p>
+<p><img src="/image/OperateSystem-review/image-20250612102413742.png" alt="image-20250612102413742" /></p>
+<p><img src="/image/OperateSystem-review/image-20250612102534671.png" alt="image-20250612102534671" /></p>
+<p><img src="/image/OperateSystem-review/image-20250612102616722.png" alt="image-20250612102616722" /></p>
+</li>
+</ol>
+</li>
+<li>
+<p>死锁检测：同银行家算法</p>
+</li>
+<li>
+<p>死锁恢复</p>
+<ol>
+<li>中止一些进程直到死锁消除</li>
+<li>资源抢占</li>
+</ol>
+</li>
+</ol>
+
+</div> 
+
+<script>
+    window.onload = detectors();
+</script>
+    <div class="post-footer">
+    <div class="h-line-primary"></div>
+    <nav class="post-nav">
+        <div class="prev-item">
+           
+        </div>
+        <div class="next-item">
+            
+                <div class="icon arrow-right"></div>
+                <div class="post-link">
+                  <a href="/2025/06/07/ComputerArch-review/">Next</a>  
+                </div>  
+            
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="post-comment">
+
+     
+
+     
+    
+    
+
+</div>
+     
+  
+</article>
+        </div>
+      </div>
+      
+      <div class="footer">
+    <div class="flex-container">
+        <div class="footer-text">
+            
+            
+            
+                Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> & <a target="_blank" rel="noopener" href="https://github.com/zoeingwingkei/frame/">Frame</a>
+                
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    
+    
+
+  </body>
+</html>
