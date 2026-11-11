@@ -105,6 +105,12 @@
               </li> 
                    
           
+            
+              <li class="menu-item">
+                <a href="/tools/">Tools</a>
+              </li> 
+                   
+          
           
         </ul>
       </nav>
@@ -155,19 +161,30 @@
     </div>
 </div>
     <div class="post-content">
-    <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>两种加密逻辑：<strong>链路加密</strong>和<strong>端到端加密</strong></p>
-<h1 id="传统的对称密码密钥分配"><a href="#传统的对称密码密钥分配" class="headerlink" title="传统的对称密码密钥分配"></a>传统的对称密码密钥分配</h1><p>人工传送密钥只能用于链路加密，端到端加密必须使用<strong>密钥分配中心(KDC)</strong></p>
-<h2 id="KDC模式"><a href="#KDC模式" class="headerlink" title="KDC模式"></a>KDC模式</h2><p>设A和B要建立连接，A有一个只有自己和KDC知道的主密钥Ka，B有类似的Kb</p>
-<p><img src="/image/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-5/1729082322301.png" alt="1729082322301"></p>
+    <h1>概述</h1>
+<p>两种加密逻辑：<strong>链路加密</strong>和<strong>端到端加密</strong></p>
+<h1>传统的对称密码密钥分配</h1>
+<p>人工传送密钥只能用于链路加密，端到端加密必须使用<strong>密钥分配中心(KDC)</strong></p>
+<h2 id="KDC模式">KDC模式</h2>
+<p>设A和B要建立连接，A有一个只有自己和KDC知道的主密钥Ka，B有类似的Kb</p>
+<p><img src="image/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-5/1729082322301.png" alt="1729082322301" /></p>
 <p>使用层次性KDC会更好</p>
-<h1 id="公钥分配"><a href="#公钥分配" class="headerlink" title="公钥分配"></a>公钥分配</h1><h2 id="公钥发布"><a href="#公钥发布" class="headerlink" title="公钥发布"></a>公钥发布</h2><p>广播给所有人</p>
+<h1>公钥分配</h1>
+<h2 id="公钥发布">公钥发布</h2>
+<p>广播给所有人</p>
 <p>缺点：可以伪装成其他人进行公钥发布</p>
-<h2 id="公开可访问目录"><a href="#公开可访问目录" class="headerlink" title="公开可访问目录"></a>公开可访问目录</h2><p>由可信的管理员进行公钥目录管理，但管理员存在安全漏洞</p>
-<h2 id="公钥授权"><a href="#公钥授权" class="headerlink" title="公钥授权"></a>公钥授权</h2><p><img src="/image/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-5/1729082776326.png" alt="1729082776326"></p>
+<h2 id="公开可访问目录">公开可访问目录</h2>
+<p>由可信的管理员进行公钥目录管理，但管理员存在安全漏洞</p>
+<h2 id="公钥授权">公钥授权</h2>
+<p><img src="image/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-5/1729082776326.png" alt="1729082776326" /></p>
 <p>缺点：管理员成为系统的瓶颈</p>
-<h2 id="公钥证书"><a href="#公钥证书" class="headerlink" title="公钥证书"></a>公钥证书</h2><p><img src="/image/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-5/1729082876550.png" alt="1729082876550"></p>
-<h1 id="基于公钥密码的传统密钥分配"><a href="#基于公钥密码的传统密钥分配" class="headerlink" title="基于公钥密码的传统密钥分配"></a>基于公钥密码的传统密钥分配</h1><h2 id="naive"><a href="#naive" class="headerlink" title="naive"></a>naive</h2><p>直接用公钥系统对密钥加密，但会被伪造</p>
-<h2 id="安全方法"><a href="#安全方法" class="headerlink" title="安全方法"></a>安全方法</h2><p><img src="/image/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-5/1729083061948.png" alt="1729083061948"></p>
+<h2 id="公钥证书">公钥证书</h2>
+<p><img src="image/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-5/1729082876550.png" alt="1729082876550" /></p>
+<h1>基于公钥密码的传统密钥分配</h1>
+<h2 id="naive">naive</h2>
+<p>直接用公钥系统对密钥加密，但会被伪造</p>
+<h2 id="安全方法">安全方法</h2>
+<p><img src="image/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-5/1729083061948.png" alt="1729083061948" /></p>
 
 </div> 
 

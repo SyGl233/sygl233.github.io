@@ -105,6 +105,12 @@
               </li> 
                    
           
+            
+              <li class="menu-item">
+                <a href="/tools/">Tools</a>
+              </li> 
+                   
+          
           
         </ul>
       </nav>
@@ -162,15 +168,18 @@
 <p>LL分析，意为<strong>从左到右读取输入串，生成最左推导</strong></p>
 <p>LR分析，意为<strong>从左到有读取输入串，生成最右推导</strong></p>
 <p>已知，一般而言LR分析的能力要强于LL分析，但这是为什么呢？</p>
-<h1 id="移进、推导、归约"><a href="#移进、推导、归约" class="headerlink" title="移进、推导、归约"></a>移进、推导、归约</h1><p>LR分析器被称为<strong>移进-归约分析</strong>，因为它对输入串处理的逻辑是，先将输入串<strong>移进</strong>到栈上，再在到达特定的位置（<strong>句柄</strong>）时，根据栈上情况选择表达式来<strong>归约</strong></p>
+<h1>移进、推导、归约</h1>
+<p>LR分析器被称为<strong>移进-归约分析</strong>，因为它对输入串处理的逻辑是，先将输入串<strong>移进</strong>到栈上，再在到达特定的位置（<strong>句柄</strong>）时，根据栈上情况选择表达式来<strong>归约</strong></p>
 <p>类似地，LL分析器可以被称为<strong>推导-移进分析</strong>，因为它先对栈上的非终结符选择产生式进行<strong>推导</strong>，再逐步<strong>移进</strong>输入串来消除推导出的终结符</p>
 <p>二者的最主要区别体现在：LL分析器在移进符号<strong>之前</strong>选择产生式，而LR分析器在移进符号<strong>之后</strong>选择产生式；因此后者可以有更多的已知信息来选择产生式</p>
 <p>也是因为这个原因，LL(0)分析没有实际意义，因为在不向前察看的情况下，选择推导产生式就是盲猜</p>
-<h1 id="与语法分析树的关系"><a href="#与语法分析树的关系" class="headerlink" title="与语法分析树的关系"></a>与语法分析树的关系</h1><p>语法分析是生成<strong>语法分析树</strong>的过程，生成一棵树的过程，也是在遍历这棵树</p>
-<p>注意到，语法分析树中的<strong>叶子节点</strong>对应<strong>终结符</strong>，<strong>非叶子节点</strong>对应<strong>非终结符</strong>；于是，我们可以把<strong>移进符号</strong>当作是对叶子节点的遍历，把<strong>选择产生式进行推导&#x2F;归约</strong>当作是对非叶子节点的遍历</p>
+<h1>与语法分析树的关系</h1>
+<p>语法分析是生成<strong>语法分析树</strong>的过程，生成一棵树的过程，也是在遍历这棵树</p>
+<p>注意到，语法分析树中的<strong>叶子节点</strong>对应<strong>终结符</strong>，<strong>非叶子节点</strong>对应<strong>非终结符</strong>；于是，我们可以把<strong>移进符号</strong>当作是对叶子节点的遍历，把<strong>选择产生式进行推导/归约</strong>当作是对非叶子节点的遍历</p>
 <p>于是，<strong>LL分析</strong>先推导再移进，是对AST的<strong>先序遍历</strong>；而<strong>LR分析</strong>先移进再归约，是对AST的<strong>后序遍历</strong></p>
 <p>在LR分析中起到第一步归约作用的<strong>句柄</strong>，也就是后序遍历序列中第一个出现的非叶子节点</p>
-<h1 id="与DPDA的关系"><a href="#与DPDA的关系" class="headerlink" title="与DPDA的关系"></a>与DPDA的关系</h1><p>上一节中提到，LR(1)文法的语言一定是DPDA接受的语言，反之亦然</p>
+<h1>与DPDA的关系</h1>
+<p>上一节中提到，LR(1)文法的语言一定是DPDA接受的语言，反之亦然</p>
 <p>实际上，LR分析器本质上就是一个DPDA：</p>
 <ul>
 <li>PDA有一个核心状态<code>action</code>，在此状态下，所有移进过程：<code>ACTION[i, a] = sj</code>以自转移边<code>a|i → ji</code>的形式完成</li>
