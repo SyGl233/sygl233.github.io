@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ΛΟΓΟΣ · 古希腊语词典</title>
+  <meta name="description" content="按课检索《ΛΟΓΟΣ》教材词汇，含中、英、西三语释义与完整变格表。">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page">
+    <header class="masthead">
+      <div class="topline">
+        <a class="backlink" href="/tools/">← 返回 Tools</a>
+        <a class="textbook-link" href="https://sites.google.com/educarex.es/logos/logos" target="_blank" rel="noopener">
+          教材网站 · ΛΟΓΟΣ <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+
+      <div class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">ΛΟΓΟΣ · ANCIENT GREEK LEXICON</p>
+          <h1>古希腊语词典</h1>
+          <p class="lede">按课检索教材词汇，附中 / Eng / Esp 三语释义、出现课次与完整变格表。</p>
+          <div class="hero-tags">
+            <span id="heroLesson">第 1–2 课</span>
+            <span id="heroCount">52 个词条</span>
+            <span>阿提卡方言</span>
+          </div>
+        </div>
+        <div class="hero-mark" aria-hidden="true">Λ</div>
+      </div>
+
+      <div class="controls">
+        <label class="search-wrap">
+          <span class="search-icon" aria-hidden="true">⌕</span>
+          <input id="searchInput" type="search" autocomplete="off" spellcheck="false"
+                 placeholder="搜索希腊语、拉丁字母或释义…" aria-label="搜索词条">
+          <kbd>/</kbd>
+        </label>
+        <label class="select-wrap">
+          <span>课次</span>
+          <select id="lessonFilter" aria-label="按课次筛选"></select>
+        </label>
+        <label class="select-wrap">
+          <span>词性</span>
+          <select id="posFilter" aria-label="按词性筛选"></select>
+        </label>
+      </div>
+
+      <div class="hint-row">
+        <p>搜索不需要输入重音；希腊字母或拉丁字母都可以。拉丁字母按 macOS「希腊语-多音调」键盘映射。</p>
+        <button id="mapBtn" class="link-btn" type="button" aria-expanded="false" aria-controls="mapPanel">查看键盘映射</button>
+      </div>
+      <div id="mapPanel" class="map-panel" hidden>
+        <div class="map-head">
+          <strong>macOS Greek – Polytonic</strong>
+          <span>键入左侧字母 = 得到右侧希腊字母</span>
+        </div>
+        <div id="mapGrid" class="map-grid"></div>
+        <p class="map-note">搜索时会自动忽略重音、送气号和下标；ς 与 σ 视为同一个字母。q 在该键盘上对应分号，不映射为希腊字母。</p>
+      </div>
+    </header>
+
+    <main>
+      <div class="list-head">
+        <div id="resultCount" class="result-count" aria-live="polite"></div>
+        <div class="list-note">点击词条查看完整变格表</div>
+      </div>
+
+      <div id="wordList" class="word-list"></div>
+
+      <div id="emptyState" class="empty" hidden>
+        <div class="empty-mark" aria-hidden="true">Ω</div>
+        <p>没有找到匹配的词条。</p>
+        <button id="resetBtn" class="text-btn" type="button">清除筛选</button>
+      </div>
+
+      <section class="demo-card" aria-labelledby="demoTitle">
+        <div>
+          <p class="demo-kicker">PRINCIPAL PARTS · 格式预览</p>
+          <h2 id="demoTitle">规则动词的 principal parts</h2>
+          <p>第 1 课的 εἰμί 是不规则动词；想看看规则动词的六个主要部分，可以打开第 3 课的 ἀκούω。</p>
+        </div>
+        <button id="demoVerbBtn" class="demo-btn" type="button">
+          查看规则动词示例 <span aria-hidden="true">→</span>
+        </button>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p id="footerScope">词汇范围：教材《ΛΟΓΟΣ》第 1–2 课 · 52 个词条。释义在教材西语释义基础上补充中文与英文。</p>
+      <p class="footer-links">
+        <a href="https://sites.google.com/educarex.es/logos/logos" target="_blank" rel="noopener">教材网站</a>
+        <span>·</span>
+        <a href="https://datastudio.google.com/u/0/reporting/abb7a1bc-d9f1-418d-8c44-7cd04cb265b8/page/4fPyB" target="_blank" rel="noopener">词汇数据来源</a>
+        <span>·</span>
+        <a href="https://en.wiktionary.org/" target="_blank" rel="noopener">Wiktionary</a>
+      </p>
+    </footer>
+  </div>
+
+  <div id="backdrop" class="backdrop" hidden></div>
+
+  <aside id="detail" class="detail" role="dialog" aria-modal="true" aria-labelledby="detailTitle" aria-hidden="true">
+    <div class="detail-top">
+      <span class="detail-kicker">LEXICON ENTRY</span>
+      <button id="detailClose" class="close-btn" type="button" aria-label="关闭词条详情">×</button>
+    </div>
+    <div id="detailBody" class="detail-body"></div>
+  </aside>
+
+  <script src="app.js"></script>
+</body>
+</html>
