@@ -37,6 +37,11 @@
   max-width: 100%;
   display: flex;
 }
+@media (max-width: 1000px) {
+  .menu-list .menu-item {
+    margin-left: $margin-m-2;
+  }
+}
 @media (max-width: 688px) {
   .header-inner {
     flex-wrap: wrap;

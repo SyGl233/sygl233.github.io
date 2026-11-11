@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Stellar Horologium</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="app">
+      <header class="topbar">
+        <a class="brand" href="/tools/" title="Back to tools">
+          <span class="brand-mark">✦</span>
+          <span>STELLAR HOROLOGIUM</span>
+        </a>
+
+        <div class="controls" aria-label="Clock controls">
+          <button id="locateButton" class="icon-button" type="button" title="Use browser location" aria-label="Use browser location">⌖</button>
+          <label class="field">
+            <span>LAT</span>
+            <input id="latInput" type="number" min="-90" max="90" step="0.0001" inputmode="decimal">
+          </label>
+          <label class="field">
+            <span>LON</span>
+            <input id="lonInput" type="number" min="-180" max="180" step="0.0001" inputmode="decimal">
+          </label>
+          <label class="field time-field">
+            <span>TIME</span>
+            <input id="timeInput" type="datetime-local" step="1">
+          </label>
+          <div class="segmented" role="group" aria-label="Time mode">
+            <button id="liveButton" class="segment is-active" type="button">LIVE</button>
+            <button id="holdButton" class="segment" type="button">HOLD</button>
+          </div>
+          <button id="nowButton" class="icon-button" type="button" title="Return to now" aria-label="Return to now">↺</button>
+        </div>
+      </header>
+
+      <section class="stage">
+        <div class="clock-frame" aria-label="Astronomical clock">
+          <svg id="clockSvg" class="clock-svg" viewBox="-600 -600 1200 1200" role="img" aria-labelledby="clockTitle clockDescription">
+            <title id="clockTitle">Astronomical sidereal clock</title>
+            <desc id="clockDescription">A twenty-four hour sidereal dial with seasonal bands, solar and lunar hands, and planetary markers.</desc>
+            <defs>
+              <radialGradient id="faceGradient" cx="50%" cy="48%" r="62%">
+                <stop offset="0%" stop-color="#f1dfb4"></stop>
+                <stop offset="55%" stop-color="#c69b55"></stop>
+                <stop offset="100%" stop-color="#251a17"></stop>
+              </radialGradient>
+              <radialGradient id="innerFaceGradient" cx="48%" cy="45%" r="60%">
+                <stop offset="0%" stop-color="#27191a"></stop>
+                <stop offset="70%" stop-color="#151013"></stop>
+                <stop offset="100%" stop-color="#050507"></stop>
+              </radialGradient>
+              <radialGradient id="jewelGradient" cx="42%" cy="36%" r="68%">
+                <stop offset="0%" stop-color="#fff2ad"></stop>
+                <stop offset="58%" stop-color="#b47d2d"></stop>
+                <stop offset="100%" stop-color="#3d2415"></stop>
+              </radialGradient>
+              <linearGradient id="brassGradient" x1="0%" x2="100%" y1="0%" y2="100%">
+                <stop offset="0%" stop-color="#f0d992"></stop>
+                <stop offset="45%" stop-color="#b78334"></stop>
+                <stop offset="100%" stop-color="#5b3518"></stop>
+              </linearGradient>
+              <linearGradient id="silverGradient" x1="0%" x2="100%" y1="0%" y2="100%">
+                <stop offset="0%" stop-color="#f8f7ec"></stop>
+                <stop offset="48%" stop-color="#aeb7bd"></stop>
+                <stop offset="100%" stop-color="#4d5961"></stop>
+              </linearGradient>
+              <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="9" stdDeviation="10" flood-color="#000000" flood-opacity="0.42"></feDropShadow>
+              </filter>
+              <filter id="goldGlow" x="-40%" y="-40%" width="180%" height="180%">
+                <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#f4c85a" flood-opacity="0.65"></feDropShadow>
+              </filter>
+              <filter id="moonGlow" x="-40%" y="-40%" width="180%" height="180%">
+                <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#cad4df" flood-opacity="0.55"></feDropShadow>
+              </filter>
+              <pattern id="engravingPattern" width="34" height="34" patternUnits="userSpaceOnUse">
+                <path d="M0 17H34M17 0V34" stroke="#d8b469" stroke-width="0.7" opacity="0.13"></path>
+                <circle cx="17" cy="17" r="5" fill="none" stroke="#e6ca83" stroke-width="0.7" opacity="0.12"></circle>
+              </pattern>
+            </defs>
+
+            <circle class="clock-shadow" r="585"></circle>
+            <circle class="outer-plate" r="574"></circle>
+            <circle class="engraved-field" r="546"></circle>
+            <g id="seasonBands"></g>
+            <circle class="season-inner-line" r="491"></circle>
+            <circle class="dial-rim" r="462"></circle>
+            <circle class="dial-face" r="420"></circle>
+            <circle class="dial-engraving" r="404"></circle>
+            <g id="minorTicks"></g>
+            <g id="majorTicks"></g>
+            <g id="romanNumerals"></g>
+            <g id="ornamentLayer"></g>
+            <g id="planetTracks"></g>
+            <g id="nightLayer"></g>
+            <g id="solarLayer"></g>
+            <g id="lunarLayer"></g>
+            <g id="siderealLayer"></g>
+            <g id="planetMarkers"></g>
+            <g class="readout">
+              <text id="dateLine" x="0" y="-64"></text>
+              <text id="latLonLine" x="0" y="-36"></text>
+              <text id="siderealLine" x="0" y="-8"></text>
+              <text id="solarLine" x="0" y="20"></text>
+              <text id="statusLine" x="0" y="52"></text>
+            </g>
+            <circle class="center-jewel" r="22"></circle>
+            <circle class="center-pin" r="8"></circle>
+          </svg>
+        </div>
+
+        <aside class="almanac" aria-label="Astronomical almanac">
+          <div class="panel-title">EPHEMERIS</div>
+          <div class="readout-grid">
+            <span>JD</span>
+            <strong id="jdValue">--</strong>
+            <span>GMST</span>
+            <strong id="gmstValue">--</strong>
+            <span>LST</span>
+            <strong id="lstValue">--</strong>
+            <span>SOLAR</span>
+            <strong id="solarValue">--</strong>
+          </div>
+          <div id="bodyRows" class="body-rows"></div>
+        </aside>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
