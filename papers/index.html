@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Papers · SyGl</title>
+  <meta name="description" content="论文阅读知识库：原始 PDF、完整转写稿与中文总结。">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/papers/katex/katex.min.css">
+  <link rel="stylesheet" href="/papers/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/">SyGl<span>/</span>Papers</a>
+    <nav class="topnav" aria-label="主导航">
+      <a href="/">Home</a>
+      <a href="/archives/">Archive</a>
+      <a href="/tools/">Tools</a>
+      <a class="active" href="/papers/" aria-current="page">Papers</a>
+    </nav>
+  </header>
+
+  <main class="papers-shell">
+    <aside class="library" aria-label="论文列表">
+      <div class="library-head">
+        <div>
+          <p class="eyebrow">Research Library</p>
+          <h2>论文知识库</h2>
+        </div>
+        <span class="count" id="paperCount">3</span>
+      </div>
+
+      <div class="library-tools">
+        <label class="search">
+          <span class="sr-only">搜索论文</span>
+          <input id="paperSearch" type="search" placeholder="搜索标题、作者、关键词…" autocomplete="off">
+          <kbd>/</kbd>
+        </label>
+        <div class="tag-filter" id="tagFilter" aria-label="按标签筛选"></div>
+      </div>
+
+      <div class="library-scroll">
+        <div class="list-label">
+          <span>全部论文</span>
+          <span id="resultCount">3 篇</span>
+        </div>
+        <ol class="paper-list" id="paperList"></ol>
+        <p class="empty-list" id="emptyList" hidden>没有匹配的论文。</p>
+      </div>
+
+      <div class="library-foot">
+        <p>每篇论文归档：<strong>总结稿</strong>、<strong>转写稿</strong>、<strong>原始 PDF</strong>。</p>
+      </div>
+    </aside>
+
+    <section class="workspace" id="workspace" aria-live="polite">
+      <div class="loading" id="loading">正在加载论文归档…</div>
+      <noscript>需要启用 JavaScript 才能使用论文阅读器。</noscript>
+    </section>
+  </main>
+
+  <footer class="paper-footer">
+    <span>SyGl · Papers</span>
+    <span>总结与转写由论文原文整理；引用请以 PDF 为准。</span>
+  </footer>
+
+  <script src="/papers/app.js"></script>
+</body>
+</html>
