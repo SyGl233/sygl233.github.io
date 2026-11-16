@@ -100,7 +100,7 @@
       <div class="reader">
         <div class="tabs" role="tablist" aria-label="论文视图">
           ${tabs.map(([key, label]) => `<button type="button" role="tab" data-tab="${key}" aria-selected="${state.tab === key}" class="${state.tab === key ? 'active' : ''}">${label}</button>`).join('')}
-          <span class="tab-note">${p.transcript_html.length > 50000 ? '长文 · 建议使用侧栏目录浏览' : ''}</span>
+          <span class="tab-note">${p.transcript_html.length > 50000 ? '长文 · 可用 Ctrl/⌘+F 检索章节标题' : ''}</span>
         </div>
         ${panelHtml(p)}
       </div>`;
