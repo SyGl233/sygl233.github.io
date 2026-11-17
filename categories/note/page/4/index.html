@@ -2,8 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f7f4ec">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
 
@@ -18,11 +18,7 @@
 
     <link rel="icon" href="/favicon.ico">
 
-
-
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto+Mono&display=swap');
-</style>
+<meta name="generator" content="Hexo">
 
 
 
@@ -38,6 +34,8 @@
     
     <script src="/js/menu.js"></script>
     
+    <script src="/js/format.js"></script>
+    
 
 
 
@@ -52,82 +50,73 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
-  <body>
-    <div class="mask-border">
-    </div>
-
+<!-- hexo injector head_end end --></head>
+  <body class="theme-atrium">
     <div class="wrapper">
+      <header class="site-header">
+  <div class="container header-inner">
+    <a class="site-brand" href="/" aria-label="返回首页">
+      
+        <span class="brand-mark">S</span>
+        <span class="brand-name">SyGl</span>
+      
+    </a>
 
-      <div class="header">
-  <div class="flex-container">
-    <div class="header-inner">
-      <div class="site-brand-container">
-        <a href="/">
+    <button type="button" id="menu-btn" class="menu-btn" aria-expanded="false" aria-controls="site-nav" onclick="toggleMenu()">Menu</button>
+
+    <nav class="site-nav" id="site-nav" aria-label="主导航">
+      <ul class="menu-list">
+        
           
-            SyGl
+          <li class="menu-item">
+            <a href="/">Home</a>
+          </li>
+        
           
-        </a>
-      </div>
-      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
-        Menu
-      </div>
-      <nav class="site-nav">
-        <ul class="menu-list">
+          <li class="menu-item">
+            <a href="/archives/">Archive</a>
+          </li>
+        
           
-            
-              <li class="menu-item">
-                <a href="/">Home</a>
-              </li> 
-                   
+          <li class="menu-item">
+            <a href="/categories/gallery/">Gallery</a>
+          </li>
+        
           
-            
-              <li class="menu-item">
-                <a href="/archives/">Archive</a>
-              </li> 
-                   
+          <li class="menu-item menu-item-active">
+            <a href="/categories/note/" aria-current=&#34;page&#34;>Note</a>
+          </li>
+        
           
-            
-              <li class="menu-item">
-                <a href="/categories/gallery/">Gallery</a>
-              </li> 
-                   
+          <li class="menu-item">
+            <a href="/categories/personal/">Personal</a>
+          </li>
+        
           
-            
-              <li class="menu-item">
-                <a href="/categories/note/">Note</a>
-              </li> 
-                   
+          <li class="menu-item">
+            <a href="/tools/">Tools</a>
+          </li>
+        
           
-            
-              <li class="menu-item">
-                <a href="/categories/personal/">Personal</a>
-              </li> 
-                   
-          
-            
-              <li class="menu-item">
-                <a href="/tools/">Tools</a>
-              </li> 
-                   
-          
-            
-              <li class="menu-item">
-                <a href="/papers/">Papers</a>
-              </li> 
-                   
-          
-          
-        </ul>
-      </nav>
-    </div>
+          <li class="menu-item">
+            <a href="/papers/">Papers</a>
+          </li>
+        
+        
+      </ul>
+    </nav>
   </div>
-</div>
+</header>
 
 
-      <div class="main">
-        <div class="flex-container">
-          <div id="category">
+      <main class="main" id="main">
+        <div class="container">
+          <section class="page-intro">
+  <p class="eyebrow">Category</p>
+  <h1>note</h1>
+  <p>该分类下的文章。</p>
+</section>
+<div id="category">
   <div class="post-gallery">
     <div class="post-gallery-list">
         
@@ -151,14 +140,10 @@
                         
                     </div>
                     <div class="post-title">
-                        <a href="/2024/11/13/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-9/"</a>
-                            
-                                编译原理(9) 静态语义分析和中间代码生成
-                            
-                        </a>
+                        <a href="/2024/11/13/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-9/">编译原理(9) 静态语义分析和中间代码生成</a>
                     </div>
                     <span class="post-date">
-                        Nov 13, 2024
+                        2024.11.13
                     </span>
                 </div>
                 <div class="post-img">
@@ -187,14 +172,10 @@
                         
                     </div>
                     <div class="post-title">
-                        <a href="/2024/11/08/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-8/"</a>
-                            
-                                编译原理(8) 语法制导的语义计算
-                            
-                        </a>
+                        <a href="/2024/11/08/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-8/">编译原理(8) 语法制导的语义计算</a>
                     </div>
                     <span class="post-date">
-                        Nov 8, 2024
+                        2024.11.08
                     </span>
                 </div>
                 <div class="post-img">
@@ -223,14 +204,10 @@
                         
                     </div>
                     <div class="post-title">
-                        <a href="/2024/10/29/%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%E5%8E%9F%E7%90%86-3/"</a>
-                            
-                                信号处理(3) 离散时间Fourier变换
-                            
-                        </a>
+                        <a href="/2024/10/29/%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%E5%8E%9F%E7%90%86-3/">信号处理(3) 离散时间Fourier变换</a>
                     </div>
                     <span class="post-date">
-                        Oct 29, 2024
+                        2024.10.29
                     </span>
                 </div>
                 <div class="post-img">
@@ -259,14 +236,10 @@
                         
                     </div>
                     <div class="post-title">
-                        <a href="/2024/10/29/%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%E5%8E%9F%E7%90%86-2/"</a>
-                            
-                                信号处理(2) 采样与采样定理
-                            
-                        </a>
+                        <a href="/2024/10/29/%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%E5%8E%9F%E7%90%86-2/">信号处理(2) 采样与采样定理</a>
                     </div>
                     <span class="post-date">
-                        Oct 29, 2024
+                        2024.10.29
                     </span>
                 </div>
                 <div class="post-img">
@@ -295,14 +268,10 @@
                         
                     </div>
                     <div class="post-title">
-                        <a href="/2024/10/27/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-7/"</a>
-                            
-                                编译原理(7) 再谈LL与LR
-                            
-                        </a>
+                        <a href="/2024/10/27/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-7/">编译原理(7) 再谈LL与LR</a>
                     </div>
                     <span class="post-date">
-                        Oct 27, 2024
+                        2024.10.27
                     </span>
                 </div>
                 <div class="post-img">
@@ -331,14 +300,10 @@
                         
                     </div>
                     <div class="post-title">
-                        <a href="/2024/10/26/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-6/"</a>
-                            
-                                编译原理(6) 自底向上语法分析
-                            
-                        </a>
+                        <a href="/2024/10/26/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-6/">编译原理(6) 自底向上语法分析</a>
                     </div>
                     <span class="post-date">
-                        Oct 26, 2024
+                        2024.10.26
                     </span>
                 </div>
                 <div class="post-img">
@@ -367,14 +332,10 @@
                         
                     </div>
                     <div class="post-title">
-                        <a href="/2024/10/26/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-5/"</a>
-                            
-                                编译原理(5) 符号表
-                            
-                        </a>
+                        <a href="/2024/10/26/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-5/">编译原理(5) 符号表</a>
                     </div>
                     <span class="post-date">
-                        Oct 26, 2024
+                        2024.10.26
                     </span>
                 </div>
                 <div class="post-img">
@@ -403,14 +364,10 @@
                         
                     </div>
                     <div class="post-title">
-                        <a href="/2024/10/26/%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%E5%8E%9F%E7%90%86-1/"</a>
-                            
-                                信号处理(1) Fourier级数与Fourier变换
-                            
-                        </a>
+                        <a href="/2024/10/26/%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%E5%8E%9F%E7%90%86-1/">信号处理(1) Fourier级数与Fourier变换</a>
                     </div>
                     <span class="post-date">
-                        Oct 26, 2024
+                        2024.10.26
                     </span>
                 </div>
                 <div class="post-img">
@@ -439,14 +396,10 @@
                         
                     </div>
                     <div class="post-title">
-                        <a href="/2024/10/16/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-5/"</a>
-                            
-                                密码学(5) 密钥分配
-                            
-                        </a>
+                        <a href="/2024/10/16/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-5/">密码学(5) 密钥分配</a>
                     </div>
                     <span class="post-date">
-                        Oct 16, 2024
+                        2024.10.16
                     </span>
                 </div>
                 <div class="post-img">
@@ -475,14 +428,10 @@
                         
                     </div>
                     <div class="post-title">
-                        <a href="/2024/10/16/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-4/"</a>
-                            
-                                密码学(4) 非对称密码
-                            
-                        </a>
+                        <a href="/2024/10/16/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-4/">密码学(4) 非对称密码</a>
                     </div>
                     <span class="post-date">
-                        Oct 16, 2024
+                        2024.10.16
                     </span>
                 </div>
                 <div class="post-img">
@@ -506,26 +455,22 @@
 
 </div>
 
-
         </div>
-      </div>
+      </main>
+
+      <footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">SyGl <span>/</span> notes &amp; tools</div>
+    <div class="footer-meta">
       
-      <div class="footer">
-    <div class="flex-container">
-        <div class="footer-text">
-            
-            
-            
-                Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> & <a target="_blank" rel="noopener" href="https://github.com/zoeingwingkei/frame/">Frame</a>
-                
-        </div>
+      
+      Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> · theme Atrium
     </div>
-</div>
+  </div>
+</footer>
 
     </div>
 
     
-    
-
   </body>
 </html>

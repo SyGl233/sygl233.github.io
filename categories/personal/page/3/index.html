@@ -2,8 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f7f4ec">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
 
@@ -18,11 +18,7 @@
 
     <link rel="icon" href="/favicon.ico">
 
-
-
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto+Mono&display=swap');
-</style>
+<meta name="generator" content="Hexo">
 
 
 
@@ -38,6 +34,8 @@
     
     <script src="/js/menu.js"></script>
     
+    <script src="/js/format.js"></script>
+    
 
 
 
@@ -52,82 +50,73 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
-  <body>
-    <div class="mask-border">
-    </div>
-
+<!-- hexo injector head_end end --></head>
+  <body class="theme-atrium">
     <div class="wrapper">
+      <header class="site-header">
+  <div class="container header-inner">
+    <a class="site-brand" href="/" aria-label="返回首页">
+      
+        <span class="brand-mark">S</span>
+        <span class="brand-name">SyGl</span>
+      
+    </a>
 
-      <div class="header">
-  <div class="flex-container">
-    <div class="header-inner">
-      <div class="site-brand-container">
-        <a href="/">
+    <button type="button" id="menu-btn" class="menu-btn" aria-expanded="false" aria-controls="site-nav" onclick="toggleMenu()">Menu</button>
+
+    <nav class="site-nav" id="site-nav" aria-label="主导航">
+      <ul class="menu-list">
+        
           
-            SyGl
+          <li class="menu-item">
+            <a href="/">Home</a>
+          </li>
+        
           
-        </a>
-      </div>
-      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
-        Menu
-      </div>
-      <nav class="site-nav">
-        <ul class="menu-list">
+          <li class="menu-item">
+            <a href="/archives/">Archive</a>
+          </li>
+        
           
-            
-              <li class="menu-item">
-                <a href="/">Home</a>
-              </li> 
-                   
+          <li class="menu-item">
+            <a href="/categories/gallery/">Gallery</a>
+          </li>
+        
           
-            
-              <li class="menu-item">
-                <a href="/archives/">Archive</a>
-              </li> 
-                   
+          <li class="menu-item">
+            <a href="/categories/note/">Note</a>
+          </li>
+        
           
-            
-              <li class="menu-item">
-                <a href="/categories/gallery/">Gallery</a>
-              </li> 
-                   
+          <li class="menu-item menu-item-active">
+            <a href="/categories/personal/" aria-current=&#34;page&#34;>Personal</a>
+          </li>
+        
           
-            
-              <li class="menu-item">
-                <a href="/categories/note/">Note</a>
-              </li> 
-                   
+          <li class="menu-item">
+            <a href="/tools/">Tools</a>
+          </li>
+        
           
-            
-              <li class="menu-item">
-                <a href="/categories/personal/">Personal</a>
-              </li> 
-                   
-          
-            
-              <li class="menu-item">
-                <a href="/tools/">Tools</a>
-              </li> 
-                   
-          
-            
-              <li class="menu-item">
-                <a href="/papers/">Papers</a>
-              </li> 
-                   
-          
-          
-        </ul>
-      </nav>
-    </div>
+          <li class="menu-item">
+            <a href="/papers/">Papers</a>
+          </li>
+        
+        
+      </ul>
+    </nav>
   </div>
-</div>
+</header>
 
 
-      <div class="main">
-        <div class="flex-container">
-          <div id="category">
+      <main class="main" id="main">
+        <div class="container">
+          <section class="page-intro">
+  <p class="eyebrow">Category</p>
+  <h1>personal</h1>
+  <p>该分类下的文章。</p>
+</section>
+<div id="category">
   <div class="post-gallery">
     <div class="post-gallery-list">
         
@@ -145,14 +134,10 @@
                         
                     </div>
                     <div class="post-title">
-                        <a href="/2024/09/19/%E7%8C%9C%E8%AF%AD%E8%A8%80-3/"</a>
-                            
-                                猜语言(3) 北欧日耳曼语
-                            
-                        </a>
+                        <a href="/2024/09/19/%E7%8C%9C%E8%AF%AD%E8%A8%80-3/">猜语言(3) 北欧日耳曼语</a>
                     </div>
                     <span class="post-date">
-                        Sep 19, 2024
+                        2024.09.19
                     </span>
                 </div>
                 <div class="post-img">
@@ -175,14 +160,10 @@
                         
                     </div>
                     <div class="post-title">
-                        <a href="/2024/09/19/%E7%8C%9C%E8%AF%AD%E8%A8%80-2/"</a>
-                            
-                                猜语言(2) 两种小日耳曼语
-                            
-                        </a>
+                        <a href="/2024/09/19/%E7%8C%9C%E8%AF%AD%E8%A8%80-2/">猜语言(2) 两种小日耳曼语</a>
                     </div>
                     <span class="post-date">
-                        Sep 19, 2024
+                        2024.09.19
                     </span>
                 </div>
                 <div class="post-img">
@@ -205,14 +186,10 @@
                         
                     </div>
                     <div class="post-title">
-                        <a href="/2024/09/01/%E7%A9%BA%E9%97%B4%E5%AD%A6-%E5%BC%95%E8%AE%BA/"</a>
-                            
-                                空间学-引论
-                            
-                        </a>
+                        <a href="/2024/09/01/%E7%A9%BA%E9%97%B4%E5%AD%A6-%E5%BC%95%E8%AE%BA/">空间学-引论</a>
                     </div>
                     <span class="post-date">
-                        Sep 1, 2024
+                        2024.09.01
                     </span>
                 </div>
                 <div class="post-img">
@@ -235,14 +212,10 @@
                         
                     </div>
                     <div class="post-title">
-                        <a href="/2024/07/30/%E7%8C%9C%E8%AF%AD%E8%A8%80-1/"</a>
-                            
-                                猜语言(1) 常见日耳曼语
-                            
-                        </a>
+                        <a href="/2024/07/30/%E7%8C%9C%E8%AF%AD%E8%A8%80-1/">猜语言(1) 常见日耳曼语</a>
                     </div>
                     <span class="post-date">
-                        Jul 30, 2024
+                        2024.07.30
                     </span>
                 </div>
                 <div class="post-img">
@@ -265,14 +238,10 @@
                         
                     </div>
                     <div class="post-title">
-                        <a href="/2024/07/30/%E7%8C%9C%E8%AF%AD%E8%A8%80-0/"</a>
-                            
-                                猜语言(0) 这是什么？
-                            
-                        </a>
+                        <a href="/2024/07/30/%E7%8C%9C%E8%AF%AD%E8%A8%80-0/">猜语言(0) 这是什么？</a>
                     </div>
                     <span class="post-date">
-                        Jul 30, 2024
+                        2024.07.30
                     </span>
                 </div>
                 <div class="post-img">
@@ -295,14 +264,10 @@
                         
                     </div>
                     <div class="post-title">
-                        <a href="/2022/11/26/%E8%A5%BF%E6%93%8D%E5%8D%A0%E6%98%9F%E5%B8%88-3/"</a>
-                            
-                                西操占星师(3)
-                            
-                        </a>
+                        <a href="/2022/11/26/%E8%A5%BF%E6%93%8D%E5%8D%A0%E6%98%9F%E5%B8%88-3/">西操占星师(3)</a>
                     </div>
                     <span class="post-date">
-                        Nov 26, 2022
+                        2022.11.26
                     </span>
                 </div>
                 <div class="post-img">
@@ -327,14 +292,10 @@
                         
                     </div>
                     <div class="post-title">
-                        <a href="/2022/10/23/%E8%A5%BF%E6%93%8D%E5%8D%A0%E6%98%9F%E5%B8%88-2/"</a>
-                            
-                                西操占星师(2)
-                            
-                        </a>
+                        <a href="/2022/10/23/%E8%A5%BF%E6%93%8D%E5%8D%A0%E6%98%9F%E5%B8%88-2/">西操占星师(2)</a>
                     </div>
                     <span class="post-date">
-                        Oct 23, 2022
+                        2022.10.23
                     </span>
                 </div>
                 <div class="post-img">
@@ -359,14 +320,10 @@
                         
                     </div>
                     <div class="post-title">
-                        <a href="/2022/10/17/%E8%A5%BF%E6%93%8D%E5%8D%A0%E6%98%9F%E5%B8%88-1/"</a>
-                            
-                                西操占星师(1)
-                            
-                        </a>
+                        <a href="/2022/10/17/%E8%A5%BF%E6%93%8D%E5%8D%A0%E6%98%9F%E5%B8%88-1/">西操占星师(1)</a>
                     </div>
                     <span class="post-date">
-                        Oct 17, 2022
+                        2022.10.17
                     </span>
                 </div>
                 <div class="post-img">
@@ -392,26 +349,22 @@
 
 </div>
 
-
         </div>
-      </div>
+      </main>
+
+      <footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">SyGl <span>/</span> notes &amp; tools</div>
+    <div class="footer-meta">
       
-      <div class="footer">
-    <div class="flex-container">
-        <div class="footer-text">
-            
-            
-            
-                Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> & <a target="_blank" rel="noopener" href="https://github.com/zoeingwingkei/frame/">Frame</a>
-                
-        </div>
+      
+      Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> · theme Atrium
     </div>
-</div>
+  </div>
+</footer>
 
     </div>
 
     
-    
-
   </body>
 </html>

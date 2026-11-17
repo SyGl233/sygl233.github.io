@@ -2,8 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f7f4ec">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
 
@@ -18,11 +18,7 @@
 
     <link rel="icon" href="/favicon.ico">
 
-
-
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto+Mono&display=swap');
-</style>
+<meta name="generator" content="Hexo">
 
 
 
@@ -38,6 +34,8 @@
     
     <script src="/js/menu.js"></script>
     
+    <script src="/js/format.js"></script>
+    
 
 
 
@@ -52,120 +50,89 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
-  <body>
-    <div class="mask-border">
-    </div>
-
+<!-- hexo injector head_end end --></head>
+  <body class="theme-atrium">
     <div class="wrapper">
+      <header class="site-header">
+  <div class="container header-inner">
+    <a class="site-brand" href="/" aria-label="返回首页">
+      
+        <span class="brand-mark">S</span>
+        <span class="brand-name">SyGl</span>
+      
+    </a>
 
-      <div class="header">
-  <div class="flex-container">
-    <div class="header-inner">
-      <div class="site-brand-container">
-        <a href="/">
+    <button type="button" id="menu-btn" class="menu-btn" aria-expanded="false" aria-controls="site-nav" onclick="toggleMenu()">Menu</button>
+
+    <nav class="site-nav" id="site-nav" aria-label="主导航">
+      <ul class="menu-list">
+        
           
-            SyGl
+          <li class="menu-item">
+            <a href="/">Home</a>
+          </li>
+        
           
-        </a>
-      </div>
-      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
-        Menu
-      </div>
-      <nav class="site-nav">
-        <ul class="menu-list">
+          <li class="menu-item">
+            <a href="/archives/">Archive</a>
+          </li>
+        
           
-            
-              <li class="menu-item">
-                <a href="/">Home</a>
-              </li> 
-                   
+          <li class="menu-item">
+            <a href="/categories/gallery/">Gallery</a>
+          </li>
+        
           
-            
-              <li class="menu-item">
-                <a href="/archives/">Archive</a>
-              </li> 
-                   
+          <li class="menu-item">
+            <a href="/categories/note/">Note</a>
+          </li>
+        
           
-            
-              <li class="menu-item">
-                <a href="/categories/gallery/">Gallery</a>
-              </li> 
-                   
+          <li class="menu-item">
+            <a href="/categories/personal/">Personal</a>
+          </li>
+        
           
-            
-              <li class="menu-item">
-                <a href="/categories/note/">Note</a>
-              </li> 
-                   
+          <li class="menu-item">
+            <a href="/tools/">Tools</a>
+          </li>
+        
           
-            
-              <li class="menu-item">
-                <a href="/categories/personal/">Personal</a>
-              </li> 
-                   
-          
-            
-              <li class="menu-item">
-                <a href="/tools/">Tools</a>
-              </li> 
-                   
-          
-            
-              <li class="menu-item">
-                <a href="/papers/">Papers</a>
-              </li> 
-                   
-          
-          
-        </ul>
-      </nav>
-    </div>
+          <li class="menu-item">
+            <a href="/papers/">Papers</a>
+          </li>
+        
+        
+      </ul>
+    </nav>
   </div>
-</div>
+</header>
 
 
-      <div class="main">
-        <div class="flex-container">
+      <main class="main" id="main">
+        <div class="container">
           <article id="post">
 
   
     <div class="post-head">
-    <div class="post-info">
-        <div class="tag-list">
-            
-                
-                    <span class="post-tag">
-                        <a href="/tags/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">
-                            课程笔记
-                        </a>
-                    </span>    
-                
-                    <span class="post-tag">
-                        <a href="/tags/%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%E5%8E%9F%E7%90%86/">
-                            信号处理原理
-                        </a>
-                    </span>    
-                           
-            
-        </div>
-        <div class="post-title">
-            
-            
-                信号处理(3) 离散时间Fourier变换
-            
-            
-        </div>
-        <span class="post-date">
-            Oct 29, 2024
-        </span>
-    </div>
-    <div class="post-img">
+  <div class="post-info">
+    <div class="tag-list">
+      
         
-            <div class="h-line-primary"></div>
-              
+          <span class="post-tag"><a href="/tags/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">课程笔记</a></span>
+        
+          <span class="post-tag"><a href="/tags/%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%E5%8E%9F%E7%90%86/">信号处理原理</a></span>
+        
+      
     </div>
+    <h1 class="post-title">信号处理(3) 离散时间Fourier变换</h1>
+    <span class="post-date">2024.10.29</span>
+  </div>
+  <div class="post-img">
+    
+  </div>
 </div>
+
     <div class="post-content">
     <p>连续时间情形的FT具有理论意义，但现实情况下的信号往往没有解析表达式，也无法获知任意时刻<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>∈</mo><mi mathvariant="double-struck">R</mi></mrow><annotation encoding="application/x-tex">t\in\mathbb{R}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6542em;vertical-align:-0.0391em;"></span><span class="mord mathnormal">t</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6889em;"></span><span class="mord mathbb">R</span></span></span></span>的信息</p>
 <p>因此，将时间域离散化是必要的，这相当于以<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>T</mi><mi>s</mi></msub></mrow><annotation encoding="application/x-tex">T_s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">s</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>周期进行采样</p>
@@ -439,24 +406,21 @@ c-10,0,-16.667,5,-20,15z M188 15 H145 v585 v1200 v585 h43z"/></svg></span></span
   
 </article>
         </div>
-      </div>
+      </main>
+
+      <footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">SyGl <span>/</span> notes &amp; tools</div>
+    <div class="footer-meta">
       
-      <div class="footer">
-    <div class="flex-container">
-        <div class="footer-text">
-            
-            
-            
-                Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> & <a target="_blank" rel="noopener" href="https://github.com/zoeingwingkei/frame/">Frame</a>
-                
-        </div>
+      
+      Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> · theme Atrium
     </div>
-</div>
+  </div>
+</footer>
 
     </div>
 
     
-    
-
   </body>
 </html>

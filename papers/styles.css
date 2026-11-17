@@ -196,39 +196,34 @@ button, input { font: inherit; }
   .workspace {
     height: 100%;
     min-height: 0;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 0;
-  }
-  .paper-hero { flex: 0 0 auto; }
-  .reader {
-    flex: 1 1 auto;
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
-  }
-  .tabs {
-    position: static;
-    flex: 0 0 auto;
-  }
-  .panel {
-    flex: 1 1 auto;
-    min-height: 0;
     overflow-y: auto;
     overscroll-behavior: contain;
     scrollbar-gutter: stable;
-    padding-right: 14px;
+    padding-top: 0;
+    padding-bottom: 44px;
+  }
+  .paper-hero { flex: 0 0 auto; padding-top: 32px; }
+  .reader { display: block; }
+  .tabs {
+    position: sticky;
+    top: 0;
+    z-index: 25;
+    background: var(--paper);
+    box-shadow: 0 1px 0 var(--line);
+  }
+  .panel {
+    overflow: visible;
+    min-height: 0;
+    padding-right: 0;
     padding-bottom: 34px;
   }
   .pdf-panel {
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
+    display: block;
+    overflow: visible;
     padding-right: 0;
   }
   .pdf-hint { flex: 0 0 auto; }
-  .pdf-frame { flex: 1 1 0; height: auto; min-height: 0; }
+  .pdf-frame { height: min(72vh, 900px); min-height: 0; }
   .paper-footer { display: none; }
 }
 

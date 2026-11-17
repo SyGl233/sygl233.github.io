@@ -2,8 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f7f4ec">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
 
@@ -18,11 +18,7 @@
 
     <link rel="icon" href="/favicon.ico">
 
-
-
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto+Mono&display=swap');
-</style>
+<meta name="generator" content="Hexo">
 
 
 
@@ -38,6 +34,8 @@
     
     <script src="/js/menu.js"></script>
     
+    <script src="/js/format.js"></script>
+    
 
 
 
@@ -52,82 +50,73 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
-  <body>
-    <div class="mask-border">
-    </div>
-
+<!-- hexo injector head_end end --></head>
+  <body class="theme-atrium">
     <div class="wrapper">
+      <header class="site-header">
+  <div class="container header-inner">
+    <a class="site-brand" href="/" aria-label="返回首页">
+      
+        <span class="brand-mark">S</span>
+        <span class="brand-name">SyGl</span>
+      
+    </a>
 
-      <div class="header">
-  <div class="flex-container">
-    <div class="header-inner">
-      <div class="site-brand-container">
-        <a href="/">
+    <button type="button" id="menu-btn" class="menu-btn" aria-expanded="false" aria-controls="site-nav" onclick="toggleMenu()">Menu</button>
+
+    <nav class="site-nav" id="site-nav" aria-label="主导航">
+      <ul class="menu-list">
+        
           
-            SyGl
+          <li class="menu-item">
+            <a href="/">Home</a>
+          </li>
+        
           
-        </a>
-      </div>
-      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
-        Menu
-      </div>
-      <nav class="site-nav">
-        <ul class="menu-list">
+          <li class="menu-item">
+            <a href="/archives/">Archive</a>
+          </li>
+        
           
-            
-              <li class="menu-item">
-                <a href="/">Home</a>
-              </li> 
-                   
+          <li class="menu-item">
+            <a href="/categories/gallery/">Gallery</a>
+          </li>
+        
           
-            
-              <li class="menu-item">
-                <a href="/archives/">Archive</a>
-              </li> 
-                   
+          <li class="menu-item menu-item-active">
+            <a href="/categories/note/" aria-current=&#34;page&#34;>Note</a>
+          </li>
+        
           
-            
-              <li class="menu-item">
-                <a href="/categories/gallery/">Gallery</a>
-              </li> 
-                   
+          <li class="menu-item">
+            <a href="/categories/personal/">Personal</a>
+          </li>
+        
           
-            
-              <li class="menu-item">
-                <a href="/categories/note/">Note</a>
-              </li> 
-                   
+          <li class="menu-item">
+            <a href="/tools/">Tools</a>
+          </li>
+        
           
-            
-              <li class="menu-item">
-                <a href="/categories/personal/">Personal</a>
-              </li> 
-                   
-          
-            
-              <li class="menu-item">
-                <a href="/tools/">Tools</a>
-              </li> 
-                   
-          
-            
-              <li class="menu-item">
-                <a href="/papers/">Papers</a>
-              </li> 
-                   
-          
-          
-        </ul>
-      </nav>
-    </div>
+          <li class="menu-item">
+            <a href="/papers/">Papers</a>
+          </li>
+        
+        
+      </ul>
+    </nav>
   </div>
-</div>
+</header>
 
 
-      <div class="main">
-        <div class="flex-container">
-          <div id="category">
+      <main class="main" id="main">
+        <div class="container">
+          <section class="page-intro">
+  <p class="eyebrow">Category</p>
+  <h1>note</h1>
+  <p>该分类下的文章。</p>
+</section>
+<div id="category">
   <div class="post-gallery">
     <div class="post-gallery-list">
         
@@ -151,14 +140,10 @@
                         
                     </div>
                     <div class="post-title">
-                        <a href="/2024/10/13/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-3-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90/"</a>
-                            
-                                编译原理(4) 自顶向下语法分析
-                            
-                        </a>
+                        <a href="/2024/10/13/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-3-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90/">编译原理(4) 自顶向下语法分析</a>
                     </div>
                     <span class="post-date">
-                        Oct 13, 2024
+                        2024.10.13
                     </span>
                 </div>
                 <div class="post-img">
@@ -187,14 +172,10 @@
                         
                     </div>
                     <div class="post-title">
-                        <a href="/2024/10/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-3/"</a>
-                            
-                                密码学(3) 对称密码
-                            
-                        </a>
+                        <a href="/2024/10/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-3/">密码学(3) 对称密码</a>
                     </div>
                     <span class="post-date">
-                        Oct 9, 2024
+                        2024.10.09
                     </span>
                 </div>
                 <div class="post-img">
@@ -223,14 +204,10 @@
                         
                     </div>
                     <div class="post-title">
-                        <a href="/2024/10/06/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-2/"</a>
-                            
-                                计算机组成原理(2) 算术逻辑单元
-                            
-                        </a>
+                        <a href="/2024/10/06/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-2/">计算机组成原理(2) 算术逻辑单元</a>
                     </div>
                     <span class="post-date">
-                        Oct 6, 2024
+                        2024.10.06
                     </span>
                 </div>
                 <div class="post-img">
@@ -259,14 +236,10 @@
                         
                     </div>
                     <div class="post-title">
-                        <a href="/2024/10/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-1/"</a>
-                            
-                                计算机组成原理(1) 数据表示及检错纠错
-                            
-                        </a>
+                        <a href="/2024/10/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-1/">计算机组成原理(1) 数据表示及检错纠错</a>
                     </div>
                     <span class="post-date">
-                        Oct 5, 2024
+                        2024.10.05
                     </span>
                 </div>
                 <div class="post-img">
@@ -295,14 +268,10 @@
                         
                     </div>
                     <div class="post-title">
-                        <a href="/2024/09/25/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-2/"</a>
-                            
-                                密码学(2) 古典密码
-                            
-                        </a>
+                        <a href="/2024/09/25/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-2/">密码学(2) 古典密码</a>
                     </div>
                     <span class="post-date">
-                        Sep 25, 2024
+                        2024.09.25
                     </span>
                 </div>
                 <div class="post-img">
@@ -331,14 +300,10 @@
                         
                     </div>
                     <div class="post-title">
-                        <a href="/2024/09/25/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-1/"</a>
-                            
-                                密码学(1) 密码学概论
-                            
-                        </a>
+                        <a href="/2024/09/25/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-1/">密码学(1) 密码学概论</a>
                     </div>
                     <span class="post-date">
-                        Sep 25, 2024
+                        2024.09.25
                     </span>
                 </div>
                 <div class="post-img">
@@ -367,14 +332,10 @@
                         
                     </div>
                     <div class="post-title">
-                        <a href="/2024/09/19/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-4/"</a>
-                            
-                                编译原理(3) 龙书拾遗
-                            
-                        </a>
+                        <a href="/2024/09/19/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-4/">编译原理(3) 龙书拾遗</a>
                     </div>
                     <span class="post-date">
-                        Sep 19, 2024
+                        2024.09.19
                     </span>
                 </div>
                 <div class="post-img">
@@ -409,14 +370,10 @@
                         
                     </div>
                     <div class="post-title">
-                        <a href="/2024/09/18/RISC-V%E6%8C%87%E4%BB%A4%E9%9B%86%E7%AC%94%E8%AE%B0/"</a>
-                            
-                                RISC-V指令集笔记
-                            
-                        </a>
+                        <a href="/2024/09/18/RISC-V%E6%8C%87%E4%BB%A4%E9%9B%86%E7%AC%94%E8%AE%B0/">RISC-V指令集笔记</a>
                     </div>
                     <span class="post-date">
-                        Sep 18, 2024
+                        2024.09.18
                     </span>
                 </div>
                 <div class="post-img">
@@ -445,14 +402,10 @@
                         
                     </div>
                     <div class="post-title">
-                        <a href="/2024/09/18/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-2-%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90/"</a>
-                            
-                                编译原理(2) 词法分析
-                            
-                        </a>
+                        <a href="/2024/09/18/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-2-%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90/">编译原理(2) 词法分析</a>
                     </div>
                     <span class="post-date">
-                        Sep 18, 2024
+                        2024.09.18
                     </span>
                 </div>
                 <div class="post-img">
@@ -481,14 +434,10 @@
                         
                     </div>
                     <div class="post-title">
-                        <a href="/2024/09/18/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-1/"</a>
-                            
-                                编译原理(1) 绪论
-                            
-                        </a>
+                        <a href="/2024/09/18/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-1/">编译原理(1) 绪论</a>
                     </div>
                     <span class="post-date">
-                        Sep 18, 2024
+                        2024.09.18
                     </span>
                 </div>
                 <div class="post-img">
@@ -512,26 +461,22 @@
 
 </div>
 
-
         </div>
-      </div>
+      </main>
+
+      <footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">SyGl <span>/</span> notes &amp; tools</div>
+    <div class="footer-meta">
       
-      <div class="footer">
-    <div class="flex-container">
-        <div class="footer-text">
-            
-            
-            
-                Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> & <a target="_blank" rel="noopener" href="https://github.com/zoeingwingkei/frame/">Frame</a>
-                
-        </div>
+      
+      Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> · theme Atrium
     </div>
-</div>
+  </div>
+</footer>
 
     </div>
 
     
-    
-
   </body>
 </html>
